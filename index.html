@@ -65,13 +65,37 @@
         </div>
     </nav>
 
-    <header id="inicio" class="hero" style="z-index: -1;border-radius: 10% 40% 30% 50% / 30% 40% 60% 50%;">
+    <header id="inicio" class="hero" style="z-index: -1;border-radius: 40% 10% 60%/20% 80% 20%;">
         <div class="hero-background"></div>
         <div class="container">
-            <h1>Área 51_Barber Shop</h1>
+            <h1 class="fs-10">Área 51_Barber Shop</h1>
             <p class="lead">Descubre tu Mejor Estilo</p>
         </div>
     </header>
+
+    <!-- Botón Scroll hacia abajo y devuelve al inicio -->
+    <button id="scrollToTopBtn" class="btn"
+        style="position:fixed; bottom:40px; right:30px; z-index:9999; width: 50px; height:40px; display:none; align-items:center; justify-content:center;">
+        <i class="fa-solid fa-chevron-up fa-lg"></i>
+    </button>
+
+    <!-- Código JS para el Botón Scroll hacia abajo y devuelve al inicio -->
+    <script>
+        // Mostrar/ocultar el botón al hacer scroll
+        window.addEventListener('scroll', function () {
+            const btn = document.getElementById('scrollToTopBtn');
+            if (window.scrollY > 200) {
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        // Scroll suave al inicio al hacer clic
+        document.getElementById('scrollToTopBtn').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 
     <!-- sección nosotros -->
     <section id="nosotros" class="py-5 fade-in-section gx-10" style="scroll-margin-top: 80px;">
