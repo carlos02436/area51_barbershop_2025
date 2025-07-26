@@ -312,117 +312,125 @@
      z-index: 1;
  }
 
+ /* Efecto hover del boton de scroll */
+    #scrollToTopBtn {
+        background: #424242;
+        color: white;
+        border: 2px solid black;
+    }
+
+    #scrollToTopBtn:hover {
+        background: black;
+        border: 2px solid #424242;
+    }
+
  /* Sección Responsive de la página web */
  /* Dispositivos grandes (mayores a 1200px) */
-@media screen and (min-width: 1200px) {
-    .hero h1 {
-        font-size: 5rem;
-    }
-}
+ @media screen and (min-width: 1200px) {
+     .hero h1 {
+         font-size: 5rem;
+     }
+ }
 
-/* Laptops y tablets grandes (992px a 1199px) */
-@media screen and (max-width: 1199px) {
-    .hero h1 {
-        font-size: 4rem;
-    }
-}
+ /* Laptops y tablets grandes (992px a 1199px) */
+ @media screen and (max-width: 1199px) {
+     .hero h1 {
+         font-size: 4rem;
+     }
+ }
 
-/* Tablets medianas (768px a 991px) */
-@media screen and (max-width: 991px) {
-    .hero h1 {
-        font-size: 3.2rem;
-    }
+ /* Tablets medianas (768px a 991px) */
+ @media screen and (max-width: 991px) {
+     .hero h1 {
+         font-size: 3.2rem;
+     }
 
-    .hero p.lead {
-        font-size: 1.2rem;
-    }
+     .hero p.lead {
+         font-size: 1.2rem;
+     }
 
-    .navbar-nav {
-        text-align: center;
-    }
+     .navbar-nav {
+         text-align: center;
+     }
 
-    .navbar-collapse {
-        background-color: rgba(0, 0, 0, 0.9);
-        padding: 20px 0;
-    }
-}
+     .navbar-collapse {
+         background-color: rgba(0, 0, 0, 0.9);
+         padding: 20px 0;
+     }
+ }
 
-/* Teléfonos grandes (576px a 767px) */
-@media screen and (max-width: 767px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
+ /* Teléfonos grandes (576px a 767px) */
+ @media screen and (max-width: 767px) {
+     .hero h1 {
+         font-size: 2.5rem;
+     }
 
-    .hero p.lead {
-        font-size: 1rem;
-    }
+     .hero p.lead {
+         font-size: 1rem;
+     }
 
-    .navbar-brand img {
-        width: 35px;
-        height: 35px;
-    }
+     .navbar-brand img {
+         width: 35px;
+         height: 35px;
+     }
 
-    .navbar-brand {
-        font-size: 1.2rem;
-    }
+     .navbar-brand {
+         font-size: 1.2rem;
+     }
 
-    .btn-neon {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-    }
-}
+     .btn-neon {
+         font-size: 0.9rem;
+         padding: 8px 16px;
+     }
+ }
 
-/* Teléfonos pequeños (576px a 399px) */
-@media screen and (max-width: 575px) {
-    .hero h1 {
-        font-size: 2rem;
-        word-break: break-word;
-    }
+ /* Teléfonos pequeños y medianos (hasta 575px) */
+ @media screen and (max-width: 575px) {
+     .hero h1 {
+         font-size: 2rem;
+         word-break: break-word;
+     }
 
-    .hero p.lead {
-        font-size: 0.95rem;
-    }
+     .hero p.lead {
+         font-size: 0.95rem;
+     }
 
-    .navbar-toggler {
-        margin-top: 5px;
-    }
+     /* Ocultar solo el texto del logo */
+     .logo-text {
+         display: none;
+     }
 
-    .navbar-collapse {
-        padding: 10px 15px;
-    }
+     .navbar-brand img {
+         width: 40px;
+         height: 40px;
+         margin-right: 0;
+     }
 
-    .btn-neon {
-        font-size: 0.85rem;
-        padding: 6px 12px;
-    }
-}
+     .navbar-toggler {
+         margin-top: 5px;
+     }
 
-/* 👇 Solo en pantallas MUY pequeñas (menos de 400px) ocultamos el título */
-@media screen and (max-width: 399px) {
-    .navbar-brand {
-        font-size: 0; /* Oculta texto sin afectar el layout */
-        flex-direction: row;
-        align-items: center;
-    }
+     .navbar-collapse {
+         padding: 10px 15px;
+     }
 
-    .navbar-brand img {
-        width: 40px;
-        height: 40px;
-        margin-right: 0;
-    }
-}
+     .btn-neon {
+         font-size: 0.85rem;
+         padding: 6px 12px;
+     }
+ }
 
-/* Ultra pequeños (menos de 360px) */
-@media screen and (max-width: 360px) {
-    .hero h1 {
-        font-size: 1.6rem;
-    }
+ /* Teléfonos ultra pequeños (hasta 360px) */
+ @media screen and (max-width: 360px) {
+     .hero h1 {
+         font-size: 1.6rem;
+     }
 
-    .hero p.lead {
-        font-size: 0.85rem;
-    }
+     .hero p.lead {
+         font-size: 0.85rem;
+     }
 
-    .btn-neon {
-        font-size: 0.8rem;
-    }
-}
+     .btn-neon {
+         font-size: 0.8rem;
+     }
+ }
