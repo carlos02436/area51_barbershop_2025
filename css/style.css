@@ -16,6 +16,8 @@
      margin: 0;
      padding: 0;
      width: 100%;
+     align-items: center;
+     justify-content: center;
  }
 
  body::before {
@@ -32,6 +34,7 @@
 
  html {
      scroll-behavior: smooth;
+     width: 100%;
  }
 
  .navbar {
@@ -313,124 +316,76 @@
  }
 
  /* Efecto hover del boton de scroll */
-    #scrollToTopBtn {
-        background: #424242;
-        color: white;
-        border: 2px solid black;
-    }
+ #scrollToTopBtn {
+     background: #424242;
+     color: white;
+     border: 2px solid black;
+ }
 
-    #scrollToTopBtn:hover {
-        background: black;
-        border: 2px solid #424242;
-    }
+ #scrollToTopBtn:hover {
+     background: black;
+     border: 2px solid #424242;
+ }
 
  /* Sección Responsive de la página web */
- /* Dispositivos grandes (mayores a 1200px) */
- @media screen and (min-width: 1200px) {
-     .hero h1 {
-         font-size: 5rem;
-     }
- }
+@media screen and (max-width: 768px) {
+    html, body {
+        margin-top: auto !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
 
- /* Laptops y tablets grandes (992px a 1199px) */
- @media screen and (max-width: 1199px) {
-     .hero h1 {
-         font-size: 4rem;
-     }
- }
+    header {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        align-self: center;
+        margin-top: 7rem !important;
+    }
 
- /* Tablets medianas (768px a 991px) */
- @media screen and (max-width: 991px) {
-     .hero h1 {
-         font-size: 3.2rem;
-     }
+    iframe {
+        width: 100% !important;
+        height: 30rem !important;
+        margin: 0 auto;
+        justify-content: center !important;
+        align-items: center !important;
+        align-self: center;
+    }
 
-     .hero p.lead {
-         font-size: 1.2rem;
-     }
+    #videos {
+        min-width: none;
+    }
 
-     .navbar-nav {
-         text-align: center;
-     }
+    .navbar-brand strong {
+        display: flex !important;
+        font-size: 11px !important;
+    }
 
-     .navbar-collapse {
-         background-color: rgba(0, 0, 0, 0.9);
-         padding: 20px 0;
-     }
- }
+    .navbar-brand img {
+        width: 50px !important;
+        height: auto !important;
+    }
 
- /* Teléfonos grandes (576px a 767px) */
- @media screen and (max-width: 767px) {
-     .hero h1 {
-         font-size: 2.5rem;
-     }
+    .navbar-toggler {
+        display: block;
+        margin-top: 0 !important;
+    }
 
-     .hero p.lead {
-         font-size: 1rem;
-     }
+    .hero {
+        height: auto !important;
+        padding: 40px 0;
+        text-align: center;
+    }
 
-     .navbar-brand img {
-         width: 35px;
-         height: 35px;
-     }
+    .hero h1 {
+        font-size: 1.8rem;
+    }
 
-     .navbar-brand {
-         font-size: 1.2rem;
-     }
+    .hero p.lead {
+        font-size: 1rem;
+    }
 
-     .btn-neon {
-         font-size: 0.9rem;
-         padding: 8px 16px;
-     }
- }
-
- /* Teléfonos pequeños y medianos (hasta 575px) */
- @media screen and (max-width: 575px) {
-     .hero h1 {
-         font-size: 2rem;
-         word-break: break-word;
-     }
-
-     .hero p.lead {
-         font-size: 0.95rem;
-     }
-
-     /* Ocultar solo el texto del logo */
-     .logo-text {
-         display: none;
-     }
-
-     .navbar-brand img {
-         width: 40px;
-         height: 40px;
-         margin-right: 0;
-     }
-
-     .navbar-toggler {
-         margin-top: 5px;
-     }
-
-     .navbar-collapse {
-         padding: 10px 15px;
-     }
-
-     .btn-neon {
-         font-size: 0.85rem;
-         padding: 6px 12px;
-     }
- }
-
- /* Teléfonos ultra pequeños (hasta 360px) */
- @media screen and (max-width: 360px) {
-     .hero h1 {
-         font-size: 1.6rem;
-     }
-
-     .hero p.lead {
-         font-size: 0.85rem;
-     }
-
-     .btn-neon {
-         font-size: 0.8rem;
-     }
- }
+    .btn-neon {
+        font-size: 0.9rem;
+    }
+}
