@@ -1,13 +1,15 @@
  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
  body {
-     background-image: url(../img/fondo_body.jpg);/* Reemplaza con tu URL */
+     background-image: url(../img/fondo_body.jpg);
+     /* Reemplaza con tu URL */
      width: auto;
      height: 600px;
      background-size: cover;
      background-position: center;
      background-repeat: no-repeat;
-     background-attachment: fixed;/* Hace efecto parallax suave en desktop */
+     background-attachment: fixed;
+     /* Hace efecto parallax suave en desktop */
      position: relative;
      font-family: 'Roboto', sans-serif;
      background-color: #000;
@@ -24,7 +26,8 @@
      left: 0;
      width: 100%;
      height: 100%;
-     background-color: rgba(0, 0, 0, 0.5);/* Cambia 0.5 según qué tan oscura la quieres */
+     background-color: rgba(0, 0, 0, 0.5);
+     /* Cambia 0.5 según qué tan oscura la quieres */
      z-index: -1;
  }
 
@@ -64,6 +67,15 @@
      color: white;
      /* Agrega el color blanco al pasar el mouse */
      transition: all 0.3s ease;
+ }
+
+ .navbar-toggler {
+     border-color: white;
+     /* Borde blanco del botón */
+ }
+
+ .navbar-toggler-icon {
+     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
  }
 
  .hero {
@@ -148,8 +160,7 @@
      height: 100px;
      object-fit: cover;
      border-radius: 25px;
-     border: 4px solid #00ff00;
-     filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
+     filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
      transition: transform 0.3s ease, box-shadow 0.3s;
  }
 
@@ -202,29 +213,31 @@
      background-color: #000;
  }
 
-@media (max-width: 767px) {
-    footer .row {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+ @media (max-width: 767px) {
+     .contacto-section {
+         padding-bottom: 120px;
+         margin-bottom: 50px;
+     }
 
-    footer .col-md-2,
-    footer .col-md-4 {
-        width: 100%;
-        max-width: 90%;
-        margin-bottom: 25px;
-    }
+     footer {
+         margin-top: 0;
+         padding-top: 40px;
+         position: relative;
+         text-align: left !important;
+     }
 
-    footer img {
-        width: 60%;
-    }
+     .btn-neon {
+         width: 100%;
+         text-align: center;
+     }
 
-    footer .text-center.mt-3 {
-        font-size: 0.85rem;
-    }
-}
+     .social-icons {
+         justify-content: center;
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+     }
+ }
 
  .social-icons a {
      color: #00ff00;
@@ -290,36 +303,38 @@
  }
 
  /* Fondo Sección Contacto */
-.contacto-section {
-    position: relative;
-    background-image: url(../img/seccion_contacto.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    font-family: 'Roboto', sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 600px;
-    z-index: 1;
-}
+ .contacto-section {
+     position: relative;
+     background-image: url(../img/seccion_contacto.jpg);
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     font-family: 'Roboto', sans-serif;
+     background-color: #000;
+     color: #fff;
+     margin: 0;
+     width: 100%;
+     min-height: 600px;
+     height: auto;
+     padding: 40px 15px;
+     z-index: 1;
+ }
 
-.contacto-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Cambia el 0.4 para más o menos opacidad */
-    z-index: 0;
-}
+ .contacto-section::before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.4);
+     /* Cambia el 0.4 para más o menos opacidad */
+     z-index: 0;
+ }
 
-/* Asegúrate de que el contenido esté por encima del overlay */
-.contacto-section > * {
-    position: relative;
-    z-index: 1;
-}
+ /* Asegúrate de que el contenido esté por encima del overlay */
+ .contacto-section>* {
+     position: relative;
+     z-index: 1;
+ }
