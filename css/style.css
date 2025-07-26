@@ -312,168 +312,117 @@
      z-index: 1;
  }
 
- /* Responsive en cualquier tamaño de pantalla */
-@media screen and (max-width: 320px) {
-    .logo-text {
-        font-size: 1.5rem;
+ /* Sección Responsive de la página web */
+ /* Dispositivos grandes (mayores a 1200px) */
+@media screen and (min-width: 1200px) {
+    .hero h1 {
+        font-size: 5rem;
+    }
+}
+
+/* Laptops y tablets grandes (992px a 1199px) */
+@media screen and (max-width: 1199px) {
+    .hero h1 {
+        font-size: 4rem;
+    }
+}
+
+/* Tablets medianas (768px a 991px) */
+@media screen and (max-width: 991px) {
+    .hero h1 {
+        font-size: 3.2rem;
     }
 
-    .main-nav .nav-links {
-        display: none;
-        flex-direction: column;
-        gap: 15px;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        width: 100%;
-        background-color: #fff;
-        padding: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    .hero p.lead {
+        font-size: 1.2rem;
     }
 
-    .main-nav.open .nav-links {
-        display: flex;
-    }
-
-    .nav-toggle {
-        display: block;
-    }
-
-    .contenedor-logo-texto {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-
-    .texto {
+    .navbar-nav {
         text-align: center;
     }
 
-    .cards-container {
-        flex-direction: column;
-        align-items: center;
+    .navbar-collapse {
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 20px 0;
     }
+}
 
-    .card-hover {
-        max-width: 95%;
-    }
-
-    .join-grid {
-        grid-template-columns: 1fr !important;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .footer-social .social-icons {
-        justify-content: center;
-    }
-
-    .contenedor-buscador {
-        transform: translateY(0);
-        padding: 20px;
-    }
-
-    .video-content1 h1 {
+/* Teléfonos grandes (576px a 767px) */
+@media screen and (max-width: 767px) {
+    .hero h1 {
         font-size: 2.5rem;
     }
 
-    .video-content1 p {
-        font-size: 1.1rem;
-    }
-
-    .map-container {
-        width: 100%;
-    }
-}
-
-/* Tablets horizontales y laptops pequeños (769px a 1024px) */
-@media screen and (max-width: 748px) {
-    .card-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .join-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .contenedor-logo-texto {
-        gap: 20px;
-    }
-
-    .texto {
+    .hero p.lead {
         font-size: 1rem;
     }
 
-    .footer-content {
-        gap: 20px;
+    .navbar-brand img {
+        width: 35px;
+        height: 35px;
     }
 
-    .video-content1 h1 {
-        font-size: 3rem;
+    .navbar-brand {
+        font-size: 1.2rem;
     }
 
-    .search-input {
-        width: 100%;
-    }
-}
-
-/* Monitores medianos y laptops grandes (1025px a 1366px) */
-@media screen and (max-width: 1366px) {
-    .contenedor-buscador {
-        max-width: 90%;
-    }
-
-    .video-content1 h1 {
-        font-size: 3.5rem;
+    .btn-neon {
+        font-size: 0.9rem;
+        padding: 8px 16px;
     }
 }
 
-/* responsive en cualquier dispositivo */
-@media (max-width: 768px) {
-    .search-form {
-        flex-direction: column;
-        width: 100%;
+/* Teléfonos pequeños (576px a 399px) */
+@media screen and (max-width: 575px) {
+    .hero h1 {
+        font-size: 2rem;
+        word-break: break-word;
     }
 
-    .search-input,
-    .search-form button {
-        width: 100%;
-        margin-bottom: 10px;
+    .hero p.lead {
+        font-size: 0.95rem;
     }
 
-    .main-nav {
-        display: none;
-        width: 100%;
+    .navbar-toggler {
+        margin-top: 5px;
     }
 
-    .main-nav.active {
-        display: block;
-        width: 100%;
+    .navbar-collapse {
+        padding: 10px 15px;
     }
 
-    .nav-links {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-    }
-
-    /* Mostrar el botón hamburguesa */
-    .nav-toggle {
-        display: block;
-        width: 100%;
+    .btn-neon {
+        font-size: 0.85rem;
+        padding: 6px 12px;
     }
 }
 
-/* Animación de desplazamiento horizontal */
-@keyframes scroll {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-    width: 100%;
-  }
+/* 👇 Solo en pantallas MUY pequeñas (menos de 400px) ocultamos el título */
+@media screen and (max-width: 399px) {
+    .navbar-brand {
+        font-size: 0; /* Oculta texto sin afectar el layout */
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navbar-brand img {
+        width: 40px;
+        height: 40px;
+        margin-right: 0;
+    }
+}
+
+/* Ultra pequeños (menos de 360px) */
+@media screen and (max-width: 360px) {
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero p.lead {
+        font-size: 0.85rem;
+    }
+
+    .btn-neon {
+        font-size: 0.8rem;
+    }
 }
