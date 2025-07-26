@@ -1,0 +1,325 @@
+ @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+
+ body {
+     background-image: url(../img/fondo_body.jpg);/* Reemplaza con tu URL */
+     width: auto;
+     height: 600px;
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;/* Hace efecto parallax suave en desktop */
+     position: relative;
+     font-family: 'Roboto', sans-serif;
+     background-color: #000;
+     color: #fff;
+     margin: 0;
+     padding: 0;
+     width: 100%;
+ }
+
+ body::before {
+     content: '';
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.5);/* Cambia 0.5 según qué tan oscura la quieres */
+     z-index: -1;
+ }
+
+ html {
+     scroll-behavior: smooth;
+ }
+
+ .navbar {
+     background-color: rgba(0, 0, 0, 0.8) !important;
+     backdrop-filter: blur(10px);
+ }
+
+ .navbar-brand {
+     font-family: 'Orbitron', sans-serif;
+     display: flex;
+     align-items: center;
+ }
+
+ .navbar-brand:hover {
+     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+     transition: all 0.3s ease;
+ }
+
+ .navbar-brand img {
+     width: 40px;
+     height: 40px;
+     margin-right: 10px;
+ }
+
+ .navbar-nav .nav-link {
+     position: relative;
+     padding-bottom: 5px
+ }
+
+ .navbar-nav .nav-link:hover {
+     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+     color: white;
+     /* Agrega el color blanco al pasar el mouse */
+     transition: all 0.3s ease;
+ }
+
+ .hero {
+     position: relative;
+     height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+     overflow: hidden;
+ }
+
+ .hero-background {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-size: cover;
+     background-position: center;
+     transition: opacity 1s ease-in-out;
+ }
+
+ .hero .container {
+     position: relative;
+     z-index: 1;
+ }
+
+ .hero h1,
+ .hero p.lead {
+     font-family: 'Orbitron', sans-serif;
+ }
+
+ .hero h1 {
+     font-size: 4.3rem;
+     margin-bottom: 20px;
+     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+ }
+
+ .hero p.lead {
+     font-size: 1.5rem;
+     margin-bottom: 30px;
+ }
+
+ .btn-neon {
+     color: #00ff00;
+     border: 2px solid #00ff00;
+     background-color: transparent;
+     box-shadow: 0 0 10px #00ff00;
+     transition: all 0.3s ease;
+ }
+
+ .btn-neon:hover {
+     background-color: #00ff00;
+     color: #000;
+     box-shadow: 0 0 20px #00ff00;
+ }
+
+ .card {
+     width: 100%;
+     background-color: rgba(255, 255, 255, 0.1);
+     border: 1px solid #00ff00;
+     transition: transform 0.3s, box-shadow 0.3s;
+     border-radius: 25px;
+ }
+
+ .card:hover {
+     transform: translateY(-10px);
+ }
+
+ #galeria {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     gap: 20px;
+     /* O el número que quieras */
+ }
+
+ #galeria img {
+     width: 100px;
+     /* O el tamaño que prefieras */
+     height: 100px;
+     object-fit: cover;
+     border-radius: 25px;
+     border: 4px solid #00ff00;
+     filter: drop-shadow(0 0 10px rgba(0, 0, 0, .8));
+     transition: transform 0.3s ease, box-shadow 0.3s;
+ }
+
+ #galeria img:hover {
+     transform: scale(1.06);
+ }
+
+
+ .section-title {
+     position: relative;
+     display: inline-block;
+     padding-bottom: 10px;
+     margin-bottom: 30px;
+ }
+
+ .section-title::after {
+     content: '';
+     position: absolute;
+     left: 0;
+     bottom: 0;
+     width: 100%;
+     height: 2px;
+     background: linear-gradient(90deg, transparent, #00ff00, transparent);
+ }
+
+ #contacto {
+     background-color: rgba(0, 255, 0, 0.1);
+ }
+
+ #videos .embed-responsive {
+     display: flex;
+     border: 2px solid #00ff00;
+     transition: transform 0.3s, box-shadow 0.3s;
+     border-radius: 25px;
+     height: 100%;
+     width: 100%;
+     justify-content: center;
+ }
+
+ #videos .embed-responsive:hover {
+     transform: scale(1.05);
+ }
+
+ #videos h5 {
+     color: #00ff00;
+     text-shadow: 0 0 5px #00ff00;
+ }
+
+ footer {
+     background-color: #000;
+ }
+
+@media (max-width: 767px) {
+    footer .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    footer .col-md-2,
+    footer .col-md-4 {
+        width: 100%;
+        max-width: 90%;
+        margin-bottom: 25px;
+    }
+
+    footer img {
+        width: 60%;
+    }
+
+    footer .text-center.mt-3 {
+        font-size: 0.85rem;
+    }
+}
+
+ .social-icons a {
+     color: #00ff00;
+     transition: all 0.3s ease;
+ }
+
+ .social-icons a:hover {
+     color: #fff;
+     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+ }
+
+ .fade-in-section {
+     opacity: 0;
+     transform: translateY(20px);
+     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+ }
+
+ .fade-in-section.is-visible {
+     opacity: 1;
+     transform: translateY(0);
+ }
+
+ img {
+     height: 80%;
+     width: 80%;
+     transition: transform 0.3s ease;
+     /* Suaviza el cambio */
+ }
+
+ img:hover {
+     transform: scale(1.1);
+     /* Aumenta el tamaño de la imagen un 10% */
+ }
+
+
+ .video-hover {
+     transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+     border-radius: 35px;
+     border: 3px solid transparent;
+ }
+
+ .video-hover:hover {
+     transform: scale(1.05);
+     border: 3px solid #00ff00;
+     transform: scale(1.1);
+ }
+
+ blockquote {
+     font-style: italic;
+     background-color: transparent;
+     border-left: 5px solid #ffffff;
+     padding: 10px 20px;
+     margin: 10px 0;
+     border-radius: 35px;
+     border: 5px solid #00ff00;
+     transition: all 0.3s ease;
+ }
+
+ blockquote:hover {
+     background-color: transparent;
+     transform: scale(1.05);
+     /* Aumentar tamaño */
+ }
+
+ /* Fondo Sección Contacto */
+.contacto-section {
+    position: relative;
+    background-image: url(../img/seccion_contacto.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 600px;
+    z-index: 1;
+}
+
+.contacto-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Cambia el 0.4 para más o menos opacidad */
+    z-index: 0;
+}
+
+/* Asegúrate de que el contenido esté por encima del overlay */
+.contacto-section > * {
+    position: relative;
+    z-index: 1;
+}

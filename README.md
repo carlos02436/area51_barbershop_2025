@@ -1,2 +1,2 @@
-# area51_barbershop_2025
-Página web informativa e interactiva del sitio.
+# AREA_51_BARBER_SHOP
+Página web, para negocio de Barbería.
