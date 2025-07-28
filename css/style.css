@@ -327,7 +327,7 @@
      border: 2px solid #424242;
  }
 
- /* Sección Responsive de la página web */
+ /* Sección Responsive de la página web (768px)*/
 @media screen and (max-width: 768px) {
     html, body {
         margin-top: auto !important;
@@ -359,6 +359,69 @@
     .navbar-brand strong {
         display: flex !important;
         font-size: 14px !important;
+    }
+
+    .navbar-brand img {
+        width: 50px !important;
+        height: auto !important;
+    }
+
+    .navbar-toggler {
+        display: block;
+        margin-top: 0 !important;
+    }
+
+    .hero {
+        height: auto !important;
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero p.lead {
+        font-size: 1rem;
+    }
+
+    .btn-neon {
+        font-size: 0.9rem;
+    }
+}
+
+/* Para pantallas móviles (428px o menos) */
+@media screen and (max-width: 428px) {
+    html, body {
+        margin-top: auto !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    header {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        align-self: center;
+        margin-top: 7rem !important;
+    }
+
+    iframe {
+        width: 100% !important;
+        height: 30rem !important;
+        margin: 0 auto;
+        justify-content: center !important;
+        align-items: center !important;
+        align-self: center;
+    }
+
+    #videos {
+        min-width: none;
+    }
+
+    .navbar-brand strong {
+        display: flex !important;
+        font-size: 18px !important;
     }
 
     .navbar-brand img {
