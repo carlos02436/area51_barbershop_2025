@@ -333,6 +333,7 @@
         margin-top: auto !important;
         padding: 0 !important;
         width: 100% !important;
+        text-align: justify !important;
     }
 
     header {
@@ -396,6 +397,7 @@
         margin-top: auto !important;
         padding: 0 !important;
         width: 100% !important;
+        text-align: justify !important;
     }
 
     header {
@@ -453,12 +455,13 @@
     }
 }
 
-/* Para pantallas móvilees más pequeñas (320px o menos) */
+/* Para pantallas móviles más pequeñas (320px o menos) */
 @media screen and (max-width: 320px) {
     html, body {
         margin-top: auto !important;
         padding: 0 !important;
         width: 100% !important;
+        text-align: justify !important;
     }
 
     header {
