@@ -147,7 +147,7 @@
  .card:hover {
      transform: translateY(-10px);
  }
- 
+
  #galeria {
      display: flex;
      flex-wrap: wrap;
@@ -389,13 +389,23 @@
      /* TikTok responsive embed */
      .tiktok-embed {
          width: 100% !important;
-         max-width: 400px;
-         height: 40rem; /* Controla el aspecto o el cómo se ve el video responsive */
+         aspect-ratio: 9 / 16;
+         /* ✅ Mantiene el formato vertical típico de TikTok */
+         height: auto !important;
+         /* ✅ Deja que se ajuste automáticamente */
          border: 2px solid #00ff00 !important;
          border-radius: 25px !important;
          margin: auto;
+         overflow: hidden;
+         /* ✅ Oculta scroll interno */
      }
 
+     .tiktok-embed iframe {
+         height: 100% !important;
+         width: 100% !important;
+         border: none !important;
+         overflow: hidden !important;
+     }
 
      .navbar-brand strong {
          font-size: 14px !important;
@@ -429,3 +439,19 @@
          font-size: 0.9rem !important;
      }
  }
+
+ /* Estilos específicos para pantallas muy pequeñas (como 320px) */
+@media screen and (max-width: 360px) {
+    .navbar-brand strong {
+        font-size: 11px !important; /* Puedes ajustar a 11px si aún es grande */
+        white-space: nowrap;        /* Opcional: evita salto de línea */
+    }
+
+    .navbar-brand {
+        gap: 0.5rem !important; /* Espacio menor entre el logo y el texto */
+    }
+
+    .navbar-brand img {
+        width: 40px !important; /* Reduce el logo también si es necesario */
+    }
+}
