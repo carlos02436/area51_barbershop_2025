@@ -147,7 +147,7 @@
  .card:hover {
      transform: translateY(-10px);
  }
-
+ 
  #galeria {
      display: flex;
      flex-wrap: wrap;
@@ -199,6 +199,8 @@
      border-radius: 25px;
      height: 100%;
      width: 100%;
+     max-height: 30rem;
+     padding: 10px;
      justify-content: center;
  }
 
@@ -327,195 +329,103 @@
      border: 2px solid #424242;
  }
 
- /* Sección Responsive de la página web (768px)*/
-@media screen and (max-width: 768px) {
-    html, body {
-        margin-top: auto !important;
-        padding: 0 !important;
-        width: 100% !important;
-        text-align: justify !important;
-    }
+ /* Sección Responsive de la página web para todos los dispositivos menores a 768px */
+ @media screen and (max-width: 768px) {
 
-    header {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        align-self: center;
-        margin-top: 7rem !important;
-    }
+     html,
+     body {
+         margin-top: auto !important;
+         padding: 0 !important;
+         width: 100% !important;
+         text-align: justify !important;
+     }
 
-    iframe {
-        width: 100% !important;
-        height: 30rem !important;
-        margin: 0 auto;
-        justify-content: center !important;
-        align-items: center !important;
-        align-self: center;
-    }
+     header {
+         display: flex !important;
+         justify-content: center !important;
+         align-items: center !important;
+         margin-top: 7rem !important;
+     }
 
-    #videos {
-        min-width: none;
-    }
+     iframe {
+         width: 100% !important;
+         height: 20rem !important;
+         margin: 0 auto;
+         display: flex;
+         justify-content: center !important;
+         align-items: center !important;
+         display: block;
+         margin-left: auto;
+         margin-right: auto;
+     }
 
-    .navbar-brand strong {
-        display: flex !important;
-        font-size: 14px !important;
-    }
+     #videos {
+         width: 100%;
+         margin: 0 auto;
+     }
 
-    .navbar-brand img {
-        width: 50px !important;
-        height: auto !important;
-    }
+     /* Contenedor responsive para YouTube */
+     .video-wrapper {
+         max-width: 30rem;
+         /* ajusta este valor según el tamaño que desees */
+         margin: auto;
+         /* centra horizontalmente */
+         padding: 10px;
+         /* ajusta este valor según el espacio interno que desees para el padding */
+         align-items: center !important;
+         border-radius: 15px;
+         border: 2px solid #00ff00 !important;
+         max-height: 60rem;
+     }
 
-    .navbar-toggler {
-        display: block;
-        margin-top: 0 !important;
-    }
+     .video-wrapper iframe {
+         width: 100%;
+         border-radius: 15px;
+         aspect-ratio: 16 / 9;
+         /* Controla el aspecto o el cómo se ve el video responsive */
+     }
 
-    .hero {
-        height: auto !important;
-        padding: 40px 0;
-        text-align: center;
-    }
 
-    .hero h1 {
-        font-size: 1.8rem;
-    }
+     /* TikTok responsive embed */
+     .tiktok-embed {
+         width: 100% !important;
+         max-width: 400px;
+         height: 40rem; /* Controla el aspecto o el cómo se ve el video responsive */
+         border: 2px solid #00ff00 !important;
+         border-radius: 25px !important;
+         margin: auto;
+     }
 
-    .hero p.lead {
-        font-size: 1rem;
-    }
 
-    .btn-neon {
-        font-size: 0.9rem;
-    }
-}
+     .navbar-brand strong {
+         font-size: 14px !important;
+     }
 
-/* Para pantallas móviles (428px o menos) */
-@media screen and (max-width: 428px) {
-    html, body {
-        margin-top: auto !important;
-        padding: 0 !important;
-        width: 100% !important;
-        text-align: justify !important;
-    }
+     .navbar-brand img {
+         width: 50px !important;
+         height: auto !important;
+     }
 
-    header {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        align-self: center;
-        margin-top: 7rem !important;
-    }
+     .navbar-toggler {
+         display: block;
+         margin-top: 0 !important;
+     }
 
-    iframe {
-        width: 100% !important;
-        height: 30rem !important;
-        margin: 0 auto;
-        justify-content: center !important;
-        align-items: center !important;
-        align-self: center;
-    }
+     .hero {
+         height: auto !important;
+         padding: 40px 15px !important;
+         text-align: center;
+     }
 
-    #videos {
-        min-width: none;
-    }
+     .hero h1 {
+         font-size: 2rem !important;
+     }
 
-    .navbar-brand strong {
-        display: flex !important;
-        font-size: 18px !important;
-    }
+     .hero p.lead {
+         font-size: 1rem !important;
+     }
 
-    .navbar-brand img {
-        width: 50px !important;
-        height: auto !important;
-    }
-
-    .navbar-toggler {
-        display: block;
-        margin-top: 0 !important;
-    }
-
-    .hero {
-        height: auto !important;
-        padding: 40px 0;
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: 1.8rem;
-    }
-
-    .hero p.lead {
-        font-size: 1rem;
-    }
-
-    .btn-neon {
-        font-size: 0.9rem;
-    }
-}
-
-/* Para pantallas móviles más pequeñas (320px o menos) */
-@media screen and (max-width: 320px) {
-    html, body {
-        margin-top: auto !important;
-        padding: 0 !important;
-        width: 100% !important;
-        text-align: justify !important;
-    }
-
-    header {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        align-self: center;
-        margin-top: 7rem !important;
-    }
-
-    iframe {
-        width: 100% !important;
-        height: 30rem !important;
-        margin: 0 auto;
-        justify-content: center !important;
-        align-items: center !important;
-        align-self: center;
-    }
-
-    #videos {
-        min-width: none;
-    }
-
-    .navbar-brand strong {
-        display: flex !important;
-        font-size: 11px !important;
-    }
-
-    .navbar-brand img {
-        width: 50px !important;
-        height: auto !important;
-    }
-
-    .navbar-toggler {
-        display: block;
-        margin-top: 0 !important;
-    }
-
-    .hero {
-        height: auto !important;
-        padding: 40px 0;
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: 1.8rem;
-    }
-
-    .hero p.lead {
-        font-size: 1rem;
-    }
-
-    .btn-neon {
-        font-size: 0.9rem;
-    }
-}
-
+     .btn-neon {
+         font-size: 0.9rem !important;
+     }
+ }
