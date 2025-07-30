@@ -441,17 +441,129 @@
  }
 
  /* Estilos específicos para pantallas muy pequeñas (como 320px) */
-@media screen and (max-width: 360px) {
-    .navbar-brand strong {
-        font-size: 11px !important; /* Puedes ajustar a 11px si aún es grande */
-        white-space: nowrap;        /* Opcional: evita salto de línea */
-    }
+ @media screen and (max-width: 360px) {
 
-    .navbar-brand {
-        gap: 0.5rem !important; /* Espacio menor entre el logo y el texto */
-    }
+     html,
+     body {
+         margin-top: auto !important;
+         padding: 0 !important;
+         width: 100% !important;
+         text-align: justify !important;
+     }
 
-    .navbar-brand img {
-        width: 40px !important; /* Reduce el logo también si es necesario */
-    }
-}
+     header {
+         display: flex !important;
+         justify-content: center !important;
+         align-items: center !important;
+         margin-top: 7rem !important;
+     }
+
+     iframe {
+         width: 100% !important;
+         height: 20rem !important;
+         margin: 0 auto;
+         display: flex;
+         justify-content: center !important;
+         align-items: center !important;
+         display: block;
+         margin-left: auto;
+         margin-right: auto;
+     }
+
+     #videos {
+         width: 100%;
+         margin: 0 auto;
+     }
+
+     /* Contenedor responsive para YouTube */
+     .video-wrapper {
+         max-width: 30rem;
+         /* ajusta este valor según el tamaño que desees */
+         margin: auto;
+         /* centra horizontalmente */
+         padding: 10px;
+         /* ajusta este valor según el espacio interno que desees para el padding */
+         align-items: center !important;
+         border-radius: 15px;
+         border: 2px solid #00ff00 !important;
+         max-height: 60rem;
+     }
+
+     .video-wrapper iframe {
+         width: 100%;
+         border-radius: 15px;
+         aspect-ratio: 16 / 9;
+         /* Controla el aspecto o el cómo se ve el video responsive */
+     }
+
+
+     /* TikTok responsive embed */
+     .tiktok-embed {
+         width: 100% !important;
+         aspect-ratio: 9 / 16;
+         /* ✅ Mantiene el formato vertical típico de TikTok */
+         height: auto !important;
+         /* ✅ Deja que se ajuste automáticamente */
+         border: 2px solid #00ff00 !important;
+         border-radius: 25px !important;
+         margin: auto;
+         overflow: hidden;
+         /* ✅ Oculta scroll interno */
+     }
+
+     .tiktok-embed iframe {
+         height: 100% !important;
+         width: 100% !important;
+         border: none !important;
+         overflow: hidden !important;
+     }
+
+     .navbar-brand strong {
+         font-size: 14px !important;
+     }
+
+     .navbar-brand img {
+         width: 50px !important;
+         height: auto !important;
+     }
+
+     .navbar-toggler {
+         display: block;
+         margin-top: 0 !important;
+     }
+
+     .hero {
+         height: auto !important;
+         padding: 40px 15px !important;
+         text-align: center;
+     }
+
+     .hero h1 {
+         font-size: 2rem !important;
+     }
+
+     .hero p.lead {
+         font-size: 1rem !important;
+     }
+
+     .btn-neon {
+         font-size: 0.9rem !important;
+     }
+
+     .navbar-brand strong {
+         font-size: 11px !important;
+         /* Puedes ajustar a 11px si aún es grande */
+         white-space: nowrap;
+         /* Opcional: evita salto de línea */
+     }
+
+     .navbar-brand {
+         gap: 0.5rem !important;
+         /* Espacio menor entre el logo y el texto */
+     }
+
+     .navbar-brand img {
+         width: 40px !important;
+         /* Reduce el logo también si es necesario */
+     }
+ }
