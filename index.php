@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Icono -->
-    <link rel="icon" href="img/logo.png">
+    <link rel="icon" href="public/img/logo.png">
 
     <!-- Google Fonts -->
     <link
@@ -19,7 +19,7 @@
         rel="stylesheet">
 
     <!-- Estilos CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
         border-inline: 2px solid #00ff00;">
         <div class="container-fluid">
             <a class="navbar-brand">
-                <img src="img/logo.png" alt="Logo REDOLLS S.A." class="img-fluid text-white" style="height: 50px;">
+                <img src="public/img/logo.png" alt="Logo REDOLLS S.A." class="img-fluid text-white" style="height: 50px;">
                 <strong class="text-white">Area 51_Barbershop</strong>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -84,7 +84,7 @@
     <!-- Código JS para el Botón Scroll hacia abajo y devuelve al inicio -->
     <script>
         // Mostrar/ocultar el botón al hacer scroll
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', function() {
             const btn = document.getElementById('scrollToTopBtn');
             if (window.scrollY > 200) {
                 btn.style.display = 'flex';
@@ -94,8 +94,11 @@
         });
 
         // Scroll suave al inicio al hacer clic
-        document.getElementById('scrollToTopBtn').addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('scrollToTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 
@@ -107,7 +110,7 @@
             <div transition-style class="--in-custom">
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-justify">
-                        <img src="img/yeison3.png" alt="Barbero Yeison en Área 51" class="img-fluid about-us-image">
+                        <img src="public/img/yeison3.png" alt="Barbero Yeison en Área 51" class="img-fluid about-us-image">
                         <p class="mt-4 text-justify">
                             En <strong>ÁREA 51_BARBER SHOP</strong> nos apasiona transformar tu estilo.
                             Combinamos lo clásico con lo moderno para ofrecerte una experiencia única.
@@ -134,7 +137,7 @@
                     <div class="card h-100 w-100">
                         <div class="card-body">
                             <div class="mb-3" style="height: 200px; overflow: hidden; border-radius: 20px;">
-                                <img src="img/Area51_grupo.png" alt="Misión" class="img-fluid w-100 h-100"
+                                <img src="public/img/grupoArea51.jpg" alt="Misión" class="img-fluid w-100 h-100"
                                     style="object-fit: cover; border-radius: 20px;">
                             </div>
                             <p class="card-text text-justify text-white">
@@ -156,7 +159,7 @@
                     <div class="card h-100 w-100">
                         <div class="card-body">
                             <div class="mb-3" style="height: 200px; overflow: hidden; border-radius: 20px;">
-                                <img src="img/yeison4.png" alt="Visión" class="img-fluid w-100 h-100"
+                                <img src="public/img/yeison4.png" alt="Visión" class="img-fluid w-100 h-100"
                                     style="object-fit: cover; border-radius: 20px;">
                             </div>
                             <p class="card-text text-justify text-white">
@@ -187,7 +190,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/corte1.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/corte1.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-cut me-2"></i>Corte de Cabello</h5>
@@ -204,7 +207,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/corte de cabello y barba1.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/corte de cabello y barba1.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-cut me-2"></i>Corte de Cabello y Corte de Barba</h5>
@@ -222,7 +225,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/corte de cabello y cejas.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/corte de cabello y cejas.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-cut me-2"></i>Corte de Cabello y Corte de Cejas</h5>
@@ -239,7 +242,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/corte de barba.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/corte de barba.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-cut me-2"></i>Corte de Barba</h5>
@@ -257,7 +260,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/corte de cejas.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/corte de cejas.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-cut me-2"></i>Corte de Cejas</h5>
@@ -274,7 +277,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/cerquillo.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/cerquillo.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-cut me-2"></i>Cerquillo</h5>
@@ -292,7 +295,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/paquete premium.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/paquete premium.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-star-of-life me-2"></i>Paquete Premium</h5>
@@ -310,7 +313,7 @@
                             style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                             <div
                                 style="width: 100%; height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                <img src="img/keratina.jpg" alt="Barbero Yeison en Área 51"
+                                <img src="public/img/keratina.jpg" alt="Barbero Yeison en Área 51"
                                     style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                             </div>
                             <h5 class="card-title"><i class="fas fa-star-of-life me-2"></i>Aplicación de Queratina</h5>
@@ -332,7 +335,7 @@
                 <!-- Barbero 1 -->
                 <div class="row align-items-center mb-5">
                     <div class="col-md-6">
-                        <img src="img/yeisonBarber.png" alt="Barbero 1"
+                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
                             style="border-radius: 20px; width: 70%; height: 70%;">
                     </div>
                     <div class="col-md-6">
@@ -348,7 +351,7 @@
                 <!-- Barbero 2 -->
                 <div class="row align-items-center mb-5 flex-md-row-reverse">
                     <div class="col-md-6">
-                        <img src="img/yeisonBarber.png" alt="Barbero 1"
+                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
                             style="border-radius: 20px; width: 70%; height: 70%;">
                     </div>
                     <div class="col-md-6">
@@ -363,7 +366,7 @@
                 <!-- Barbero 3 -->
                 <div class="row align-items-center mb-5">
                     <div class="col-md-6">
-                        <img src="img/yeisonBarber.png" alt="Barbero 1"
+                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
                             style="border-radius: 20px; width: 70%; height: 70%;">
                     </div>
                     <div class="col-md-6">
@@ -378,7 +381,7 @@
                 <!-- Barbero 4 -->
                 <div class="row align-items-center mb-5 flex-md-row-reverse">
                     <div class="col-md-6">
-                        <img src="img/yeisonBarber.png" alt="Barbero 1"
+                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
                             style="border-radius: 20px; width: 70%; height: 70%;">
                     </div>
                     <div class="col-md-6">
@@ -399,39 +402,39 @@
             <h2 class="text-center mb-5 section-title">Galería de estilos</h2>
             <div class="row">
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte7.png" alt="Estilo de corte y barba 1" class="img-fluid"
+                    <img src="public/img/corte7.png" alt="Estilo de corte y barba 1" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte8.png" alt="Estilo de corte y barba 2" class="img-fluid"
+                    <img src="public/img/corte8.png" alt="Estilo de corte y barba 2" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte9.png" alt="Estilo de corte y barba 3" class="img-fluid"
+                    <img src="public/img/corte9.png" alt="Estilo de corte y barba 3" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte10.png" alt="Estilo de corte y barba 4" class="img-fluid"
+                    <img src="public/img/corte10.png" alt="Estilo de corte y barba 4" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte11.png" alt="Estilo de corte y barba 5" class="img-fluid"
+                    <img src="public/img/corte11.png" alt="Estilo de corte y barba 5" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte12.png" alt="Estilo de corte y barba 5" class="img-fluid"
+                    <img src="public/img/corte12.png" alt="Estilo de corte y barba 5" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte13.png" alt="Estilo de corte y barba 5" class="img-fluid"
+                    <img src="public/img/corte13.png" alt="Estilo de corte y barba 5" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte14.png" alt="Estilo de corte y barba 5" class="img-fluid"
+                    <img src="public//corte14.png" alt="Estilo de corte y barba 5" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="img/corte15.png" alt="Estilo de corte y barba 5" class="img-fluid"
+                    <img src="public/img/corte15.png" alt="Estilo de corte y barba 5" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
             </div>
@@ -560,7 +563,7 @@
                     <!-- Testimonio 1 -->
                     <div class="carousel-item active" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Juan Pérez" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Juan Pérez" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"Excelente servicio, el ambiente es espectacular. ¡Súper
                                 recomendado!"</p>
@@ -571,7 +574,7 @@
                     <!-- Testimonio 2 -->
                     <div class="carousel-item" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Andrés Gómez" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Andrés Gómez" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"El mejor corte que me han hecho, atención personalizada y
                                 profesionalismo."</p>
@@ -582,7 +585,7 @@
                     <!-- Testimonio 3 -->
                     <div class="carousel-item" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Camilo Torres" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Camilo Torres" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"Un lugar increíble donde te hacen sentir como en casa. Muy
                                 recomendado."</p>
@@ -593,7 +596,7 @@
                     <!-- Testimonio 4 -->
                     <div class="carousel-item" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Sebastián Martínez" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Sebastián Martínez" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"Cortes modernos y el personal súper amable. Sin duda volveré."
                             </p>
@@ -604,7 +607,7 @@
                     <!-- Testimonio 5 -->
                     <div class="carousel-item" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Diego Herrera" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Diego Herrera" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"Muy buena experiencia, me encantó la asesoría sobre el estilo
                                 que más me convenía."</p>
@@ -615,7 +618,7 @@
                     <!-- Testimonio 6 -->
                     <div class="carousel-item" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Luis Ramírez" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Luis Ramírez" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"Profesionales de verdad, te sientes en manos expertas desde el
                                 primer momento."</p>
@@ -626,7 +629,7 @@
                     <!-- Testimonio 7 -->
                     <div class="carousel-item" style="margin: 15px auto;">
                         <div class="d-flex flex-column align-items-center">
-                            <img src="img/yeisonBarber.png" alt="Ricardo Castaño" class="rounded-circle mb-4"
+                            <img src="public/img/yeisonBarber.png" alt="Ricardo Castaño" class="rounded-circle mb-4"
                                 style="width: 90px; height: 90px; object-fit: cover;">
                             <p class="text-center mb-4">"Simplemente los mejores, me devolvieron la confianza en los
                                 barberos."</p>
@@ -858,7 +861,12 @@
                 return;
             }
 
-            reservas.push({ nombre, barbero, fecha, hora });
+            reservas.push({
+                nombre,
+                barbero,
+                fecha,
+                hora
+            });
             localStorage.setItem("reservas", JSON.stringify(reservas));
 
             // Mensaje para WhatsApp
@@ -870,9 +878,9 @@
                 `✂️ Barbero: ${barbero}`;
 
             const textoCodificado = encodeURIComponent(mensaje);
-            const urlWhatsApp = esDispositivoMovil()
-                ? `https://wa.me/${telefono}?text=${textoCodificado}`
-                : `https://web.whatsapp.com/send?phone=${telefono}&text=${textoCodificado}`;
+            const urlWhatsApp = esDispositivoMovil() ?
+                `https://wa.me/${telefono}?text=${textoCodificado}` :
+                `https://web.whatsapp.com/send?phone=${telefono}&text=${textoCodificado}`;
 
             window.open(urlWhatsApp, "_blank");
 
@@ -882,7 +890,7 @@
         }
 
         // cancelar reserva
-        document.getElementById("btn-cancelar").addEventListener("click", function (e) {
+        document.getElementById("btn-cancelar").addEventListener("click", function(e) {
             e.preventDefault();
             document.getElementById("booking-form").reset();
             actualizarHoras();
@@ -891,7 +899,7 @@
         // Eventos
         document.getElementById("date").addEventListener("change", actualizarHoras);
         document.getElementById("barber").addEventListener("change", actualizarHoras);
-        document.querySelector(".btn-neon").addEventListener("click", function (e) {
+        document.querySelector(".btn-neon").addEventListener("click", function(e) {
             e.preventDefault();
             guardarReserva();
         });
@@ -957,15 +965,13 @@
 
                 <hr style="border-top: 1px solid #00ff00;">
                 <div class="text-center mt-3">
-                    <p class="navbar-brand mb-0" style="justify-content: center;font-size: 0.55rem;">&copy; 2025 Área
-                        51_Barber Shop. Todos
-                        los
-                        Derechos Reservados.</p>
+                    <p class="navbar-brand mb-0" style="justify-content: center;font-size: 1.3rem;">
+                        &copy; 2025 Área 51_Barber Shop. Todos los Derechos Reservados.</p>
                 </div>
             </div>
     </footer>
 
-    <script src="JavaScript/scripts.js"></script>
+    <script src="public/JavaScript/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Scripts de TikTok -->
