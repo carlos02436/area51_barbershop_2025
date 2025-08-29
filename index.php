@@ -328,72 +328,50 @@
     </section>
 
     <!-- Barberos -->
+    <?php
+    // Conexión a la BD
+    $host = "127.0.0.1";
+    $dbname = "area51_barberia";
+    $username = "root";
+    $password = "";
+
+    try {
+        $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+        // Traer solo 5 barberos
+        $stmt = $db->query("SELECT id_barbero, nombre, especialidad, img_barberos FROM barberos ORDER BY id_barbero ASC LIMIT 5");
+        $barberos = $stmt->fetchAll();
+
+    } catch (PDOException $e) {
+        die("Error de conexión: " . $e->getMessage());
+    }
+    ?>
+
     <section id="barberos" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Sección de Barberos</h2>
             <div class="container">
-                <!-- Barbero 1 -->
-                <div class="row align-items-center mb-5">
-                    <div class="col-md-6">
-                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
-                            style="border-radius: 20px; width: 70%; height: 70%;">
-                    </div>
-                    <div class="col-md-6">
-                        <h2 class="text-center mb-4 section-title">Yeison Sarmiento</h2>
-                        <p class="card-text">
-                            Experto en cortes clásicos y modernos, enfocado en resaltar la personalidad de cada cliente.
-                            Su pasión y dedicación lo convierten en uno de los barberos favoritos de nuestros
-                            visitantes.
-                        </p>
-                    </div>
-                </div>
 
-                <!-- Barbero 2 -->
-                <div class="row align-items-center mb-5 flex-md-row-reverse">
-                    <div class="col-md-6">
-                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
-                            style="border-radius: 20px; width: 70%; height: 70%;">
+                <?php foreach ($barberos as $index => $barbero): ?>
+                    <div class="row align-items-center mb-5 <?= ($index % 2 != 0) ? 'flex-md-row-reverse' : '' ?>">
+                        <div class="col-md-6">
+                            <img src="public/img/<?= htmlspecialchars($barbero['img_barberos']) ?>" 
+                                alt="<?= htmlspecialchars($barbero['nombre']) ?>"
+                                style="border-radius: 20px; width: 70%; height: 70%;">
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="text-center mb-4 section-title"><?= htmlspecialchars($barbero['nombre']) ?></h2>
+                            <p class="card-text text-justify">
+                                <?= htmlspecialchars($barbero['especialidad']) ?>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h2 class="text-center mb-4 section-title">El menu</h2>
-                        <p class="card-text">
-                            Especialista en estilos urbanos y tendencias actuales. Su creatividad y técnica impecable
-                            aseguran que cada cliente salga con un look fresco e innovador.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Barbero 3 -->
-                <div class="row align-items-center mb-5">
-                    <div class="col-md-6">
-                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
-                            style="border-radius: 20px; width: 70%; height: 70%;">
-                    </div>
-                    <div class="col-md-6">
-                        <h2 class="text-center mb-4 section-title">Samuél</h2>
-                        <p class="card-text">
-                            Con años de experiencia, su especialidad son los fades perfectos y el cuidado de la barba.
-                            Su atención al detalle garantiza resultados excepcionales en cada visita.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Barbero 4 -->
-                <div class="row align-items-center mb-5 flex-md-row-reverse">
-                    <div class="col-md-6">
-                        <img src="public/img/yeisonBarber.png" alt="Barbero 1"
-                            style="border-radius: 20px; width: 70%; height: 70%;">
-                    </div>
-                    <div class="col-md-6">
-                        <h2 class="text-center mb-4 section-title">Juancho</h2>
-                        <p class="card-text">
-                            Amante de los cortes de precisión y los estilos personalizados. Su objetivo es realzar la
-                            imagen de cada cliente a través de técnicas modernas y asesoría personalizada.
-                        </p>
-                    </div>
-                </div>
+                <?php endforeach; ?>
 
             </div>
+        </div>
     </section>
 
     <!-- Galería de Fotos -->
@@ -430,7 +408,7 @@
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
-                    <img src="public//corte14.png" alt="Estilo de corte y barba 5" class="img-fluid"
+                    <img src="public/img/corte14.png" alt="Estilo de corte y barba 5" class="img-fluid"
                         style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                 </div>
                 <div class="col-md-4 col-6 mb-4">
@@ -506,50 +484,49 @@
     </section>
 
     <!-- Noticias -->
+    <?php
+    // Conexión a la base de datos
+    $host = "localhost";
+    $user = "root"; // cambia según tu configuración
+    $pass = "";     // cambia según tu configuración
+    $db   = "area51_barberia";
+
+    $conn = new mysqli($host, $user, $pass, $db);
+
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    // Consulta para obtener las 3 noticias más recientes
+    $sql = "SELECT titulo, contenido, fecha_publicacion FROM noticias ORDER BY fecha_publicacion DESC LIMIT 3";
+    $result = $conn->query($sql);
+    ?>
+
     <section id="noticias" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Noticias y Eventos</h2>
             <div class="row">
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 bg-transparent border-0">
-                        <div class="card-body d-flex flex-column text-white"
-                            style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
-                            <h5 class="card-title"><i class="far fa-calendar-alt me-2"></i>Evento: Noche de Estilo</h5>
-                            <p class="card-text">¡Prepárense amigos! El próximo sábado tendremos una noche especial
-                                con descuentos en cortes y estilos inspirados en el cosmos. Música, bebidas y buen
-                                ambiente garantizados.</p>
-                            <p class="card-text mt-auto"><small>Publicado: Hace 2 días</small></p>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while($row = $result->fetch_assoc()): ?>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100 bg-transparent border-0">
+                                <div class="card-body d-flex flex-column text-white"
+                                    style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
+                                    <h5 class="card-title"><i class="far fa-newspaper me-2"></i><?php echo htmlspecialchars($row['titulo']); ?></h5>
+                                    <p class="card-text"><?php echo htmlspecialchars($row['contenido']); ?></p>
+                                    <p class="card-text mt-auto"><small>Publicado: <?php echo date("d-m-Y", strtotime($row['fecha_publicacion'])); ?></small></p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 bg-transparent border-0">
-                        <div class="card-body d-flex flex-column text-white"
-                            style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
-                            <h5 class="card-title"><i class="fas fa-bullhorn me-2"></i>Nuevo Producto: Cera</h5>
-                            <p class="card-text">Hemos recibido nuestra nueva cera para peinar "Gravedad Cero". Fijación
-                                extrema que desafía las leyes de la física. ¡Pide una muestra en tu próxima visita!</p>
-                            <p class="card-text mt-auto"><small>Publicado: Hace 1 semana</small></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 bg-transparent border-0">
-                        <div class="card-body d-flex flex-column text-white"
-                            style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
-                            <h5 class="card-title"><i class="fas fa-gift me-2"></i>Promoción Aniversario</h5>
-                            <p class="card-text">Celebramos nuestro primer año interestelar. Durante todo el mes, obtén
-                                un 15% de descuento en el "Paquete Barber Shop" al reservar online.</p>
-                            <p class="card-text mt-auto"><small>Publicado: Hace 3 semanas</small></p>
-                        </div>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-white">No hay noticias disponibles.</p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
 
+    <?php $conn->close(); ?>
 
     <!-- Testimonios -->
     <section id="testimonios" class="py-5 fade-in-section"
@@ -957,7 +934,7 @@
 
                 <!-- LOGO + BOTONES -->
                 <div class="col-md-4 mb-3 text-center">
-                    <img src="img/logo.png" alt="Área 51_Barber Shop"
+                    <img src="public/img/logo.png" alt="Área 51_Barber Shop"
                         style="width: 40%; height: inherit; margin-bottom: 15px;">
                     <div class="d-flex justify-content-center gap-2 mt-2">
                     </div>
@@ -965,7 +942,7 @@
 
                 <hr style="border-top: 1px solid #00ff00;">
                 <div class="text-center mt-3">
-                    <p class="navbar-brand mb-0" style="justify-content: center;font-size: 1.3rem;">
+                    <p class="navbar-brand mb-0" style="justify-content: center;font-size: 0.55rem;">
                         &copy; 2025 Área 51_Barber Shop. Todos los Derechos Reservados.</p>
                 </div>
             </div>
