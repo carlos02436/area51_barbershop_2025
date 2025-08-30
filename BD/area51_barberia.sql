@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-08-2025 a las 03:39:58
+-- Tiempo de generación: 30-08-2025 a las 04:08:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -303,6 +303,56 @@ INSERT INTO `servicios` (`id_servicio`, `img_servicio`, `nombre`, `descripcion`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `testimonios`
+--
+
+CREATE TABLE `testimonios` (
+  `id_testimonio` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `mensaje` text NOT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `testimonios`
+--
+
+INSERT INTO `testimonios` (`id_testimonio`, `nombre`, `mensaje`, `img`, `fecha_registro`) VALUES
+(1, 'Juan Pérez', 'Excelente servicio, el ambiente es espectacular. ¡Súper recomendado!', 'yeisonBarber.png', '2025-08-30 02:05:36'),
+(2, 'Andrés Gómez', 'El mejor corte que me han hecho, atención personalizada y profesionalismo.', 'yeisonBarber.png', '2025-08-30 02:05:36'),
+(3, 'Camilo Torres', 'Un lugar increíble donde te hacen sentir como en casa. Muy recomendado.', 'yeisonBarber.png', '2025-08-30 02:05:36'),
+(4, 'Sebastián Martínez', 'Cortes modernos y el personal súper amable. Sin duda volveré.', 'yeisonBarber.png', '2025-08-30 02:05:36'),
+(5, 'Diego Herrera', 'Muy buena experiencia, me encantó la asesoría sobre el estilo que más me convenía.', 'yeisonBarber.png', '2025-08-30 02:05:36'),
+(6, 'Luis Ramírez', 'Profesionales de verdad, te sientes en manos expertas desde el primer momento.', 'yeisonBarber.png', '2025-08-30 02:05:36'),
+(7, 'Ricardo Castaño', 'Simplemente los mejores, me devolvieron la confianza en los barberos.', 'yeisonBarber.png', '2025-08-30 02:05:36');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tiktok`
+--
+
+CREATE TABLE `tiktok` (
+  `id_tiktok` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `video_id` varchar(50) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tiktok`
+--
+
+INSERT INTO `tiktok` (`id_tiktok`, `url`, `video_id`, `descripcion`, `fecha_registro`) VALUES
+(1, 'https://www.tiktok.com/@ysarmiento.barber/video/7492250638236110086', '7492250638236110086', NULL, '2025-08-30 01:48:49'),
+(2, 'https://www.tiktok.com/@ysarmiento.barber/video/7493208342282767621', '7493208342282767621', NULL, '2025-08-30 01:48:49'),
+(3, 'https://www.tiktok.com/@ysarmiento.barber/video/7494847153395813637', '7494847153395813637', NULL, '2025-08-30 01:48:49');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `videos`
 --
 
@@ -392,6 +442,18 @@ ALTER TABLE `servicios`
   ADD PRIMARY KEY (`id_servicio`);
 
 --
+-- Indices de la tabla `testimonios`
+--
+ALTER TABLE `testimonios`
+  ADD PRIMARY KEY (`id_testimonio`);
+
+--
+-- Indices de la tabla `tiktok`
+--
+ALTER TABLE `tiktok`
+  ADD PRIMARY KEY (`id_tiktok`);
+
+--
 -- Indices de la tabla `videos`
 --
 ALTER TABLE `videos`
@@ -460,6 +522,18 @@ ALTER TABLE `noticias`
 --
 ALTER TABLE `servicios`
   MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `testimonios`
+--
+ALTER TABLE `testimonios`
+  MODIFY `id_testimonio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `tiktok`
+--
+ALTER TABLE `tiktok`
+  MODIFY `id_tiktok` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `videos`

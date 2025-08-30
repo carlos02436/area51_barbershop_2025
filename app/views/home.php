@@ -212,36 +212,31 @@
                 <?php endforeach; ?>
 
                 <!-- TikTok Videos -->
-                <div class="col-md-6 col-lg-4 d-flex justify-content-center">
-                    <blockquote class="tiktok-embed iframe"
-                        cite="https://www.tiktok.com/@ysarmiento.barber/video/7492250638236110086"
-                        data-video-id="7492250638236110086">
-                        <section></section>
-                    </blockquote>
-                </div>
+                <?php
+                require_once __DIR__ . '/../controllers/TikTokController.php';
 
-                <div class="col-md-6 col-lg-4">
-                    <blockquote class="tiktok-embed"
-                        cite="https://www.tiktok.com/@ysarmiento.barber/video/7493208342282767621"
-                        data-video-id="7493208342282767621">
-                        <section></section>
-                    </blockquote>
-                </div>
+                $tiktokController = new TikTokController();
+                $tiktoks = $tiktokController->listarVideos(10);
+                ?>
 
-                <div class="col-md-6 col-lg-4 d-flex justify-content-center">
-                    <blockquote class="tiktok-embed"
-                        cite="https://www.tiktok.com/@ysarmiento.barber/video/7494847153395813637"
-                        data-video-id="7494847153395813637">
-                        <section></section>
-                    </blockquote>
+                <!-- Sección TikTok -->
+                <div class="container py-4">
+                    <div class="row">
+                        <?php foreach ($tiktoks as $video): ?>
+                            <div class="col-md-6 col-lg-4 d-flex justify-content-center mb-4">
+                                <blockquote class="tiktok-embed iframe"
+                                    cite="<?= htmlspecialchars($video['url']) ?>"
+                                    data-video-id="<?= htmlspecialchars($video['video_id']) ?>">
+                                    <section></section>
+                                </blockquote>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-
-            </div>
-        </div>
     </section>
+
     <!-- Scripts de TikTok -->
     <script async src="https://www.tiktok.com/embed.js"></script>
-    </section>
 
     <?php
     require_once __DIR__ . '/../controllers/NoticiaController.php';
@@ -287,6 +282,13 @@
         </div>
     </section>
 
+    <?php
+    require_once __DIR__ . '/../controllers/TestimonioController.php';
+
+    $testimonioController = new TestimonioController();
+    $testimonios = $testimonioController->listarTestimonios();
+    ?>
+
     <!-- Testimonios -->
     <section id="testimonios" class="py-5 fade-in-section"
         style="padding-top: 150px; padding-bottom: 150px; margin: auto; scroll-margin-top: 80px;">
@@ -296,82 +298,18 @@
             <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner" style="height: 200px;">
 
-                    <!-- Testimonio 1 -->
-                    <div class="carousel-item active" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Juan Pérez" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"Excelente servicio, el ambiente es espectacular. ¡Súper
-                                recomendado!"</p>
-                            <h5>Juan Pérez</h5>
+                    <?php foreach ($testimonios as $index => $t): ?>
+                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="margin: 15px auto;">
+                            <div class="d-flex flex-column align-items-center">
+                                <img src="public/img/<?= htmlspecialchars($t['img']) ?>" 
+                                    alt="<?= htmlspecialchars($t['nombre']) ?>" 
+                                    class="rounded-circle mb-4"
+                                    style="width: 90px; height: 90px; object-fit: cover;">
+                                <p class="text-center mb-4"><?= htmlspecialchars($t['mensaje']) ?></p>
+                                <h5><?= htmlspecialchars($t['nombre']) ?></h5>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Testimonio 2 -->
-                    <div class="carousel-item" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Andrés Gómez" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"El mejor corte que me han hecho, atención personalizada y
-                                profesionalismo."</p>
-                            <h5>Andrés Gómez</h5>
-                        </div>
-                    </div>
-
-                    <!-- Testimonio 3 -->
-                    <div class="carousel-item" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Camilo Torres" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"Un lugar increíble donde te hacen sentir como en casa. Muy
-                                recomendado."</p>
-                            <h5>Camilo Torres</h5>
-                        </div>
-                    </div>
-
-                    <!-- Testimonio 4 -->
-                    <div class="carousel-item" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Sebastián Martínez" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"Cortes modernos y el personal súper amable. Sin duda volveré."
-                            </p>
-                            <h5>Sebastián Martínez</h5>
-                        </div>
-                    </div>
-
-                    <!-- Testimonio 5 -->
-                    <div class="carousel-item" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Diego Herrera" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"Muy buena experiencia, me encantó la asesoría sobre el estilo
-                                que más me convenía."</p>
-                            <h5>Diego Herrera</h5>
-                        </div>
-                    </div>
-
-                    <!-- Testimonio 6 -->
-                    <div class="carousel-item" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Luis Ramírez" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"Profesionales de verdad, te sientes en manos expertas desde el
-                                primer momento."</p>
-                            <h5>Luis Ramírez</h5>
-                        </div>
-                    </div>
-
-                    <!-- Testimonio 7 -->
-                    <div class="carousel-item" style="margin: 15px auto;">
-                        <div class="d-flex flex-column align-items-center">
-                            <img src="public/img/yeisonBarber.png" alt="Ricardo Castaño" class="rounded-circle mb-4"
-                                style="width: 90px; height: 90px; object-fit: cover;">
-                            <p class="text-center mb-4">"Simplemente los mejores, me devolvieron la confianza en los
-                                barberos."</p>
-                            <h5>Ricardo Castaño</h5>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
 
                 </div>
 
