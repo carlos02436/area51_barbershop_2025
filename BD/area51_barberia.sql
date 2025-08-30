@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-08-2025 a las 04:08:46
+-- Tiempo de generación: 30-08-2025 a las 19:27:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -84,7 +84,10 @@ INSERT INTO `barberos` (`id_barbero`, `img_barberos`, `nombre`, `especialidad`, 
 (2, 'yeisonBarber.png', 'Yeison Sarmiento', 'Es un barbero excelente, con gran precisión en los cortes y un estilo moderno que encanta a los clientes. Su dedicación y creatividad hacen que cada visita sea una experiencia única y satisfactoria.', '3112345678', '2024-12-05'),
 (3, 'Rafael_Barrios.png', 'Rafael Barrios', 'Destaca por su técnica impecable y su pasión por ofrecer siempre un corte de calidad superior. Su compromiso con la perfección lo ha convertido en uno de los barberos más confiables y solicitados por los clientes.', '3123456789', '2024-12-10'),
 (4, 'Rafael_Jaime.png', 'Rafael Jaime', 'Es reconocido por su estilo detallista, garantizando siempre un acabado elegante y profesional. Su habilidad para adaptarse a las tendencias lo hace sobresalir como un referente en la barbería.', '3134567890', '2024-12-15'),
-(5, 'Samuel_Martinez.png', 'Samuel Martínez', 'Es un barbero con gran creatividad, logrando cortes únicos y personalizados que dejan huella en cada cliente. Su talento y carisma generan confianza, lo que hace que siempre sea altamente recomendado.', '3145678901', '2024-12-18');
+(5, 'Samuel_Martinez.png', 'Samuel Martínez', 'Es un barbero con gran creatividad, logrando cortes únicos y personalizados que dejan huella en cada cliente. Su talento y carisma generan confianza, lo que hace que siempre sea altamente recomendado.', '3145678901', '2024-12-18'),
+(6, NULL, 'Barbero 6', 'Especialidad por definir', NULL, NULL),
+(7, NULL, 'Barbero 7', 'Especialidad por definir', NULL, NULL),
+(8, NULL, 'Barbero 8', 'Especialidad por definir', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -395,7 +398,8 @@ ALTER TABLE `barberos`
 -- Indices de la tabla `citas`
 --
 ALTER TABLE `citas`
-  ADD PRIMARY KEY (`id_cita`);
+  ADD PRIMARY KEY (`id_cita`),
+  ADD KEY `id_cliente` (`id_cliente`);
 
 --
 -- Indices de la tabla `clientes`
@@ -544,6 +548,12 @@ ALTER TABLE `videos`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `citas`
+--
+ALTER TABLE `citas`
+  ADD CONSTRAINT `fk_citas_clientes` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `dashboard`

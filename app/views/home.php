@@ -8,7 +8,11 @@
             <div transition-style class="--in-custom">
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-justify">
-                        <img src="public/img/yeison3.png" alt="Barbero Yeison en Área 51" class="img-fluid about-us-image">
+                        <div class="text-center">
+                            <img src="public/img/yeison3.png" alt="Barbero Yeison en Área 51"
+                            class="img-fluid about-us-image">
+                        </div>
+
                         <p class="mt-4 text-justify">
                             En <strong>ÁREA 51_BARBER SHOP</strong> nos apasiona transformar tu estilo.
                             Combinamos lo clásico con lo moderno para ofrecerte una experiencia única.
