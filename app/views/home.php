@@ -18,7 +18,7 @@
                     <div class="col-md-8 text-justify">
                         <div class="text-center">
                             <img src="public/img/yeison3.png" alt="Barbero Yeison en Área 51"
-                            class="img-fluid about-us-image">
+                                class="img-fluid about-us-image">
                         </div>
 
                         <p class="mt-4 text-justify">
@@ -112,7 +112,7 @@
                                 <!-- Imagen -->
                                 <div style="width: 100%; height: 200px; overflow: hidden; display: flex; 
                                             align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                    <img src="public/img/<?= htmlspecialchars($servicio['img_servicio']) ?>" 
+                                    <img src="public/img/<?= htmlspecialchars($servicio['img_servicio']) ?>"
                                         alt="<?= htmlspecialchars($servicio['nombre']) ?>"
                                         style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                                 </div>
@@ -193,8 +193,8 @@
             <div class="row">
                 <?php foreach ($imagenes as $img): ?>
                     <div class="col-md-4 col-6 mb-4">
-                        <img src="public/img/<?= htmlspecialchars($img['img_galeria']) ?>" 
-                            alt="<?= htmlspecialchars($img['nombre_galeria']) ?>" 
+                        <img src="public/img/<?= htmlspecialchars($img['img_galeria']) ?>"
+                            alt="<?= htmlspecialchars($img['nombre_galeria']) ?>"
                             class="img-fluid"
                             style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">
                     </div>
@@ -208,7 +208,7 @@
         <div class="container">
             <h2 class="text-center mb-5 section-title">Videos y algo más...</h2>
             <div class="row g-4" id="video-container">
-                <?php foreach ($videos as $row): 
+                <?php foreach ($videos as $row):
                     // Extraer ID del video para embed
                     preg_match('/[\\?&]v=([^&#]+)/', $row['url'], $matches);
                     $videoId = isset($matches[1]) ? $matches[1] : basename(parse_url($row['url'], PHP_URL_PATH));
@@ -216,8 +216,8 @@
                     <div class="col-md-4 mb-4">
                         <div class="embed-responsive embed-responsive-16by9 video-wrapper">
                             <iframe class="embed-responsive-item"
-                                    src="https://www.youtube.com/embed/<?= htmlspecialchars($videoId) ?>"
-                                    allowfullscreen></iframe>
+                                src="https://www.youtube.com/embed/<?= htmlspecialchars($videoId) ?>"
+                                allowfullscreen></iframe>
                         </div>
                         <h5 class="mt-2 text-center"><?= htmlspecialchars($row['titulo']) ?></h5>
                     </div>
@@ -313,8 +313,8 @@
                     <?php foreach ($testimonios as $index => $t): ?>
                         <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="margin: 15px auto;">
                             <div class="d-flex flex-column align-items-center">
-                                <img src="public/img/<?= htmlspecialchars($t['img']) ?>" 
-                                    alt="<?= htmlspecialchars($t['nombre']) ?>" 
+                                <img src="public/img/<?= htmlspecialchars($t['img']) ?>"
+                                    alt="<?= htmlspecialchars($t['nombre']) ?>"
                                     class="rounded-circle mb-4"
                                     style="width: 90px; height: 90px; object-fit: cover;">
                                 <p class="text-center mb-4"><?= htmlspecialchars($t['mensaje']) ?></p>
@@ -343,14 +343,14 @@
     </section>
 
     <!-- Contacto -->
-    <section id="contacto" class="py-5 fade-in-section mb-5 contacto-section" style="scroll-margin-top: 80px;">
+    <section id="contacto" class="py-5 fade-in-section contacto-section" style="scroll-margin-top: 80px;background:transparent;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Contacto</h2>
 
             <div class="row">
                 <!-- Información de Contacto -->
                 <div class="col-12 col-lg-6 mb-4">
-                    <h4><i class="fas fa-info-circle me-2"></i>Información de Contacto</h4>
+                    <h4 class="mt-4"><i class="fas fa-info-circle me-2"></i>Información de Contacto</h4>
                     <p><strong>Dirección:</strong> Transversal 2 # 04 - 01 Barrio 17 de Febrero</p>
                     <p><strong>Teléfono:</strong> (+57) 312 473 22 36</p>
                     <p><strong>Email:</strong> area51barbershop2025@gmail.com</p>
@@ -361,46 +361,35 @@
 
                     <h4 class="mt-4"><i class="fas fa-share-alt me-2"></i>Síguenos</h4>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com/share/1AYqvPUhT9/?mibextid=wwXIfr" target="_blank"
-                            class="me-3">
-                            <i class="fab fa-facebook fa-2x"></i>
-                        </a>
-                        <a href="https://www.instagram.com/area51barbershop_lajagua?igsh=MWxoMjBnb3I0azI2YQ%3D%3D&utm_source=qr"
-                            target="_blank" class="me-3">
-                            <i class="fab fa-instagram fa-2x"></i>
-                        </a>
-                        <a href="https://www.tiktok.com/@ysarmiento.barber?_t=ZS-8voHYlVk1Ym&_r=1" target="_blank"
-                            class="me-3">
-                            <i class="fab fa-tiktok fa-2x"></i>
-                        </a>
-                        <a href="https://whatsapp.com" target="_blank">
-                            <i class="fab fa-whatsapp fa-2x"></i>
-                        </a>
+                        <a href="https://www.facebook.com/share/1AYqvPUhT9/?mibextid=wwXIfr" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f mt-3"></i></a>
+                        <a href="http://wa.me/573124732236" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/area51barbershop_lajagua/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@ysarmiento.barber?_t=ZS-8voHYlVk1Ym&_r=1" aria-label="TikTok" target="_blank"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
 
                 <!-- Información y Enlace de Reservas -->
-                <div class="col-12 col-lg-6 mb-4">
-                    <h4><i class="far fa-calendar-alt me-2"></i>Reserva tu Cita</h4>
-                    <div class="p-3">
-                        <p style="font-size: 1.1rem;">
+                <div class="col-12 col-lg-6 mb-3">
+                    <h4 class="mt-4"><i class="far fa-calendar-alt me-2"></i>Reserva tu Cita</h4>
+                    <div>
+                        <p>
                             En <strong>Área 51_Barber Shop</strong>, tu estilo es nuestra prioridad.
                             Nuestro equipo de barberos expertos está listo para ofrecerte una experiencia de otro nivel.
                             Ya sea que busques un corte clásico, un diseño moderno o nuestro exclusivo
                             <em><strong>Paquete Premium</strong></em>, estamos aquí para ti.
                         </p>
-                        <p style="font-size: 1.1rem;">
+                        <p>
                             ¡No esperes más! Agenda tu cita con nosotros y prepárate para salir renovado.
                             Ponte en contacto a través de nuestro WhatsApp, redes sociales o visítanos directamente.
                             ¡Tu próxima transformación comienza aquí!
                         </p>
                     </div>
-                    <div class="d-flex justify-content-center gap-2 mt-3">
-                        <a class="btn btn-neon" href="index.php?page=panel">RESERVAR</a>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-neon" href="index.php?page=create">RESERVAR</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-<main>
+    <main>

@@ -16,7 +16,12 @@ if ($conn->connect_error) {
 
 // INCLUIR MODELS
 require_once __DIR__ . '/app/models/Cita.php';
-$citaModel = new Cita(); // Instancia del modelo de citas
+require_once __DIR__ . '/app/models/Servicio.php';
+require_once __DIR__ . '/app/models/Barbero.php';
+
+$citaModel = new Cita();
+$servicioModel = new Servicio();
+$barberoModel = new Barbero();
 
 // DEFINIR LA PÁGINA ACTUAL
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
@@ -26,7 +31,7 @@ include __DIR__ . '/app/views/plantillas/header.php';
 
 // ENRUTADOR
 switch ($page) {
-    
+
     case 'home':
         include __DIR__ . '/app/views/home.php';
         break;
@@ -36,6 +41,9 @@ switch ($page) {
         break;
 
     case 'create':
+        // Cargar barberos y servicios para el formulario
+        $servicios = $servicioModel->getServicios();
+        $barberos = $barberoModel->obtenerBarberos();
         include __DIR__ . '/app/views/citas/create.php';
         break;
 

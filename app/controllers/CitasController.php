@@ -1,32 +1,44 @@
 <?php
 require_once __DIR__ . '/../../models/Cita.php';
 require_once __DIR__ . '/../../models/Cliente.php';
+require_once __DIR__ . '/../../models/Servicio.php';
+require_once __DIR__ . '/../../models/Barbero.php';
 
-$citaModel = new Cita();
-$clienteModel = new Cliente();
+class CitasController {
+    private $citaModel;
+    private $clienteModel;
+    private $db;
 
-$action = $_GET['action'] ?? '';
+    public function __construct($db) {
+        $this->db = $db;
+        $this->citaModel = new Cita();
+        $this->clienteModel = new Cliente();
+    }
 
-$data = json_decode(file_get_contents("php://input"), true);
+    public function create() {
+        $servicioModel = new Servicio();
+        $barberoModel = new Barbero();
 
-switch($action) {
+        // Llamar a los métodos que ya existen en tus modelos
+        $servicios = method_exists($servicioModel, 'obtenerServicios')
+            ? $servicioModel->obtenerServicios()
+            : (method_exists($servicioModel, 'getServicios') ? $servicioModel->getServicios() : []);
 
-    case 'crear':
+        $barberos = method_exists($barberoModel, 'obtenerBarberos')
+            ? $barberoModel->obtenerBarberos()
+            : (method_exists($barberoModel, 'getBarberos') ? $barberoModel->getBarberos() : []);
+
+        require __DIR__ . '/../views/citas/create.php';
+    }
+
+    public function store($data) {
         $nombre = trim($data['nombre']);
         $apellido = trim($data['apellido']);
 
-        // Revisar si el cliente ya existe
-        $cliente = $clienteModel->getClientePorNombre($nombre, $apellido);
+        $cliente = $this->clienteModel->getClientePorNombre($nombre, $apellido);
+        $id_cliente = $cliente ? $cliente['id_cliente'] : $this->clienteModel->crearCliente($nombre, $apellido);
 
-        if (!$cliente) {
-            // Si no existe, lo creamos
-            $id_cliente = $clienteModel->crearCliente($nombre, $apellido);
-        } else {
-            $id_cliente = $cliente['id_cliente'];
-        }
-
-        // Crear cita
-        $success = $citaModel->crearCita(
+        $success = $this->citaModel->crearCita(
             $id_cliente,
             $data['id_barbero'],
             $data['id_servicio'],
@@ -35,27 +47,5 @@ switch($action) {
         );
 
         echo json_encode(['success' => $success]);
-        break;
-
-    case 'editar':
-        $success = $citaModel->editarCita(
-            $data['id_cita'],
-            $data['id_cliente'],
-            $data['id_barbero'],
-            $data['id_servicio'],
-            $data['fecha_cita'],
-            $data['hora_cita'],
-            $data['estado']
-        );
-        echo json_encode(['success' => $success]);
-        break;
-
-    case 'cancelar':
-        $success = $citaModel->cancelarCita($data['id_cita']);
-        echo json_encode(['success' => $success]);
-        break;
-
-    default:
-        echo json_encode(['error' => 'Acción no válida']);
-        break;
+    }
 }

@@ -217,15 +217,24 @@
      background-color: #000;
  }
 
- .social-icons a {
-     color: #00ff00;
-     transition: all 0.3s ease;
- }
+ .social-icons {
+  display: flex;
+  gap: 20px; /* Espacio entre íconos */
+  justify-content: flex-start; /* Alinea a la izquierda */
+  align-items: center;
+  margin-top: 15px;
+}
 
- .social-icons a:hover {
-     color: #fff;
-     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
- }
+.social-icons a {
+  font-size: 28px; /* Tamaño de los íconos */
+  color: #fff; /* Color de los íconos */
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2); /* Aumenta tamaño al pasar el mouse */
+  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+}
 
  .fade-in-section {
      opacity: 0;

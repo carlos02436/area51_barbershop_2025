@@ -10,11 +10,11 @@ $barberos = $barberoModel->obtenerBarberos();
 $servicios = $servicioModel->obtenerServicios();
 ?>
 
-<section class="container py-5">
+<section class="container py-5" style="scroll-margin-top: 60px; margin-top: 80px;">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
             <div class="card shadow rounded-4 p-4">
-                <h2 class="text-center mb-4">¡Haz tu Reserva!</h2>
+                <h2 class="text-center mb-4 text-white">¡Haz tu Reserva!</h2>
                 <form id="form-create">
                     <div class="mb-3">
                         <input type="text" name="nombre" placeholder="Nombre" required class="form-control rounded-pill">
@@ -25,7 +25,7 @@ $servicios = $servicioModel->obtenerServicios();
                     <div class="mb-3">
                         <select name="id_barbero" class="form-select rounded-pill" required>
                             <option value="">Selecciona un barbero</option>
-                            <?php foreach($barberos as $b): ?>
+                            <?php foreach ($barberos as $b): ?>
                                 <option value="<?= $b['id_barbero'] ?>"><?= $b['nombre'] ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -33,8 +33,10 @@ $servicios = $servicioModel->obtenerServicios();
                     <div class="mb-3">
                         <select name="id_servicio" class="form-select rounded-pill" required>
                             <option value="">Selecciona un servicio</option>
-                            <?php foreach($servicios as $s): ?>
-                                <option value="<?= $s['id_servicio'] ?>"><?= $s['nombre'] ?></option>
+                            <?php foreach ($servicios as $s): ?>
+                                <option value="<?= htmlspecialchars($s['id_servicio']) ?>">
+                                    <?= htmlspecialchars($s['nombre']) ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -55,21 +57,21 @@ $servicios = $servicioModel->obtenerServicios();
 </section>
 
 <script>
-document.getElementById('form-create').addEventListener('submit', function(e){
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(this));
-    fetch('app/controllers/CitaController.php?action=crear',{
-        method:'POST',
-        body: JSON.stringify(data)
-    })
-    .then(res=>res.json())
-    .then(resp=>{
-        if(resp.success) {
-            alert('Cita reservada correctamente!');
-            location.href='index.php?page=panel';
-        } else {
-            alert('Error: cita duplicada o límite alcanzado');
-        }
+    document.getElementById('form-create').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(this));
+        fetch('app/controllers/CitaController.php?action=crear', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(resp => {
+                if (resp.success) {
+                    alert('Cita reservada correctamente!');
+                    location.href = 'index.php?page=panel';
+                } else {
+                    alert('Error: cita duplicada o límite alcanzado');
+                }
+            });
     });
-});
 </script>

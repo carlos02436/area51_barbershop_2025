@@ -26,4 +26,10 @@ class Barbero {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAll() {
+        $sql = "SELECT id_barbero, nombre FROM barberos";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

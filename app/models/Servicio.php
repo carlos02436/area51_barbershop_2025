@@ -21,4 +21,15 @@ class Servicio {
         $stmt = $db->query("SELECT id_servicio, nombre FROM servicios");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAll() {
+        $sql = "SELECT id_servicio, nombre FROM servicios";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerTodos() {
+        $stmt = $this->db->query("SELECT id_servicio, nombre FROM servicios");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
