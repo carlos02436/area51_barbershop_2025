@@ -15,4 +15,10 @@ class Servicio {
         $stmt->execute();
         return $stmt->fetchAll(); // Devuelve un array de servicios
     }
+
+    public function getServicios() {
+        global $db; // usamos la conexión PDO de database.php
+        $stmt = $db->query("SELECT id_servicio, nombre FROM servicios");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

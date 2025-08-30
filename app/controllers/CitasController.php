@@ -1,41 +1,45 @@
 <?php
-// controllers/CitasController.php
-require_once __DIR__ . '/../models/Cita.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../../models/Cita.php';
+require_once __DIR__ . '/../../models/Cliente.php';
 
-class CitasController {
-    private $cita;
+$citaModel = new Cita();
+$clienteModel = new Cliente();
 
-    public function __construct($db) {
-        $this->cita = new Cita($db);
-    }
+$action = $_GET['action'] ?? '';
 
-    // Mostrar todas las citas
-    public function index() {
-        return $this->cita->obtenerTodas();
-    }
+$data = json_decode(file_get_contents("php://input"), true);
 
-    // Crear nueva cita
-    public function store($data) {
-        return $this->cita->crear(
-            $data['id_cliente'],
+switch($action) {
+
+    case 'crear':
+        $nombre = trim($data['nombre']);
+        $apellido = trim($data['apellido']);
+
+        // Revisar si el cliente ya existe
+        $cliente = $clienteModel->getClientePorNombre($nombre, $apellido);
+
+        if (!$cliente) {
+            // Si no existe, lo creamos
+            $id_cliente = $clienteModel->crearCliente($nombre, $apellido);
+        } else {
+            $id_cliente = $cliente['id_cliente'];
+        }
+
+        // Crear cita
+        $success = $citaModel->crearCita(
+            $id_cliente,
             $data['id_barbero'],
             $data['id_servicio'],
             $data['fecha_cita'],
-            $data['hora_cita'],
-            $data['estado'] ?? 'pendiente'
+            $data['hora_cita']
         );
-    }
 
-    // Mostrar una cita
-    public function show($id) {
-        return $this->cita->obtenerPorId($id);
-    }
+        echo json_encode(['success' => $success]);
+        break;
 
-    // Actualizar cita
-    public function update($id, $data) {
-        return $this->cita->actualizar(
-            $id,
+    case 'editar':
+        $success = $citaModel->editarCita(
+            $data['id_cita'],
             $data['id_cliente'],
             $data['id_barbero'],
             $data['id_servicio'],
@@ -43,10 +47,15 @@ class CitasController {
             $data['hora_cita'],
             $data['estado']
         );
-    }
+        echo json_encode(['success' => $success]);
+        break;
 
-    // Eliminar cita
-    public function destroy($id) {
-        return $this->cita->eliminar($id);
-    }
+    case 'cancelar':
+        $success = $citaModel->cancelarCita($data['id_cita']);
+        echo json_encode(['success' => $success]);
+        break;
+
+    default:
+        echo json_encode(['error' => 'Acción no válida']);
+        break;
 }

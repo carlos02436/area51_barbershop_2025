@@ -39,7 +39,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="#inicio">Inicio</a>
+                        <a class="nav-link text-white" href="index.php?page=#inicio">Inicio</a>
                     </li>
                     <li class="nav-item me-4">
                         <a class="nav-link text-white" href="#nosotros">Nosotros</a>
@@ -66,14 +66,6 @@
             </div>
         </div>
     </nav>
-
-    <header id="inicio" class="hero" style="z-index: -1;border-radius: 40% 10% 60%/20% 80% 20%;">
-        <div class="hero-background"></div>
-        <div class="container">
-            <h1 class="fs-1">Área 51_Barber Shop</h1>
-            <p class="lead">Descubre tu Mejor Estilo</p>
-        </div>
-    </header>
 
     <!-- Botón Scroll hacia abajo y devuelve al inicio -->
     <button id="scrollToTopBtn" class="btn" style="position:fixed; bottom:40px; right:30px; z-index:9999; width: 50px; height:40px;

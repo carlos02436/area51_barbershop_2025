@@ -1,4 +1,12 @@
 <body>
+    <!-- Encabezado -->
+    <header id="inicio" class="hero" style="z-index: -1;border-radius: 40% 10% 60%/20% 80% 20%;">
+        <div class="hero-background"></div>
+        <div class="container">
+            <h1 class="fs-1">Área 51_Barber Shop</h1>
+            <p class="lead">Descubre tu Mejor Estilo</p>
+        </div>
+    </header>
 
     <!-- sección nosotros -->
     <section id="nosotros" class="py-5 fade-in-section gx-10" style="scroll-margin-top: 80px;">
@@ -387,199 +395,12 @@
                             ¡Tu próxima transformación comienza aquí!
                         </p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Formulario de Reserva -->
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-10 col-lg-6">
-                    <div class="card shadow">
-                        <div class="card-body p-4">
-                            <h4 class="text-center mb-4 text-white">¡Haz tu Reserva!</h4>
-                            <form id="booking-form">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label text-white">Nombre Completo:</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        placeholder="Ej: Juan Pérez" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="date" class="form-label text-white">Día de la Cita:</label>
-                                    <input type="date" class="form-control" id="date" name="date" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="barber" class="form-label text-white">Barbero de Preferencia:</label>
-                                    <select class="form-select" id="barber" name="barber" required>
-                                        <option value="" disabled selected>Selecciona un barbero</option>
-                                        <option value="Yeison Sarmiento">Yeison Sarmiento</option>
-                                        <option value="Samuel">Samuel</option>
-                                        <option value="El Menu">El Menu</option>
-                                        <option value="Juancho">Juancho</option>
-                                    </select>
-                                </div>
-
-                                <!-- Hora -->
-                                <div class="mb-3">
-                                    <label for="time" class="form-label text-white">Hora de la Cita:</label>
-                                    <select class="form-select" id="time" name="time" required>
-                                        <option value="" disabled selected>Selecciona una hora</option>
-                                        <option value="08:00">08:00 AM</option>
-                                        <option value="08:30">08:30 AM</option>
-                                        <option value="09:00">09:00 AM</option>
-                                        <option value="09:30">09:30 AM</option>
-                                        <option value="10:00">10:00 AM</option>
-                                        <option value="10:30">10:30 AM</option>
-                                        <option value="11:00">11:00 AM</option>
-                                        <option value="11:30">11:30 AM</option>
-                                        <option value="14:00">02:00 PM</option>
-                                        <option value="14:30">02:30 PM</option>
-                                        <option value="15:00">03:00 PM</option>
-                                        <option value="15:30">03:30 PM</option>
-                                        <option value="16:00">04:00 PM</option>
-                                        <option value="16:30">04:30 PM</option>
-                                        <option value="17:00">05:00 PM</option>
-                                        <option value="17:30">05:30 PM</option>
-                                        <option value="18:00">06:00 PM</option>
-                                        <option value="18:30">06:30 PM</option>
-                                        <option value="19:00">07:00 PM</option>
-                                        <option value="19:30">07:30 PM</option>
-                                        <option value="20:00">08:00 PM</option>
-                                        <option value="20:30">08:30 PM</option>
-                                        <option value="21:00">09:00 PM</option>
-                                    </select>
-                                </div>
-
-                                <div class="d-flex justify-content-center gap-2 mt-3">
-                                    <a class="btn btn-neon" id="btn-reservar" target="_blank">RESERVAR</a>
-                                    <a class="btn btn-neon" id="btn-cancelar" target="_blank">CANCELAR</a>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="d-flex justify-content-center gap-2 mt-3">
+                        <a class="btn btn-neon" href="index.php?page=panel">RESERVAR</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <script>
-        // Generar las horas de 08:00 a 21:00 cada 30 minutos
-        function generarHoras() {
-            const horas = [];
-
-            for (let h = 8; h <= 20; h++) {
-                // Excluir 13:00 y 13:30 (1:00 PM y 1:30 PM)
-                if (h === 13) continue;
-
-                horas.push(`${String(h).padStart(2, '0')}:00`);
-                horas.push(`${String(h).padStart(2, '0')}:30`);
-            }
-
-            // Agregar 21:00 (9:00 PM)
-            horas.push("21:00");
-
-            return horas;
-        }
-
-        function obtenerReservas() {
-            return JSON.parse(localStorage.getItem("reservas")) || [];
-        }
-
-        function actualizarHoras() {
-            const barbero = document.getElementById("barber").value;
-            const fecha = document.getElementById("date").value;
-            const horaSelect = document.getElementById("time");
-            horaSelect.innerHTML = "";
-
-            if (!barbero || !fecha) {
-                horaSelect.innerHTML = `<option disabled selected>Selecciona fecha y barbero primero</option>`;
-                return;
-            }
-
-            const horas = generarHoras();
-            const reservas = obtenerReservas();
-
-            horas.forEach(hora => {
-                const ocupada = reservas.some(r =>
-                    r.fecha === fecha && r.hora === hora && r.barbero === barbero
-                );
-
-                const option = document.createElement("option");
-                option.value = hora;
-                option.textContent = hora + (ocupada ? " - No disponible" : "");
-                if (ocupada) option.disabled = true;
-
-                horaSelect.appendChild(option);
-            });
-        }
-
-        function esDispositivoMovil() {
-            return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        }
-
-        function guardarReserva() {
-            const nombre = document.getElementById("name").value.trim();
-            const barbero = document.getElementById("barber").value.trim();
-            const fecha = document.getElementById("date").value;
-            const hora = document.getElementById("time").value;
-
-            if (!nombre || !barbero || !fecha || !hora) {
-                alert("⚠️ Por favor completa todos los campos antes de reservar.");
-                return;
-            }
-
-            const reservas = obtenerReservas();
-
-            const yaReservado = reservas.some(r =>
-                r.fecha === fecha && r.hora === hora && r.barbero === barbero
-            );
-
-            if (yaReservado) {
-                alert("⚠️ Esa hora ya fue reservada para ese barbero.");
-                return;
-            }
-
-            reservas.push({
-                nombre,
-                barbero,
-                fecha,
-                hora
-            });
-            localStorage.setItem("reservas", JSON.stringify(reservas));
-
-            // Mensaje para WhatsApp
-            const telefono = "573124732236";
-            const mensaje = `¡Hola! Quiero reservar una cita:\n` +
-                `👤 Nombre: ${nombre}\n` +
-                `📅 Fecha: ${fecha}\n` +
-                `⏰ Hora: ${hora}\n` +
-                `✂️ Barbero: ${barbero}`;
-
-            const textoCodificado = encodeURIComponent(mensaje);
-            const urlWhatsApp = esDispositivoMovil() ?
-                `https://wa.me/${telefono}?text=${textoCodificado}` :
-                `https://web.whatsapp.com/send?phone=${telefono}&text=${textoCodificado}`;
-
-            window.open(urlWhatsApp, "_blank");
-
-            // Limpiar formulario y horas
-            document.getElementById("booking-form").reset();
-            actualizarHoras();
-        }
-
-        // cancelar reserva
-        document.getElementById("btn-cancelar").addEventListener("click", function(e) {
-            e.preventDefault();
-            document.getElementById("booking-form").reset();
-            actualizarHoras();
-        });
-
-        // Eventos
-        document.getElementById("date").addEventListener("change", actualizarHoras);
-        document.getElementById("barber").addEventListener("change", actualizarHoras);
-        document.querySelector(".btn-neon").addEventListener("click", function(e) {
-            e.preventDefault();
-            guardarReserva();
-        });
-    </script>
 <main>

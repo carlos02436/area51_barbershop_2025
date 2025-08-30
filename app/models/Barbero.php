@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once __DIR__ . '/../../config/database.php';
 
 class Barbero {
@@ -9,6 +9,13 @@ class Barbero {
         $this->db = $db;
     }
 
+    // Obtener todos los barberos
+    public function getBarberos() {
+        $stmt = $this->db->query("SELECT id_barbero, nombre FROM barberos");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Obtener barberos con límite y más info
     public function obtenerBarberos($limite = 5) {
         $sql = "SELECT id_barbero, nombre, especialidad, img_barberos 
                 FROM barberos 
@@ -17,6 +24,6 @@ class Barbero {
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':limite', (int)$limite, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
