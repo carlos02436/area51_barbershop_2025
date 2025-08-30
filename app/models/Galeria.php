@@ -1,19 +1,16 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 
-class Barbero {
+class Galeria {
     private $db;
 
     public function __construct() {
-        global $db; // Usamos PDO de database.php
+        global $db;
         $this->db = $db;
     }
 
-    public function obtenerBarberos($limite = 5) {
-        $sql = "SELECT id_barbero, nombre, especialidad, img_barberos 
-                FROM barberos 
-                ORDER BY id_barbero ASC 
-                LIMIT :limite";
+    public function obtenerImagenes($limite = 9) {
+        $sql = "SELECT img_galeria, nombre_galeria FROM galeria ORDER BY id_galeria ASC LIMIT :limite";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':limite', (int)$limite, PDO::PARAM_INT);
         $stmt->execute();

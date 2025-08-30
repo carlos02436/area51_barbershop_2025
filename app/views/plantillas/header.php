@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área 51_Barber Shop</title>
+
+    <!-- Bootstrap y FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Icono -->
+    <link rel="icon" href="public/img/logo.png">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="public/css/style.css">
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="margin: 15px;border-radius: 25px;
+        border-inline: 2px solid #00ff00;">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="public/img/logo.png" alt="Logo REDOLLS S.A." class="img-fluid text-white" style="height: 50px;">
+                <strong class="text-white">Area 51_Barbershop</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item me-4">
+                        <a class="nav-link text-white" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link text-white" href="#nosotros">Nosotros</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link text-white" href="#servicios">Servicios</a>
+                    </li>
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Más
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-start bg-dark ms-n2">
+                            <li><a class="dropdown-item text-white bg-dark" href="#barberos">Barberos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="#galeria">Galería</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="#videos">Videos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="#noticias">Noticias</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="#testimonios">Testimonios</a></li>
+                        </ul>
+                    <li class="nav-item me-4">
+                        <a class="nav-link text-white" href="#contacto">Contáctanos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="inicio" class="hero" style="z-index: -1;border-radius: 40% 10% 60%/20% 80% 20%;">
+        <div class="hero-background"></div>
+        <div class="container">
+            <h1 class="fs-1">Área 51_Barber Shop</h1>
+            <p class="lead">Descubre tu Mejor Estilo</p>
+        </div>
+    </header>
+
+    <!-- Botón Scroll hacia abajo y devuelve al inicio -->
+    <button id="scrollToTopBtn" class="btn" style="position:fixed; bottom:40px; right:30px; z-index:9999; width: 50px; height:40px;
+        display:none; align-items:center; justify-content:center;">
+        <i class="fa-solid fa-chevron-up fa-lg"></i>
+    </button>
+
+    <!-- Código JS para el Botón Scroll hacia abajo y devuelve al inicio -->
+    <script>
+        // Mostrar/ocultar el botón al hacer scroll
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('scrollToTopBtn');
+            if (window.scrollY > 200) {
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        // Scroll suave al inicio al hacer clic
+        document.getElementById('scrollToTopBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+<main>

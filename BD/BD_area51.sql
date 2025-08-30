@@ -48,23 +48,22 @@ DELIMITER ;
 -- =========================
 CREATE TABLE barberos (
     id_barbero INT AUTO_INCREMENT PRIMARY KEY,
-    img_barberos	varchar(255),
+    img_barberos VARCHAR(255) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    especialidad VARCHAR(100) NOT NULL,
+    especialidad TEXT NOT NULL,
     telefono VARCHAR(20),
     fecha_contratacion DATE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =========================
 -- TABLA NOTICIAS
 -- =========================
 CREATE TABLE noticias (
     id_noticia INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(200) NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
     contenido TEXT NOT NULL,
-    fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    publicado_por INT
-);
+    fecha_publicacion DATE NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =========================
 -- TABLA VIDEOS
@@ -93,12 +92,13 @@ CREATE TABLE eventos (
 -- TABLA SERVICIOS
 -- =========================
 CREATE TABLE servicios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_servicio INT AUTO_INCREMENT PRIMARY KEY,
+    img_servicio VARCHAR(255) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     precio DECIMAL(10,2) NULL,
     observacion VARCHAR(255) NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =========================
 -- TABLA CITAS
@@ -113,6 +113,29 @@ CREATE TABLE citas (
     estado ENUM('pendiente','confirmada','cancelada','realizada') DEFAULT 'pendiente',
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ============================================
+-- TABLA GALERÍA
+-- ============================================
+CREATE TABLE galeria (
+    id_galeria INT AUTO_INCREMENT PRIMARY KEY,
+    img_galeria VARCHAR(255) NOT NULL,
+    nombre_galeria VARCHAR(100) NOT NULL
+);
+
+-- ============================================
+-- TABLA GALERÍA
+-- ============================================
+INSERT INTO galeria (img_galeria, nombre_galeria) VALUES
+('corte7.png', 'Estilo de corte y barba 1'),
+('corte8.png', 'Estilo de corte y barba 2'),
+('corte9.png', 'Estilo de corte y barba 3'),
+('corte10.png', 'Estilo de corte y barba 4'),
+('corte11.png', 'Estilo de corte y barba 5'),
+('corte12.png', 'Estilo de corte y barba 6'),
+('corte13.png', 'Estilo de corte y barba 7'),
+('corte14.png', 'Estilo de corte y barba 8'),
+('corte15.png', 'Estilo de corte y barba 9');
 
 -- ============================================
 -- REGISTROS CLIENTES
@@ -139,53 +162,48 @@ INSERT INTO administradores (nombre, usuario, email, password) VALUES
 -- REGISTROS BARBEROS
 -- ============================================
 INSERT INTO barberos (img_barberos, nombre, especialidad, telefono, fecha_contratacion) VALUES
-('', 'José Ramírez', 'Cortes clásicos', '3101234567', '2024-12-01'),
-('', 'Mario López', 'Degradados', '3112345678', '2024-12-05'),
-('', 'Fernando Ruiz', 'Barbas y afeitados', '3123456789', '2024-12-10'),
-('', 'Pedro Méndez', 'Cortes modernos', '3134567890', '2024-12-15'),
-('', 'Ricardo Silva', 'Tinturas y diseños', '3145678901', '2024-12-18'),
-('', 'Alejandro Torres', 'Peinados y estilo', '3156789012', '2024-12-20'),
-('', 'Héctor Vargas', 'Cortes rápidos', '3167890123', '2024-12-22'),
-('', 'Camilo Peña', 'Cortes artísticos', '3178901234', '2024-12-25');
+('Yisel_herrera.png', 'Yisel Herrera', 'Es la encargada de atención al cliente, siempre amable y dispuesta a ayudar a cada visitante a sentirse como en casa. Su trato cercano y profesional la convierte en un pilar fundamental para la experiencia de quienes visitan la barbería.', '3101234567', '2024-12-01'),
+('yeisonBarber.png', 'Yeison Sarmiento', 'Es un barbero excelente, con gran precisión en los cortes y un estilo moderno que encanta a los clientes. Su dedicación y creatividad hacen que cada visita sea una experiencia única y satisfactoria.', '3112345678', '2024-12-05'),
+('Rafael_Barrios.png', 'Rafael Barrios', 'Destaca por su técnica impecable y su pasión por ofrecer siempre un corte de calidad superior. Su compromiso con la perfección lo ha convertido en uno de los barberos más confiables y solicitados por los clientes.', '3123456789', '2024-12-10'),
+('Rafael_Jaime.png', 'Rafael Jaime', 'Es reconocido por su estilo detallista, garantizando siempre un acabado elegante y profesional. Su habilidad para adaptarse a las tendencias lo hace sobresalir como un referente en la barbería.', '3134567890', '2024-12-15'),
+('Samuel_Martinez.png', 'Samuel Martínez', 'Es un barbero con gran creatividad, logrando cortes únicos y personalizados que dejan huella en cada cliente. Su talento y carisma generan confianza, lo que hace que siempre sea altamente recomendado.', '3145678901', '2024-12-18');
 
 -- ============================================
 -- REGISTROS SERVICIOS
 -- ============================================
-INSERT INTO servicios (nombre, descripcion, precio, observacion) VALUES
-('Corte de Cabello', 'Corte de cabello diseñado para que destaques.', 15000.00, NULL),
-('Corte de Cabello y Corte de Barba', 'Afeitado y corte de barba clásico, resaltando tu mejor estilo.', 25000.00, NULL),
-('Corte de Cabello y Corte de Cejas', 'Corte de cabello con perfilación de cejas.', 18000.00, NULL),
-('Corte de Barba', 'Diferentes cortes y perfilación de barba.', 10000.00, NULL),
-('Corte de Cejas', 'Perfilación de cejas adaptada a tu estilo.', 5000.00, NULL),
-('Cerquillo', 'Delineación de cortes para resaltar tu estilo.', 5000.00, NULL),
-('Paquete Premium', 'Corte de cabello + barba + limpieza facial + masaje relajante.', 50000.00, NULL),
-('Aplicación de Queratina', 'Tratamiento para suavidad, brillo y manejabilidad del cabello.', NULL, 'Costo según el largo del cabello');
+INSERT INTO servicios (img_servicio, nombre, descripcion, precio, observacion) VALUES
+('corte1.jpg', 'Corte de Cabello', 'Corte de cabello diseñado para que destaques.', 15000.00, NULL),
+('corte de cabello y barba1.jpg', 'Corte de Cabello y Corte de Barba', 'Afeitado y corte de barba clásico, resaltando tu mejor estilo.', 25000.00, NULL),
+('corte de cabello y cejas.jpg', 'Corte de Cabello y Corte de Cejas', 'Corte de cabello con perfilación de cejas.', 18000.00, NULL),
+('corte de barba.jpg', 'Corte de Barba', 'Diferentes cortes y perfilación de barba.', 10000.00, NULL),
+('corte de cejas.jpg', 'Corte de Cejas', 'Perfilación de cejas adaptada a tu estilo.', 5000.00, NULL),
+('cerquillo.jpg', 'Cerquillo', 'Delineación de cortes para resaltar tu estilo.', 5000.00, NULL),
+('paquete premium.jpg', 'Paquete Premium', 'Corte de cabello + barba + limpieza facial + masaje relajante.', 50000.00, NULL),
+('keratina.jpg', 'Aplicación de Queratina', 'Tratamiento para suavidad, brillo y manejabilidad del cabello.', NULL, 'Costo según el largo del cabello');
 
 -- ============================================
 -- REGISTROS NOTICIAS
 -- ============================================
 INSERT INTO noticias (titulo, contenido, fecha_publicacion) VALUES
-('Nueva promoción de cortes', 'Durante enero tenemos descuentos en cortes clásicos.', '2025-01-02'),
-('Concurso de estilo', 'Participa en nuestro concurso de peinados y gana premios.', '2025-01-07'),
-('Apertura nocturna', 'Abriremos hasta las 10pm los viernes y sábados.', '2025-01-12'),
-('Barberos invitados', 'Este mes tendremos barberos internacionales.', '2025-01-15'),
-('Nuevo servicio disponible', 'Ya contamos con tratamientos capilares.', '2025-01-18'),
-('Día del hombre', 'Promociones especiales por el día del hombre.', '2025-01-20'),
-('Capacitación continua', 'Nuestros barberos se capacitan en nuevas técnicas.', '2025-01-25'),
-('Premio a la mejor barbería', 'Ganamos reconocimiento local como mejor barbería.', '2025-01-28');
+('Nueva promoción de cortes', 
+ 'Durante enero tenemos descuentos especiales en cortes clásicos. Aprovecha esta promoción para renovar tu estilo a un precio inigualable. Nuestros barberos profesionales te esperan para ofrecerte un servicio de calidad, rápido y con la mejor atención.', 
+ '2025-01-05'),
+
+('Concurso de estilo', 
+ 'Participa en nuestro Concurso de Estilo y demuestra tu creatividad con los cortes más originales. Los ganadores recibirán premios exclusivos y descuentos en próximos servicios. ¡No te pierdas esta oportunidad de brillar y mostrar tu talento en la barbería!', 
+ '2025-01-15'),
+
+('Apertura nocturna', 
+ '¡Ahora abrimos en horario nocturno! Ven a disfrutar de un corte o arreglo de barba después de tu jornada diaria. Nuestra barbería estará disponible en horarios extendidos para brindarte comodidad y el mejor servicio cuando más lo necesites.', 
+ '2025-01-20');
 
 -- ============================================
 -- REGISTROS VIDEOS
 -- ============================================
 INSERT INTO videos (titulo, url, fecha_publicacion) VALUES
-('Corte Degradado', 'https://youtu.be/degradado1', '2025-01-05'),
-('Estilo Clásico', 'https://youtu.be/clasico1', '2025-01-07'),
-('Afeitado Barba', 'https://youtu.be/barba1', '2025-01-10'),
-('Diseño de Corte', 'https://youtu.be/diseno1', '2025-01-12'),
-('Técnicas Modernas', 'https://youtu.be/moderno1', '2025-01-15'),
-('Tutorial Peinados', 'https://youtu.be/peinado1', '2025-01-18'),
-('Uso de productos', 'https://youtu.be/productos1', '2025-01-20'),
-('Experiencia Cliente', 'https://youtu.be/cliente1', '2025-01-22');
+('10 Cortes de moda 2025', 'https://youtu.be/rugYY0WMlj0?si=vz7wB3rEc3L35Q0u', '2025-01-05'),
+('Como Hacer un Desvanecido en V', 'https://youtu.be/rpdpu_Ktnkw?si=AL0CTIwJccelfPB5', '2025-05-07'),
+('El arte del cuidado personal', 'https://youtu.be/7_lQ_HQnMwY?si=JsMpORA77jeyLrLi', '2025-08-10');
 
 -- ============================================
 -- REGISTROS EVENTOS
