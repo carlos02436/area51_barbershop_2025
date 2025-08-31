@@ -15,7 +15,11 @@ class Administrador {
 
     // Método de login optimizado y seguro
     public function login($usuario, $password) {
-        $admin = $this->getAdministradorPorUsuario($usuario);
+        $sql = "SELECT * FROM administradores WHERE usuario = :usuario LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':usuario' => $usuario]);
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($admin && password_verify($password, $admin['password'])) {
             return $admin;
         }

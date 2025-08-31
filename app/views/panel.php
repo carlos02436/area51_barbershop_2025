@@ -3,7 +3,7 @@ require_once __DIR__ . '/plantillas/header.php';
 
 // Verificar sesión
 if (!isset($_SESSION['usuario'])) {
-    header("Location: /area51_barbershop_2025/index.php?page=login");
+    header("Location: /index.php?page=login");
     exit();
 }
 ?>

@@ -1,15 +1,8 @@
 <?php
-// index.php
+session_start();
+require_once __DIR__ . '/config/database.php'; // Conexión PDO
 
-// ==================== INICIAR SESIÓN ====================
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// ==================== CONEXIÓN A LA BD ====================
-require_once __DIR__ . '/config/database.php'; // $db (PDO)
-
-// ==================== AUTOLOAD MODELOS Y CONTROLADORES ====================
+// ==================== AUTOLOAD MODELOS ====================
 require_once __DIR__ . '/app/models/Administrador.php';
 require_once __DIR__ . '/app/models/Cita.php';
 require_once __DIR__ . '/app/models/Servicio.php';
@@ -17,21 +10,17 @@ require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
 require_once __DIR__ . '/app/controllers/DashboardController.php';
 
-// ==================== INSTANCIAR MODELOS NECESARIOS ====================
 $barberoModel = new Barbero();
 $servicioModel = new Servicio();
 
 // ==================== DEFINIR PÁGINA ====================
-$page = $_GET['page'] ?? 'home';
+$page = $_GET['page'] ?? 'login'; // Por defecto 'login'
 
 // ==================== HEADER ====================
 include __DIR__ . '/app/views/plantillas/header.php';
 
-// ==================== ENRUTADOR PRINCIPAL ====================
+// ==================== ENRUTADOR ====================
 switch ($page) {
-    case 'home':
-        include __DIR__ . '/app/views/home.php';
-        break;
 
     case 'login':
         include __DIR__ . '/app/views/login.php';
@@ -41,36 +30,20 @@ switch ($page) {
         include __DIR__ . '/app/views/panel.php';
         break;
 
+    // Ejemplo de otras páginas que requieren sesión
     case 'dashboard':
-        if (!isset($_SESSION['admin'])) {
-            header("Location: index.php?page=login");
-            exit;
-        }
-        include __DIR__ . '/app/views/dashboard.php';
-        break;
-
     case 'create':
-        if (!isset($_SESSION['admin'])) {
-            header("Location: index.php?page=login");
-            exit;
-        }
-        include __DIR__ . '/app/views/citas/create.php';
-        break;
-
     case 'edit':
-        if (!isset($_SESSION['admin'])) {
-            header("Location: index.php?page=login");
-            exit;
-        }
-        include __DIR__ . '/app/views/citas/edit.php';
-        break;
-
     case 'delete':
         if (!isset($_SESSION['admin'])) {
             header("Location: index.php?page=login");
             exit;
         }
-        include __DIR__ . '/app/views/citas/delete.php';
+        include __DIR__ . '/app/views/' . $page . '.php';
+        break;
+
+    case 'home':
+        include __DIR__ . '/app/views/home.php';
         break;
 
     default:
@@ -81,6 +54,5 @@ switch ($page) {
               </section>";
         break;
 }
-
 // ==================== FOOTER ====================
 include __DIR__ . '/app/views/plantillas/footer.php';
