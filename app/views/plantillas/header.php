@@ -33,7 +33,7 @@ ob_start();
         border-inline: 2px solid #00ff00;">
         <div class="container-fluid">
             <a class="navbar-brand">
-                <img src="public/img/logo.png" alt="Logo REDOLLS S.A." class="img-fluid text-white" style="height: 50px;">
+                <img src="public/img/logo.png" alt="Logo REDOLLS S.A." class="img-fluid text-white" style="height: 50px;width: 50px;">
                 <strong class="text-white">Area 51_Barbershop</strong>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"

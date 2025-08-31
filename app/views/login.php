@@ -1,3 +1,26 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$error = null;
+
+// Para desarrollo: limpiar la sesión para evitar redirecciones infinitas
+if (isset($_SESSION['admin'])) {
+    unset($_SESSION['admin']);
+}
+
+// Si ya está logueado, redirige al panel
+if (isset($_SESSION['admin'])) {
+    header("Location: index.php?page=panel");
+    exit;
+}
+
+// Si llega un error desde AuthController, se mostrará
+if (isset($_GET['error'])) {
+    $error = htmlspecialchars($_GET['error']);
+}
+?>
+
 <!-- Login administradores -->
 <div class="container min-vh-100 d-flex align-items-center justify-content-center">
     <div class="row w-100 justify-content-center">
@@ -5,10 +28,12 @@
             <div class="card shadow-lg border-0">
                 <div class="card-body p-4">
                     <h3 class="text-center mb-4 fw-bold text-white">Iniciar Sesión</h3>
-                    <?php if (isset($error)) : ?>
+
+                    <?php if ($error) : ?>
                         <div class="alert alert-danger"><?= $error; ?></div>
                     <?php endif; ?>
-                    <form method="POST" action="app/controllers/AuthController.php" autocomplete="off">
+
+                    <form method="POST" action="index.php?page=auth/login" autocomplete="off">
                         <div class="mb-3">
                             <label class="form-label text-white">Usuario</label>
                             <input type="text" style="border: 2px solid #00ff00;" name="usuario" class="form-control" required autofocus>
@@ -33,6 +58,7 @@
         </div>
     </div>
 </div>
+
 <!-- Script para ver/ocultar contraseña -->
 <script>
     const togglePassword = document.querySelector('#togglePassword');

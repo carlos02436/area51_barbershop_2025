@@ -33,12 +33,12 @@ switch ($page) {
         include __DIR__ . '/app/views/home.php';
         break;
 
-    case 'panel':
-        include __DIR__ . '/app/views/panel.php';
-        break;
-
     case 'login':
         include __DIR__ . '/app/views/login.php';
+        break;
+        
+    case 'panel':
+        include __DIR__ . '/app/views/panel.php';
         break;
 
     case 'dashboard':
