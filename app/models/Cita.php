@@ -4,10 +4,14 @@ require_once __DIR__ . '/../../config/database.php';
 
 class Cita {
     private $db;
-
-    public function __construct() {
-        global $db;
+    public function __construct($db) {
         $this->db = $db;
+    }
+
+    public function getAll() {
+        $sql = "SELECT * FROM citas ORDER BY fecha DESC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getCitas() {

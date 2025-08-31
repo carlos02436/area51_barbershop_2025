@@ -8,7 +8,6 @@ require_once __DIR__ . '/app/models/Cita.php';
 require_once __DIR__ . '/app/models/Servicio.php';
 require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
-require_once __DIR__ . '/app/controllers/DashboardController.php';
 
 $barberoModel = new Barbero();
 $servicioModel = new Servicio();
@@ -22,12 +21,11 @@ include __DIR__ . '/app/views/plantillas/header.php';
 // ==================== ENRUTADOR ====================
 switch ($page) {
 
-    case 'login':
-        include __DIR__ . '/app/views/login.php';
-        break;
-
     case 'panel':
-        include __DIR__ . '/app/views/panel.php';
+        require __DIR__ . '/app/views/panel.php';
+        break;
+    case 'login':
+        require __DIR__ . '/app/views/login.php';
         break;
 
     // Ejemplo de otras páginas que requieren sesión
