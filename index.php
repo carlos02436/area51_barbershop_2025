@@ -24,20 +24,25 @@ switch ($page) {
     case 'panel':
         require __DIR__ . '/app/views/panel.php';
         break;
+
     case 'login':
         require __DIR__ . '/app/views/login.php';
         break;
 
-    // Ejemplo de otras páginas que requieren sesión
     case 'dashboard':
+        require __DIR__ . '/app/views/dashboard.php';
+        break;
+
     case 'create':
+        require __DIR__ . '/app/views/citas/create.php';
+        break;
+
     case 'edit':
+        require __DIR__ . '/app/views/citas/edit.php';
+        break;
+
     case 'delete':
-        if (!isset($_SESSION['admin'])) {
-            header("Location: index.php?page=login");
-            exit;
-        }
-        include __DIR__ . '/app/views/' . $page . '.php';
+        include __DIR__ . '/app/views/citas/delete.php';
         break;
 
     case 'home':

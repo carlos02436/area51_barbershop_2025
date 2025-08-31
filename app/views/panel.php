@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/plantillas/header.php';
 ?>
-<div class="container py-3 text-center" style="scroll-margin-top:80px; margin:180px auto;">
+<div class="container py-3 text-center" style="margin:130px auto;">
     <div class="card shadow-lg border-0">
         <div class="card-body text-center">
             <h2 class="mb-3 text-white">Bienvenid@ a su Panel de Control 👋</h2>
