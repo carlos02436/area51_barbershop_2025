@@ -43,7 +43,7 @@ CREATE TABLE `administradores` (
 INSERT INTO `administradores` (`id_admin`, `nombre`, `usuario`, `email`, `password`, `creado_en`) VALUES
 (1, 'Carlos Parra', 'cparra', 'carlos.parra@example.com', '12345', '2025-08-29 20:16:49'),
 (2, 'Yeison Sarmiento', 'ysarmiento', 'yeison.sarmiento@example.com', '12345', '2025-08-29 20:16:49'),
-(3, 'Gisell', 'gisell', 'gisell@example.com', '12345', '2025-08-29 20:16:49');
+(3, 'Yisel Herrera', 'yiselHr', 'yisel@example.com', '12345', '2025-08-29 20:16:49');
 
 --
 -- Disparadores `administradores`
