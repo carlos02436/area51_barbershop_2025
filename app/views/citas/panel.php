@@ -2,8 +2,7 @@
 // NO incluir header/footer aquí porque ya lo hace index.php
 $citas = $citaModel->getCitasConNombres(); // Este método debe devolver cliente, barbero y servicio como nombres
 ?>
-
-<section class="container py-5">
+<section class="container py-5 " style="scroll-margin-top:80px;margin: 10px;">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <h2 class="text-center mb-4">Panel de Citas</h2>

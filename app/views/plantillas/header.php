@@ -1,29 +1,33 @@
+<?php
+// Iniciar sesión solo si no está iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Evitar errores de encabezados enviados
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área 51_Barber Shop</title>
-
     <!-- Bootstrap y FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <!-- Icono -->
     <link rel="icon" href="public/img/logo.png">
-
+    <!-- Icono -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap"
         rel="stylesheet">
-
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="public/css/style.css">
 </head>
-
 <body>
-
     <!-- Encabezado -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="margin: 15px;border-radius: 25px;
         border-inline: 2px solid #00ff00;">
@@ -58,21 +62,20 @@
                             <li><a class="dropdown-item text-white bg-dark" href="#videos">Videos</a></li>
                             <li><a class="dropdown-item text-white bg-dark" href="#noticias">Noticias</a></li>
                             <li><a class="dropdown-item text-white bg-dark" href="#testimonios">Testimonios</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="#contacto">Contáctanos</a></li>
                         </ul>
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="#contacto">Contáctanos</a>
+                        <a class="nav-link text-white" href="index.php?page=login">Admin</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
     <!-- Botón Scroll hacia abajo y devuelve al inicio -->
     <button id="scrollToTopBtn" class="btn" style="position:fixed; bottom:40px; right:30px; z-index:9999; width: 50px; height:40px;
         display:none; align-items:center; justify-content:center;">
         <i class="fa-solid fa-chevron-up fa-lg"></i>
     </button>
-
     <!-- Código JS para el Botón Scroll hacia abajo y devuelve al inicio -->
     <script>
         // Mostrar/ocultar el botón al hacer scroll
@@ -84,7 +87,6 @@
                 btn.style.display = 'none';
             }
         });
-
         // Scroll suave al inicio al hacer clic
         document.getElementById('scrollToTopBtn').addEventListener('click', function() {
             window.scrollTo({

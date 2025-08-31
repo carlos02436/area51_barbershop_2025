@@ -1,47 +1,47 @@
 <?php
+// index.php
 
-// CONFIGURACIÓN DE LA CONEXIÓN
-$host = "localhost";
-$user = "root";
-$password = "";
-$dbname = "area51_barberia";
-
-// Crear conexión
-$conn = @new mysqli($host, $user, $password, $dbname);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Error de conexión a la base de datos: " . $conn->connect_error);
+// Iniciar sesión solo una vez
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// INCLUIR MODELS
+// ==================== CONEXIÓN A LA BD ====================
+require_once __DIR__ . '/config/database.php'; // Aquí tienes $db (PDO)
+
+// ==================== AUTOLOAD MODELOS Y CONTROLADORES ====================
+require_once __DIR__ . '/app/models/Administrador.php';
 require_once __DIR__ . '/app/models/Cita.php';
 require_once __DIR__ . '/app/models/Servicio.php';
 require_once __DIR__ . '/app/models/Barbero.php';
+require_once __DIR__ . '/app/models/Dashboard.php';
+require_once __DIR__ . '/app/controllers/DashboardController.php';
 
-$citaModel = new Cita();
-$servicioModel = new Servicio();
-$barberoModel = new Barbero();
-
-// DEFINIR LA PÁGINA ACTUAL
+// ==================== DEFINIR PÁGINA ====================
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-// INCLUIR HEADER
+// ==================== HEADER ====================
 include __DIR__ . '/app/views/plantillas/header.php';
 
-// ENRUTADOR
+// ==================== ENRUTADOR PRINCIPAL ====================
 switch ($page) {
-
     case 'home':
         include __DIR__ . '/app/views/home.php';
         break;
 
     case 'panel':
-        include __DIR__ . '/app/views/citas/panel.php';
+        include __DIR__ . '/app/views/panel.php';
+        break;
+
+    case 'login':
+        include __DIR__ . '/app/views/login.php';
+        break;
+
+    case 'dashboard':
+        include __DIR__ . '/app/views/dashboard.php';
         break;
 
     case 'create':
-        // Cargar barberos y servicios para el formulario
         $servicios = $servicioModel->getServicios();
         $barberos = $barberoModel->obtenerBarberos();
         include __DIR__ . '/app/views/citas/create.php';
@@ -64,5 +64,5 @@ switch ($page) {
         break;
 }
 
-// INCLUIR FOOTER
+// ==================== FOOTER ====================
 include __DIR__ . '/app/views/plantillas/footer.php';

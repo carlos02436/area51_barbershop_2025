@@ -11,9 +11,8 @@ class Cita {
     }
 
     public function getCitas() {
-        $stmt = $this->db->prepare("SELECT * FROM citas ORDER BY fecha_cita, hora_cita");
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $stmt = $this->db->query("SELECT * FROM citas");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function crearCita($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
