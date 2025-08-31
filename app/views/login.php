@@ -1,29 +1,29 @@
 <!-- Login administradores -->
-<div class="container py-5 text-white" style="scroll-margin-top:80px;margin: 100px;">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
+<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
             <div class="card shadow-lg border-0">
-                <div class="card-body">
-                    <h3 class="text-center text-white mb-4">Iniciar Sesión</h3>
+                <div class="card-body p-4">
+                    <h3 class="text-center mb-4 fw-bold text-white">Iniciar Sesión</h3>
                     <?php if (isset($error)) : ?>
                         <div class="alert alert-danger"><?= $error; ?></div>
                     <?php endif; ?>
-                    <form method="POST" action="app/controllers/AuthController.php">
+                    <form method="POST" action="app/controllers/AuthController.php" autocomplete="off">
                         <div class="mb-3">
                             <label class="form-label text-white">Usuario</label>
-                            <input type="text" name="usuario" class="form-control" required>
+                            <input type="text" style="border: 2px solid #00ff00;" name="usuario" class="form-control" required autofocus>
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-white">Contraseña</label>
                             <div class="input-group">
-                                <input type="password" name="password" id="password" class="form-control" required>
-                                <button type="button" class="btn btn-neon" id="togglePassword">
+                                <input type="password" style="border: 2px solid #00ff00;" name="password" id="password" class="form-control" required>
+                                <button type="button" class="btn btn-neon" id="togglePassword" tabindex="-1">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-neon d-block mx-auto px-5">
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-neon px-5 py-2">
                                 Iniciar Sesión
                             </button>
                         </div>
@@ -39,11 +39,8 @@
     const password = document.querySelector('#password');
 
     togglePassword.addEventListener('click', function () {
-        // Alternar tipo de input
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
-
-        // Cambiar icono
         this.innerHTML = type === 'password' 
             ? '<i class="bi bi-eye"></i>' 
             : '<i class="bi bi-eye-slash"></i>';

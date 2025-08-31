@@ -43,13 +43,13 @@ ob_start();
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="index.php?page=#inicio">Inicio</a>
+                        <a class="nav-link text-white" href="index.php?page=home#inicio">Inicio</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="#nosotros">Nosotros</a>
+                        <a class="nav-link text-white" href="index.php?page=home#nosotros">Nosotros</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="#servicios">Servicios</a>
+                        <a class="nav-link text-white" href="index.php?page=home#servicios">Servicios</a>
                     </li>
                     <li class="nav-item dropdown me-4">
                         <a class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown"
@@ -57,13 +57,14 @@ ob_start();
                             Más
                         </a>
                         <ul class="dropdown-menu dropdown-menu-start bg-dark ms-n2">
-                            <li><a class="dropdown-item text-white bg-dark" href="#barberos">Barberos</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="#galeria">Galería</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="#videos">Videos</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="#noticias">Noticias</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="#testimonios">Testimonios</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="#contacto">Contáctanos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#barberos">Barberos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#galeria">Galería</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#videos">Videos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#noticias">Noticias</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#testimonios">Testimonios</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#contacto">Contáctanos</a></li>
                         </ul>
+                    </li>
                     <li class="nav-item me-4">
                         <a class="nav-link text-white" href="index.php?page=login">Admin</a>
                     </li>

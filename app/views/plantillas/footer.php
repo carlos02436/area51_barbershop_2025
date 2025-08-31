@@ -6,30 +6,30 @@
                 <div class="col-md-2 mb-3">
                     <p class="navbar-brand mb-0">HOME</p>
                     <ul class="list-unstyled">
-                        <li><a href="#inicio" style="color: white; text-decoration: none;">Inicio</a></li>
-                        <li><a href="#servicios" style="color: white; text-decoration: none;">Servicios</a></li>
-                        <li><a href="#galeria" style="color: white; text-decoration: none;">Galería</a></li>
-                        <li><a href="#barberos" style="color: white; text-decoration: none;">Barberos</a></li>
-                        <li><a href="#contacto" style="color: white; text-decoration: none;">Contacto</a></li>
+                        <li><a href="index.php?page=home#inicio" style="color: white; text-decoration: none;">Inicio</a></li>
+                        <li><a href="index.php?page=home#servicios" style="color: white; text-decoration: none;">Servicios</a></li>
+                        <li><a href="index.php?page=home#galeria" style="color: white; text-decoration: none;">Galería</a></li>
+                        <li><a href="index.php?page=home#barberos" style="color: white; text-decoration: none;">Barberos</a></li>
+                        <li><a href="index.php?page=home#contacto" style="color: white; text-decoration: none;">Contacto</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER SERVICIOS -->
                 <div class="col-md-2 mb-3">
                     <p class="navbar-brand mb-0">SERVICIOS</p>
                     <ul class="list-unstyled">
-                        <li><a href="#servicios" style="color: white; text-decoration: none;">Cortes</a></li>
-                        <li><a href="#servicios" style="color: white; text-decoration: none;">Afeitado</a></li>
-                        <li><a href="#servicios" style="color: white; text-decoration: none;">Diseños</a></li>
+                        <li><a href="index.php?page=home#servicios" style="color: white; text-decoration: none;">Cortes</a></li>
+                        <li><a href="index.php?page=home#servicios" style="color: white; text-decoration: none;">Afeitado</a></li>
+                        <li><a href="index.php?page=home#servicios" style="color: white; text-decoration: none;">Diseños</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER NOSOTROS -->
                 <div class="col-md-2 mb-3">
                     <p class="navbar-brand mb-0">NOSOTROS</p>
                     <ul class="list-unstyled">
-                        <li><a href="#nosotros" style="color: white; text-decoration: none;">Quiénes Somos</a></li>
-                        <li><a href="#nosotros" style="color: white; text-decoration: none;">Misión</a></li>
-                        <li><a href="#nosotros" style="color: white; text-decoration: none;">Visión</a></li>
-                        <li><a href="#testimonios" style="color: white; text-decoration: none;">Testimonios</a></li>
+                        <li><a href="index.php?page=home#nosotros" style="color: white; text-decoration: none;">Quiénes Somos</a></li>
+                        <li><a href="index.php?page=home#nosotros" style="color: white; text-decoration: none;">Misión</a></li>
+                        <li><a href="index.php?page=home#nosotros" style="color: white; text-decoration: none;">Visión</a></li>
+                        <li><a href="index.php?page=home#testimonios" style="color: white; text-decoration: none;">Testimonios</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER CONTACTO -->

@@ -6,6 +6,10 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/../models/Administrador.php';
 require_once __DIR__ . '/../../config/database.php';
 
+// Asegúrate de obtener la instancia de la base de datos
+// Usar la variable $db definida en config/database.php
+// Ya está disponible después del require_once
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);

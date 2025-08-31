@@ -17,8 +17,12 @@ require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
 require_once __DIR__ . '/app/controllers/DashboardController.php';
 
+// ==================== INSTANCIAR MODELOS NECESARIOS ====================
+$barberoModel = new Barbero();
+$servicioModel = new Servicio();
+
 // ==================== DEFINIR PÁGINA ====================
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$page = $_GET['page'] ?? 'home';
 
 // ==================== HEADER ====================
 include __DIR__ . '/app/views/plantillas/header.php';

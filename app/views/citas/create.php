@@ -34,8 +34,8 @@ $servicios = $servicioModel->obtenerServicios();
                         <select name="id_servicio" class="form-select rounded-pill" required>
                             <option value="">Selecciona un servicio</option>
                             <?php foreach ($servicios as $s): ?>
-                                <option value="<?= htmlspecialchars($s['id_servicio']) ?>">
-                                    <?= htmlspecialchars($s['nombre']) ?>
+                                <option value="<?= isset($s['id_servicio']) ? htmlspecialchars($s['id_servicio'], ENT_QUOTES, 'UTF-8') : '' ?>">
+                                    <?= isset($s['nombre']) ? htmlspecialchars($s['nombre'], ENT_QUOTES, 'UTF-8') : '' ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
