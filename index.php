@@ -1,13 +1,13 @@
 <?php
 // index.php
 
-// Iniciar sesión solo una vez
+// ==================== INICIAR SESIÓN ====================
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 // ==================== CONEXIÓN A LA BD ====================
-require_once __DIR__ . '/config/database.php'; // Aquí tienes $db (PDO)
+require_once __DIR__ . '/config/database.php'; // $db (PDO)
 
 // ==================== AUTOLOAD MODELOS Y CONTROLADORES ====================
 require_once __DIR__ . '/app/models/Administrador.php';
@@ -36,26 +36,40 @@ switch ($page) {
     case 'login':
         include __DIR__ . '/app/views/login.php';
         break;
-        
+
     case 'panel':
         include __DIR__ . '/app/views/panel.php';
         break;
 
     case 'dashboard':
+        if (!isset($_SESSION['admin'])) {
+            header("Location: index.php?page=login");
+            exit;
+        }
         include __DIR__ . '/app/views/dashboard.php';
         break;
 
     case 'create':
-        $servicios = $servicioModel->getServicios();
-        $barberos = $barberoModel->obtenerBarberos();
+        if (!isset($_SESSION['admin'])) {
+            header("Location: index.php?page=login");
+            exit;
+        }
         include __DIR__ . '/app/views/citas/create.php';
         break;
 
     case 'edit':
+        if (!isset($_SESSION['admin'])) {
+            header("Location: index.php?page=login");
+            exit;
+        }
         include __DIR__ . '/app/views/citas/edit.php';
         break;
 
     case 'delete':
+        if (!isset($_SESSION['admin'])) {
+            header("Location: index.php?page=login");
+            exit;
+        }
         include __DIR__ . '/app/views/citas/delete.php';
         break;
 
