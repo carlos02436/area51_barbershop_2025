@@ -26,7 +26,7 @@ switch ($page) {
         break;
 
     case 'login':
-        require __DIR__ . '/app/views/login.php';
+        require __DIR__ . '/app/views/dashboard.php';
         break;
 
     case 'dashboard':

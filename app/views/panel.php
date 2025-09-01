@@ -1,6 +1,4 @@
-<?php
-require_once __DIR__ . '/plantillas/header.php';
-?>
+<!--  Panel de Control -->
 <div class="container py-3 text-center" style="margin:130px auto;">
     <div class="card shadow-lg border-0">
         <div class="card-body text-center">
@@ -9,8 +7,8 @@ require_once __DIR__ . '/plantillas/header.php';
         </div>
     </div>
 
+    <!-- Dashboard -->
     <div class="row mt-4">
-        <!-- Dashboard -->
         <div class="col-md-4 mb-3">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
