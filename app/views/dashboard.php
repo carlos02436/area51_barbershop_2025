@@ -1,3 +1,4 @@
+<?php // include __DIR__ . '../plantillas/header.php'; ?>
 <?php
 // Requerimientos de archivos
 require_once __DIR__ . '/../../config/database.php'; // Ajusta si es necesario
@@ -186,3 +187,4 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
     <main>
+<?php // include __DIR__ . '../plantillas/footer.php'; ?>
