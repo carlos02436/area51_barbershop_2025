@@ -1,4 +1,3 @@
-<?php require_once __DIR__ . '/plantillas/header.php'; ?>
 <?php
 // Requerimientos de archivos
 require_once __DIR__ . '/../../config/database.php'; // Ajusta si es necesario
@@ -70,14 +69,15 @@ $stmt = $db->query("
 ");
 $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <body>
-    <div class="container-fluid bg-light my-5 py-5">
-        <h1 class="text-center fw-bold mb-5 display-4 text-primary">
+    <div class="container-fluid py-5 mt-5" style="background:transparent;">
+        <h1 class="text-center fw-bold mb-5 display-4 text-white">
             📊 Dashboard General
         </h1>
 
         <!-- Tarjetas de resumen -->
-        <div class="row g-4 mb-5">
+        <div class="row g-4 mb-5 text-white">
             <?php
             $stats = [
                 ['title' => 'Clientes', 'value' => htmlspecialchars($clientesCount), 'color' => 'primary', 'desc' => 'Total registrados'],
@@ -101,7 +101,7 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Próximas citas -->
         <div class="card shadow-sm border-0 rounded-4 mb-5">
-            <div class="card-header bg-dark text-white fw-bold rounded-top-4">
+            <div class="card-header bg-dark text-white fw-bold rounded-top-4 text-center">
                 📅 Próximas Citas
             </div>
             <div class="card-body p-0">
@@ -185,5 +185,4 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-<main>
-<?php require_once __DIR__ . '/plantillas/footer.php'; ?>
+    <main>
