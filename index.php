@@ -21,8 +21,8 @@ include __DIR__ . '/app/views/plantillas/header.php';
 // ==================== ENRUTADOR ====================
 switch ($page) {
 
-    case 'panel':
-        require __DIR__ . '/app/views/panel.php';
+    case 'home':
+        include __DIR__ . '/app/views/home.php';
         break;
 
     case 'login':
@@ -45,8 +45,8 @@ switch ($page) {
         include __DIR__ . '/app/views/citas/delete.php';
         break;
 
-    case 'home':
-        include __DIR__ . '/app/views/home.php';
+    case 'panel':
+        require __DIR__ . '/app/views/panel.php';
         break;
 
     default:
