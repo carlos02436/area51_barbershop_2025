@@ -2,44 +2,65 @@
 Página web, para negocio de Barbería.
 
 AREA51_BARBERSHOP_2025/
-│── BD/                       # Scripts SQL (estructura y datos iniciales)
-│   └── BD_area51.sql
 │
-│── app/                      # Carpeta principal del MVC
-│   ├── controllers/          # Controladores: lógica de negocio
-│   │   ├── ClienteController.php
-│   │   ├── CitaController.php
+├── app/                                
+│   ├── controllers/                    # Controladores (lógica de negocio)
+│   │   ├── AuthController.php
+│   │   ├── BarberoController.php
+│   │   ├── CitasController.php
+│   │   ├── DashboardController.php
+│   │   ├── GaleriaController.php
+│   │   ├── NoticiaController.php
+│   │   ├── PanelController.php
+│   │   ├── ReportesController.php
 │   │   ├── ServicioController.php
-│   │   └── AuthController.php
+│   │   ├── TikTokController.php
+│   │   └── VideoController.php
 │   │
-│   ├── models/               # Modelos: conexión y consultas a la BD
-│   │   ├── Cliente.php
+│   ├── models/                         # Modelos (acceso a datos)
+│   │   ├── Barbero.php
 │   │   ├── Cita.php
+│   │   ├── Cliente.php
+│   │   ├── Dashboard.php
+│   │   ├── Galeria.php
+│   │   ├── Noticia.php
+│   │   ├── Reporte.php
 │   │   ├── Servicio.php
-│   │   └── Usuario.php
+│   │   ├── Testimonio.php
+│   │   ├── TikTok.php
+│   │   └── Video.php
 │   │
-│   ├── views/                # Vistas: interfaz HTML/PHP
-│   │   ├── clientes/
-│   │   │   ├── index.php
-│   │   │   ├── crear.php
-│   │   │   └── editar.php
+│   ├── views/                          # Vistas (interfaz de usuario)
+│   │   ├── barberos/
+│   │   │   ├── create.php
+│   │   │   ├── edit.php
+│   │   │   └── index.php
 │   │   ├── citas/
-│   │   │   ├── index.php
-│   │   │   └── detalle.php
-│   │   └── servicios/
-│   │       └── index.php
+│   │   │   ├── create.php
+│   │   │   ├── delete.php
+│   │   │   └── edit.php
+│   │   ├── plantillas/
+│   │   │   ├── footer.php
+│   │   │   └── header.php
+│   │   ├── dashboard.php
+│   │   ├── home.php
+│   │   ├── login.php
+│   │   ├── logout.php
+│   │   └── panel.php
 │   │
-│   └── core/                 # Configuración central
-│       ├── Database.php      # Conexión PDO
-│       └── App.php           # Ruteador principal
+│   └── BD/                             # Base de datos (scripts SQL)
+│       └── area51_barberia.sql
 │
-│── public/                   # Archivos accesibles desde navegador
+├── config/                             # Configuración general
+│   └── database.php
+│
+├── public/                             # Archivos públicos (assets)
 │   ├── css/
 │   │   └── style.css
-│   ├── js/
+│   ├── JavaScript/
 │   │   └── scripts.js
 │   └── img/
 │
-│── index.php                 # Punto de entrada del MVC
-│── .gitignore
-│── README.md
+├── .gitignore                          # Ignorar archivos en Git
+├── index.php                           # Punto de entrada del proyecto
+└── README.md                           # Documentación inicial
