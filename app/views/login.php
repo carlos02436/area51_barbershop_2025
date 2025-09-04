@@ -2,10 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header("Location: index.php?page=panel");
-    exit;
-}
+  if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+      header("Location: index.php?page=panel");
+      exit();
+  }
 $error = $error ?? null;
 ?>
 <div class="container min-vh-100 d-flex align-items-center justify-content-center">

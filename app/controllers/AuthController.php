@@ -31,8 +31,8 @@ class AuthController {
                 $_SESSION['admin_id'] = $admin['id_admin'];
                 $_SESSION['admin_usuario'] = $admin['usuario'];
 
-                header('Location: panel.php');
-                exit;
+                header("Location: index.php?page=panel");
+                exit();
             } else {
                 $error = "Usuario o contraseña incorrectos.";
             }
@@ -45,7 +45,7 @@ class AuthController {
         session_start();
         $_SESSION = [];
         session_destroy();
-        header("Location: login.php");
-        exit;
+        header("Location: index.php?page=login");
+        exit();
     }
 }

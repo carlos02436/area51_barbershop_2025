@@ -1,10 +1,10 @@
 <?php
-// VERIFICACIÓN DE SEGURIDAD - ESTO ES LO MÁS IMPORTANTE
+// VERIFICACIÓN DE SEGURIDAD - INICIO DE SESIÓN
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar si está logueado - SOLUCIÓN PRINCIPAL AL PROBLEMA
+// Verificar si está logueado
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: /area51_barbershop_2025/index.php?page=login');
     exit();
@@ -37,7 +37,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 $_SESSION['last_activity'] = time();
 ?>
 
-<!--  Panel de Control -->
+<!--  Panel de Control HTML (Bootstrap) -->
 <div class="container py-3 text-center" style="margin:130px auto;">
     <div class="card shadow-lg border-0">
         <div class="card-body text-center">
@@ -46,8 +46,9 @@ $_SESSION['last_activity'] = time();
         </div>
     </div>
 
-    <!-- Dashboard -->
+    <!-- Dashboard y botones -->
     <div class="row mt-4">
+        <!-- Dashboard -->
         <div class="col-md-4 mb-3">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
@@ -121,38 +122,31 @@ $_SESSION['last_activity'] = time();
     </div>
     
     <div>
-        <a href="/area51_barbershop_2025/app/views/auth/logout.php" class="btn btn-danger" style="display: block;width:200px;margin: 20px auto;">
+        <a href="/area51_barbershop_2025/index.php?page=logout" class="btn btn-danger" style="display: block;width:200px;margin: 20px auto;">
             Cerrar sesión
         </a>
     </div>
 </div>
 
 <script>
-// Sistema de seguridad JavaScript mejorado - CON RUTAS CORREGIDAS
+// Seguridad JS - solo cambiar rutas a login mediante index.php?page=login
 window.onload = function() {
-    // Prevenir navegación con botones del navegador
     if (window.performance && window.performance.navigation.type === 2) {
         window.location.replace('/area51_barbershop_2025/index.php?page=login');
     }
     
-    // Verificar sesión al cargar
     checkSession();
-    
-    // Verificar sesión cada 60 segundos
     setInterval(checkSession, 60000);
-    
-    // Detectar inactividad (30 minutos)
+
     let lastActivity = Date.now();
-    const timeoutDuration = 30 * 60 * 1000; // 30 minutos
-    
-    // Actualizar última actividad en eventos del usuario
+    const timeoutDuration = 30 * 60 * 1000;
+
     ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
         document.addEventListener(event, function() {
             lastActivity = Date.now();
         }, false);
     });
-    
-    // Verificar timeout cada minuto
+
     setInterval(function() {
         if (Date.now() - lastActivity > timeoutDuration) {
             alert('Su sesión ha expirado por inactividad. Será redirigido al login.');
@@ -161,39 +155,29 @@ window.onload = function() {
     }, 60000);
 };
 
-// Función para verificar si la sesión sigue activa
 function checkSession() {
-    fetch('/area51_barbershop_2025/app/views/auth/check_session.php', {
+    fetch('/area51_barbershop_2025/index.php?page=check_session', {
         method: 'GET',
         cache: 'no-cache',
-        headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-        }
+        headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
     })
     .then(response => response.json())
     .then(data => {
         if (!data.logged_in) {
-            window.location.replace('/area51_barbershop_2025/app/views/auth/login.php');
+            window.location.replace('/area51_barbershop_2025/index.php?page=login');
         }
     })
     .catch(error => {
         console.error('Error verificando sesión:', error);
-        // En caso de error, redirigir por seguridad
-        window.location.replace('/area51_barbershop_2025/app/views/auth/login.php');
+        window.location.replace('/area51_barbershop_2025/index.php?page=login');
     });
 }
 
-// Prevenir uso de botones atrás/adelante y caché
 window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        window.location.reload();
-    }
+    if (event.persisted) window.location.reload();
 });
 
-// Manejar eventos de navegación
 window.addEventListener('popstate', function(event) {
-    // Verificar sesión antes de permitir navegación
     checkSession();
 });
 </script>
