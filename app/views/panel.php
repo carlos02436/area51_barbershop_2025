@@ -121,14 +121,15 @@ $_SESSION['last_activity'] = time();
     </div>
     
     <div>
-        <a href="/area51_barbershop_2025/app/views/auth/logout.php" class="btn btn-danger" style="display: block;width:200px;margin: 20px auto;">
+        <!-- ENLACE CORREGIDO - USA EL SISTEMA DE ENRUTAMIENTO -->
+        <a href="/area51_barbershop_2025/index.php?page=logout" class="btn btn-danger" style="display: block;width:200px;margin: 20px auto;">
             Cerrar sesión
         </a>
     </div>
 </div>
 
 <script>
-// Sistema de seguridad JavaScript mejorado - CON RUTAS CORREGIDAS
+// Sistema de seguridad JavaScript mejorado
 window.onload = function() {
     // Prevenir navegación con botones del navegador
     if (window.performance && window.performance.navigation.type === 2) {
@@ -174,13 +175,13 @@ function checkSession() {
     .then(response => response.json())
     .then(data => {
         if (!data.logged_in) {
-            window.location.replace('/area51_barbershop_2025/app/views/auth/login.php');
+            window.location.replace('/area51_barbershop_2025/index.php?page=login&msg=session_invalid');
         }
     })
     .catch(error => {
         console.error('Error verificando sesión:', error);
         // En caso de error, redirigir por seguridad
-        window.location.replace('/area51_barbershop_2025/app/views/auth/login.php');
+        window.location.replace('/area51_barbershop_2025/index.php?page=login&msg=error');
     });
 }
 

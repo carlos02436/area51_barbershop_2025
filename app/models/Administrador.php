@@ -27,30 +27,29 @@ class Administrador {
     }
 
     // Procesar login y gestionar sesión
-    public function procesarLogin() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $usuario = trim($_POST['usuario'] ?? '');
-            $password = trim($_POST['password'] ?? '');
-
-            $stmt = $this->db->prepare("SELECT * FROM administradores WHERE usuario = ? AND password = ?");
-            $stmt->execute([$usuario, $password]);
-            $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($admin) {
-                session_start();
-                session_regenerate_id(true);
-                $_SESSION['admin'] = [
-                    'id_admin' => $admin['id_admin'],
-                    'nombre'   => $admin['nombre'],
-                    'usuario'  => $admin['usuario'],
-                    'email'    => $admin['email']
-                ];
-                header("Location: index.php?page=panel");
-                exit;
-            } else {
-                return "Usuario o contraseña incorrectos.";
-            }
-        }
-        return null;
+    public function procesarLogin() { 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+            $usuario = trim($_POST['usuario'] ?? ''); 
+            
+                $password = trim($_POST['password'] ?? ''); 
+            $stmt = $this->db->prepare("SELECT * FROM administradores WHERE usuario = ? AND password = ?"); 
+            $stmt->execute([$usuario, $password]); 
+            $admin = $stmt->fetch(PDO::FETCH_ASSOC); 
+            if ($admin) { 
+                session_start(); 
+                session_regenerate_id(true); 
+                $_SESSION['admin'] = [ 
+                    'id_admin' => $admin['id_admin'], 
+                    'nombre' => $admin['nombre'], 
+                    'usuario' => $admin['usuario'], 
+                    'email' => $admin['email'] 
+                ]; 
+                header("Location: /area51_barbershop_2025/index.php?page=panel"); 
+                exit; 
+            } else { 
+                return "Usuario o contraseña incorrectos."; 
+            } 
+        } 
+        return null; 
     }
 }

@@ -11,7 +11,7 @@ header("Expires: Thu, 19 Nov 1981 08:52:00 GMT");
 header("X-Frame-Options: DENY");
 header("X-Content-Type-Options: nosniff");
 
-// Si ya está logueado, redirige al panel principal
+// Si ya está logueado, redirige al panel - RUTA CORREGIDA
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
     header('Location: /area51_barbershop_2025/index.php?page=panel');
     exit();
@@ -71,7 +71,7 @@ $error = $adminModel->procesarLogin();
             '<i class="bi bi-eye-slash"></i>';
     });
 
-    // Prevenir acceso por back/forward del navegador 
+    // Prevenir acceso por back/forward del navegador - CON RUTA CORREGIDA
     window.onload = function() {
         if (window.performance && window.performance.navigation.type === 2) {
             window.location.replace('/area51_barbershop_2025/index.php?page=login');
