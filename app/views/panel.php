@@ -1,19 +1,42 @@
 <?php
+// VERIFICACIÓN DE SEGURIDAD - ESTO ES LO MÁS IMPORTANTE
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Evitar cache
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: Thu, 19 Nov 1981 08:52:00 GMT");
-
-// Verificar login
+// Verificar si está logueado - SOLUCIÓN PRINCIPAL AL PROBLEMA
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: /area51_barbershop_2025/index.php?page=login');
     exit();
 }
+
+// Headers de seguridad para prevenir caché
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: Thu, 19 Nov 1981 08:52:00 GMT");
+header("X-Frame-Options: DENY");
+header("X-Content-Type-Options: nosniff");
+
+// Regenerar ID de sesión periódicamente para seguridad
+if (!isset($_SESSION['last_regeneration'])) {
+    $_SESSION['last_regeneration'] = time();
+} elseif (time() - $_SESSION['last_regeneration'] > 300) { // 5 minutos
+    session_regenerate_id(true);
+    $_SESSION['last_regeneration'] = time();
+}
+
+// Timeout de sesión (30 minutos de inactividad)
+$timeout = 1800; // 30 minutos
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout) {
+    session_unset();
+    session_destroy();
+    header('Location: /area51_barbershop_2025/index.php?page=login&msg=session_expired');
+    exit();
+}
+$_SESSION['last_activity'] = time();
 ?>
+
 <!--  Panel de Control -->
 <div class="container py-3 text-center" style="margin:130px auto;">
     <div class="card shadow-lg border-0">
@@ -105,29 +128,32 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 </div>
 
 <script>
-// Sistema de seguridad JavaScript - MVC corregido
+// Sistema de seguridad JavaScript mejorado - CON RUTAS CORREGIDAS
 window.onload = function() {
     // Prevenir navegación con botones del navegador
     if (window.performance && window.performance.navigation.type === 2) {
         window.location.replace('/area51_barbershop_2025/index.php?page=login');
     }
-
+    
     // Verificar sesión al cargar
     checkSession();
-
+    
     // Verificar sesión cada 60 segundos
     setInterval(checkSession, 60000);
-
+    
     // Detectar inactividad (30 minutos)
     let lastActivity = Date.now();
     const timeoutDuration = 30 * 60 * 1000; // 30 minutos
-
-    ['mousedown','mousemove','keypress','scroll','touchstart','click'].forEach(event => {
-        document.addEventListener(event, () => { lastActivity = Date.now(); }, false);
+    
+    // Actualizar última actividad en eventos del usuario
+    ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+        document.addEventListener(event, function() {
+            lastActivity = Date.now();
+        }, false);
     });
-
-    // Timeout por inactividad
-    setInterval(() => {
+    
+    // Verificar timeout cada minuto
+    setInterval(function() {
         if (Date.now() - lastActivity > timeoutDuration) {
             alert('Su sesión ha expirado por inactividad. Será redirigido al login.');
             window.location.replace('/area51_barbershop_2025/index.php?page=login&msg=timeout');
@@ -140,25 +166,34 @@ function checkSession() {
     fetch('/area51_barbershop_2025/app/views/auth/check_session.php', {
         method: 'GET',
         cache: 'no-cache',
-        headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (!data.logged_in) {
-            // Redirigir al enrutador principal, no a login.php directo
-            window.location.replace('/area51_barbershop_2025/index.php?page=login');
+        headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
         }
     })
-    .catch(() => {
-        window.location.replace('/area51_barbershop_2025/index.php?page=login');
+    .then(response => response.json())
+    .then(data => {
+        if (!data.logged_in) {
+            window.location.replace('/area51_barbershop_2025/app/views/auth/login.php');
+        }
+    })
+    .catch(error => {
+        console.error('Error verificando sesión:', error);
+        // En caso de error, redirigir por seguridad
+        window.location.replace('/area51_barbershop_2025/app/views/auth/login.php');
     });
 }
 
-// Prevenir cache con botones atrás/adelante
+// Prevenir uso de botones atrás/adelante y caché
 window.addEventListener('pageshow', function(event) {
-    if (event.persisted) window.location.reload();
+    if (event.persisted) {
+        window.location.reload();
+    }
 });
 
 // Manejar eventos de navegación
-window.addEventListener('popstate', checkSession);
+window.addEventListener('popstate', function(event) {
+    // Verificar sesión antes de permitir navegación
+    checkSession();
+});
 </script>

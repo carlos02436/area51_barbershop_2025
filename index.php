@@ -26,11 +26,11 @@ switch ($page) {
         break;
 
     case 'login':
-        require __DIR__ . '/app/views/login.php';
+        require __DIR__ . '/app/views/auth/login.php';
         break;
 
     case 'logout':
-        require __DIR__ . '/app/views/logout.php';
+        require __DIR__ . '/app/views/auth/logout.php';
         break;
 
     case 'dashboard':
