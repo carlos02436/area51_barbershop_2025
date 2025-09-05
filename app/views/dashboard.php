@@ -72,19 +72,16 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
 
-<!-- Botón de HOME -->
-<div class="position-absolute" style="top: 100px; left: 20px;">
-    <a href="index.php?page=panel" class="btn btn-neon btn-lg d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; border-radius: 50%;">
-        <i class="bi bi-house-fill fs-3"></i>
-    </a>
-</div>
-
 <!-- Contenedor principal con márgenes más equilibrados -->
 <div class="container-fluid py-5" style="max-width: 1400px; background:transparent; margin:120px auto;">
 
-    <h1 class="text-center fw-bold mb-5 display-4 text-white">
-        📊 Dashboard General
-    </h1>
+<h1 class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-center gap-3 fw-bold mb-5 display-4 text-white text-center text-md-start">
+    <a href="index.php?page=panel" class="btn btn-neon btn-lg d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; border-radius: 50%;">
+        <i class="bi bi-house-fill fs-3"></i>
+    </a>
+    📊 Dashboard General
+</h1>
+
 
     <!-- Tarjetas de resumen -->
     <div class="row g-4 mb-5">
