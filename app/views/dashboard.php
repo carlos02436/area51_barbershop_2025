@@ -72,6 +72,7 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
 
+<<<<<<< Updated upstream
 <!-- Contenedor principal con márgenes más equilibrados -->
 <div class="container-fluid py-5" style="max-width: 1400px; background:transparent; margin:120px auto;">
 
@@ -82,114 +83,126 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     📊 Dashboard General
 </h1>
 
+=======
+    <div class="container py-5" style="margin:100px;">
+        <!-- Título y botón HOME -->
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start">
+            <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle mb-3 mb-md-0"
+            style="width: 60px; height: 60px;">
+                <i class="bi bi-house-fill fs-3"></i>
+            </a>
+            <h1 class="fw-bold display-5 text-white mb-0">📊 Dashboard General</h1>
+        </div>
 
-    <!-- Tarjetas de resumen -->
-    <div class="row g-4 mb-5">
-        <?php
-        $stats = [
-            ['title' => '<span class="text-white">Clientes</span>', 'value' => htmlspecialchars($clientesCount), 'color' => 'primary', 'desc' => '<span class="text-white">Total registrados</span>'],
-            ['title' => '<span class="text-white">Citas</span>', 'value' => htmlspecialchars($citasCount), 'color' => 'success', 'desc' => '<span class="text-white">Hoy</span>'],
-            ['title' => '<span class="text-white">Barberos</span>', 'value' => htmlspecialchars($barberosCount), 'color' => 'warning', 'desc' => '<span class="text-white">Registrados</span>'],
-            ['title' => '<span class="text-white">Ingresos</span>', 'value' => '$' . number_format($ingresosHoy, 2, ',', '.'), 'color' => 'danger', 'desc' => '<span class="text-white">Hoy</span>'],
-        ];
+        <!-- Tarjetas de resumen -->
+        <div class="row g-4 mb-5">
+            <?php
+            $stats = [
+                ['title' => 'Clientes', 'value' => htmlspecialchars($clientesCount), 'color' => 'primary', 'desc' => 'Total registrados'],
+                ['title' => 'Citas', 'value' => htmlspecialchars($citasCount), 'color' => 'success', 'desc' => 'Hoy'],
+                ['title' => 'Barberos', 'value' => htmlspecialchars($barberosCount), 'color' => 'warning', 'desc' => 'Registrados'],
+                ['title' => 'Ingresos', 'value' => '$' . number_format($ingresosHoy, 2, ',', '.'), 'color' => 'danger', 'desc' => 'Hoy'],
+            ];
 
-        foreach ($stats as $stat): ?>
-            <div class="col-md-3">
+            foreach ($stats as $stat): ?>
+                <div class="col-6 col-md-3">
+                    <div class="card shadow-sm border-0 rounded-4 h-100 text-center">
+                        <div class="card-body">
+                            <h6 class="text-white fw-semibold"><?= $stat['title'] ?></h6>
+                            <h2 class="fw-bold text-<?= $stat['color'] ?>"><?= $stat['value'] ?></h2>
+                            <p class="small text-white"><?= $stat['desc'] ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+>>>>>>> Stashed changes
+
+        <!-- Próximas citas -->
+        <div class="card shadow-sm border-0 rounded-4 mb-5">
+            <div class="card-header bg-dark text-white fw-bold rounded-top-4 text-center">
+                📅 Próximas Citas
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Barbero</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Servicio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($proximasCitas)): ?>
+                                <?php foreach ($proximasCitas as $cita): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($cita['cliente']) ?></td>
+                                        <td><?= htmlspecialchars($cita['barbero']) ?></td>
+                                        <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
+                                        <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
+                                        <td><?= htmlspecialchars($cita['servicio']) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-3">No hay próximas citas</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Servicios más solicitados y últimos clientes -->
+        <div class="row g-4">
+            <div class="col-md-6">
                 <div class="card shadow-sm border-0 rounded-4 h-100">
-                    <div class="card-body text-center">
-                        <h6 class="text-muted fw-semibold"><?= $stat['title'] ?></h6>
-                        <h2 class="fw-bold text-<?= $stat['color'] ?>"><?= $stat['value'] ?></h2>
-                        <p class="small text-secondary"><?= $stat['desc'] ?></p>
+                    <div class="card-header bg-info text-white fw-bold rounded-top-4">
+                        🔥 Servicios más solicitados
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($serviciosPopulares)): ?>
+                            <ul class="list-group list-group-flush">
+                                <?php foreach ($serviciosPopulares as $servicio): ?>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <?= htmlspecialchars($servicio['nombre']) ?>
+                                        <span class="badge bg-primary rounded-pill"><?= htmlspecialchars($servicio['cantidad']) ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p class="text-muted mb-0">No hay datos</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
 
-    <!-- Próximas citas -->
-    <div class="card shadow-sm border-0 rounded-4 mb-5">
-        <div class="card-header bg-dark text-white fw-bold rounded-top-4 text-center">
-            📅 Próximas Citas
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Barbero</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Servicio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($proximasCitas)): ?>
-                            <?php foreach ($proximasCitas as $cita): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($cita['cliente']) ?></td>
-                                    <td><?= htmlspecialchars($cita['barbero']) ?></td>
-                                    <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
-                                    <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
-                                    <td><?= htmlspecialchars($cita['servicio']) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+                    <div class="card-header bg-warning text-dark fw-bold rounded-top-4">
+                        👤 Últimos clientes registrados
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($ultimosClientes)): ?>
+                            <ul class="list-group list-group-flush">
+                                <?php foreach ($ultimosClientes as $cliente): ?>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <?= htmlspecialchars($cliente['nombre']) ?>
+                                        <span class="text-muted"><?= htmlspecialchars($cliente['fecha_registro']) ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                         <?php else: ?>
-                            <tr>
-                                <td colspan="5" class="text-center text-muted py-3">No hay próximas citas</td>
-                            </tr>
+                            <p class="text-muted mb-0">No hay nuevos clientes</p>
                         <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Servicios más solicitados y últimos clientes -->
-    <div class="row g-4">
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 rounded-4 h-100">
-                <div class="card-header bg-info text-white fw-bold rounded-top-4">
-                    🔥 Servicios más solicitados
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($serviciosPopulares)): ?>
-                        <ul class="list-group list-group-flush">
-                            <?php foreach ($serviciosPopulares as $servicio): ?>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <?= htmlspecialchars($servicio['nombre']) ?>
-                                    <span class="badge bg-primary rounded-pill"><?= htmlspecialchars($servicio['cantidad']) ?></span>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p class="text-muted mb-0">No hay datos</p>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 rounded-4 h-100">
-                <div class="card-header bg-warning text-dark fw-bold rounded-top-4">
-                    👤 Últimos clientes registrados
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($ultimosClientes)): ?>
-                        <ul class="list-group list-group-flush">
-                            <?php foreach ($ultimosClientes as $cliente): ?>
-                                <li class="list-group-item">
-                                    <?= htmlspecialchars($cliente['nombre']) ?>
-                                    <span class="text-muted">(<?= htmlspecialchars($cliente['fecha_registro']) ?>)</span>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p class="text-muted mb-0">No hay nuevos clientes</p>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 <main>

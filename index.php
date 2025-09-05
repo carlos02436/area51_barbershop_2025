@@ -73,6 +73,46 @@ switch ($page) {
         require __DIR__ . '/app/views/panel.php';
         break;
 
+    case 'citas':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/citas/citas.php';
+        break;
+
+    case 'servicios':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/servicios/servicios.php';
+        break;
+
+    case 'barberos':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/barberos/barberos.php';
+        break;
+
+    case 'administradores':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/administradores/administradores.php';
+        break;
+
+    case 'reportes':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/reportes/reportes.php';
+        break;
+
     default:
         echo "<section class='container py-5 text-center'>
                 <h2 class='text-danger'>404 - Página no encontrada</h2>
