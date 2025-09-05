@@ -73,7 +73,7 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <!-- Botón de HOME -->
-<div class="position-absolute top-0 start-0 m-4">
+<div class="position-absolute" style="top: 100px; left: 20px;">
     <a href="index.php?page=panel" class="btn btn-neon btn-lg d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; border-radius: 50%;">
         <i class="bi bi-house-fill fs-3"></i>
     </a>
@@ -87,13 +87,13 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </h1>
 
     <!-- Tarjetas de resumen -->
-    <div class="row g-4 mb-5 text-white">
+    <div class="row g-4 mb-5">
         <?php
         $stats = [
-            ['title' => 'Clientes', 'value' => htmlspecialchars($clientesCount), 'color' => 'primary', 'desc' => 'Total registrados'],
-            ['title' => 'Citas', 'value' => htmlspecialchars($citasCount), 'color' => 'success', 'desc' => 'Hoy'],
-            ['title' => 'Barberos', 'value' => htmlspecialchars($barberosCount), 'color' => 'warning', 'desc' => 'Registrados'],
-            ['title' => 'Ingresos', 'value' => '$' . number_format($ingresosHoy, 2, ',', '.'), 'color' => 'danger', 'desc' => 'Hoy'],
+            ['title' => '<span class="text-white">Clientes</span>', 'value' => htmlspecialchars($clientesCount), 'color' => 'primary', 'desc' => '<span class="text-white">Total registrados</span>'],
+            ['title' => '<span class="text-white">Citas</span>', 'value' => htmlspecialchars($citasCount), 'color' => 'success', 'desc' => '<span class="text-white">Hoy</span>'],
+            ['title' => '<span class="text-white">Barberos</span>', 'value' => htmlspecialchars($barberosCount), 'color' => 'warning', 'desc' => '<span class="text-white">Registrados</span>'],
+            ['title' => '<span class="text-white">Ingresos</span>', 'value' => '$' . number_format($ingresosHoy, 2, ',', '.'), 'color' => 'danger', 'desc' => '<span class="text-white">Hoy</span>'],
         ];
 
         foreach ($stats as $stat): ?>
