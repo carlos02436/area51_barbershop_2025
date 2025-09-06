@@ -11,14 +11,17 @@ class CitasController {
     private $barberoModel;
 
     public function __construct($db) {
-        $this->citaModel = new Cita($db);
-        $this->clienteModel = new Cliente($db);
-        $this->servicioModel = new Servicio($db);
-        $this->barberoModel = new Barbero($db);
+        $this->citaModel = new Cita($db); // sí necesita $db
+        $this->clienteModel = new Cliente(); // quitar $db
+        $this->servicioModel = new Servicio(); // quitar $db
+        $this->barberoModel = new Barbero(); // quitar $db
     }
 
     public function index() {
         $citas = $this->citaModel->getCitasConNombres();
+        if (!$citas) {
+            $citas = []; // proteger foreach en la vista
+        }
         require __DIR__ . '/../views/citas/citas.php';
     }
 

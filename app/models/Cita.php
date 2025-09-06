@@ -7,6 +7,11 @@ class Cita {
         $this->db = $db;
     }
 
+    public function getServicios() {
+        $stmt = $this->db->query("SELECT nombre FROM servicios ORDER BY nombre ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getAll() {
         $sql = "SELECT * FROM citas ORDER BY fecha_cita DESC, hora_cita DESC";
         $stmt = $this->db->query($sql);
@@ -51,6 +56,7 @@ class Cita {
             INNER JOIN servicios s ON c.id_servicio = s.id_servicio
             ORDER BY c.fecha_cita ASC, c.hora_cita ASC
         ");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result ? $result : []; // siempre retornar array
     }
 }

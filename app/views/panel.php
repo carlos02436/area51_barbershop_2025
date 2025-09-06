@@ -66,7 +66,7 @@ $_SESSION['last_activity'] = time();
                 <div class="card-body">
                     <i class="fa fa-calendar-check fa-3x mb-3 text-success"></i>
                     <h5 class="card-title text-white">Citas</h5>
-                    <p class="card-text text-white">Crear, editar o eliminar citas registradas.</p>
+                    <p class="card-text text-white">Editar o eliminar citas registradas.</p>
                     <a href="/area51_barbershop_2025/index.php?page=citas" class="btn btn-success">Gestionar Citas</a>
                 </div>
             </div>
