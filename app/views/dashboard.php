@@ -69,16 +69,17 @@ $stmt = $db->query("
 ");
 $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <body>
     
-    <div class="container py-5" style="margin:100px;">
+    <div class="container py-5" style="margin-top:100px;">
         <!-- Título y botón HOME -->
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start">
-            <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle mb-3 mb-md-0"
+            <!-- Botón HOME -->
+            <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle"
             style="width: 60px; height: 60px;">
                 <i class="bi bi-house-fill fs-3"></i>
             </a>
+            <!-- Título -->
             <h1 class="fw-bold display-5 text-white mb-0">📊 Dashboard General</h1>
         </div>
 
@@ -93,7 +94,7 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ];
 
             foreach ($stats as $stat): ?>
-                <div class="col-6 col-md-3">
+                <div class="col-12 col-sm-6 col-md-3">
                     <div class="card shadow-sm border-0 rounded-4 h-100 text-center">
                         <div class="card-body">
                             <h6 class="text-white fw-semibold"><?= $stat['title'] ?></h6>
@@ -146,12 +147,12 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Servicios más solicitados y últimos clientes -->
         <div class="row g-4">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="card shadow-sm border-0 rounded-4 h-100">
                     <div class="card-header bg-info text-white fw-bold rounded-top-4">
                         🔥 Servicios más solicitados
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-2">
                         <?php if (!empty($serviciosPopulares)): ?>
                             <ul class="list-group list-group-flush">
                                 <?php foreach ($serviciosPopulares as $servicio): ?>
@@ -162,18 +163,18 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php endforeach; ?>
                             </ul>
                         <?php else: ?>
-                            <p class="text-muted mb-0">No hay datos</p>
+                            <p class="text-muted mb-0 text-center">No hay datos</p>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="card shadow-sm border-0 rounded-4 h-100">
                     <div class="card-header bg-warning text-dark fw-bold rounded-top-4">
                         👤 Últimos clientes registrados
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-2">
                         <?php if (!empty($ultimosClientes)): ?>
                             <ul class="list-group list-group-flush">
                                 <?php foreach ($ultimosClientes as $cliente): ?>
@@ -184,7 +185,7 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php endforeach; ?>
                             </ul>
                         <?php else: ?>
-                            <p class="text-muted mb-0">No hay nuevos clientes</p>
+                            <p class="text-muted mb-0 text-center">No hay nuevos clientes</p>
                         <?php endif; ?>
                     </div>
                 </div>

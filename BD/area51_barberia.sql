@@ -123,7 +123,7 @@ INSERT INTO `citas` (`id_cita`, `id_cliente`, `id_barbero`, `id_servicio`, `fech
 --
 
 CREATE TABLE `clientes` (
-  `id_cliente` int(11) NOT NULL,
+  `id_cliente` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `telefono` varchar(20) DEFAULT NULL,

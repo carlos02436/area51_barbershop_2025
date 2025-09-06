@@ -7,9 +7,11 @@ require_once __DIR__ . '/app/models/Cita.php';
 require_once __DIR__ . '/app/models/Servicio.php';
 require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
+require_once __DIR__ . '/app/controllers/CitasController.php';
 
-$barberoModel = new Barbero($db);
-$servicioModel = new Servicio($db);
+$citasController = new CitasController($db);
+$barberoModel = new Barbero();
+$servicioModel = new Servicio();
 
 // ==================== LÓGICA DE LOGIN ====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario'], $_POST['password'])) {
@@ -74,11 +76,30 @@ switch ($page) {
         break;
 
     case 'citas':
-        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-            header("Location: index.php?page=login");
-            exit;
+        $citasController->index();
+        break;
+
+    case 'crear':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $citasController->guardar(); 
+        } else {
+            $citasController->crearFormulario(); 
         }
-        require __DIR__ . '/app/views/citas/citas.php';
+        break;
+
+
+    case 'editar_cita':
+        $id = $_GET['id'] ?? null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $citasController->actualizar($id, $_POST);
+        } else {
+            $citasController->editarFormulario($id);
+        }
+        break;
+
+    case 'eliminar_cita':
+        $id = $_GET['id'] ?? null;
+        $citasController->eliminar($id);
         break;
 
     case 'servicios':

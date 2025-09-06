@@ -94,7 +94,7 @@
     require_once __DIR__ . '/../controllers/ServicioController.php';
 
     // Instanciamos el controlador y obtenemos los servicios
-    $controller = new ServicioController($db);
+    $controller = new ServicioController();
     $servicios = $controller->listarServicios();
     ?>
 
@@ -146,7 +146,7 @@
     <?php
     require_once __DIR__ . '/../controllers/BarberoController.php';
 
-    $controller = new BarberoController($db);
+    $controller = new BarberoController();
     $barberos = $controller->listarBarberos(); 
     ?>
 
@@ -385,7 +385,7 @@
                         </p>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a class="btn btn-neon" href="index.php?page=create">RESERVAR</a>
+                        <a class="btn btn-neon" href="index.php?page=crear">RESERVAR</a>
                     </div>
                 </div>
             </div>
