@@ -2,7 +2,7 @@
 // config/database.php
 
 $host = "localhost";   
-$dbname = "area51_barberia";
+$dbname = "area51_barbershop_2025"; // tu base de datos
 $username = "root";    // tu usuario de MySQL
 $password = "";        // tu contraseña (si tienes)
 
