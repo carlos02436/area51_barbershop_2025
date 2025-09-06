@@ -94,7 +94,7 @@
     require_once __DIR__ . '/../controllers/ServicioController.php';
 
     // Instanciamos el controlador y obtenemos los servicios
-    $controller = new ServicioController();
+    $controller = new ServicioController($db);
     $servicios = $controller->listarServicios();
     ?>
 
@@ -146,8 +146,8 @@
     <?php
     require_once __DIR__ . '/../controllers/BarberoController.php';
 
-    $controller = new BarberoController();
-    $barberos = $controller->listarBarberos(5); // Solo 5 barberos
+    $controller = new BarberoController($db);
+    $barberos = $controller->listarBarberos(); 
     ?>
 
     <section id="barberos" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">

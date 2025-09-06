@@ -7,17 +7,18 @@ if (!isset($citas) || !is_array($citas)) {
 
 <body>
 
-        <div class="container py-5" style="margin:100px;">
-            <!-- Título y botón HOME -->
-            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start">
-                <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle mb-3 mb-md-0"
+    <div class="container py-5" style="margin:100px;">
+        <!-- Título y botón HOME -->
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start">
+            <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle mb-3 mb-md-0"
                 style="width: 60px; height: 60px;">
-                    <i class="bi bi-house-fill fs-3"></i>
-                </a>
-                <h1 class="fw-bold display-5 text-white mb-0">📊 Citas</h1>
+                <i class="bi bi-house-fill fs-3"></i>
+            </a>
+            <h1 class="fw-bold display-5 text-white mb-0">📊 Citas</h1>
         </div>
         <!-- Tabla de citas -->
-        <table class="table table-striped table-bordered rounded shadow-sm mx-auto" style="max-width: 2000px;">
+        <table class="table table-striped table-bordered rounded shadow-sm mx-auto" 
+               style="max-width: 2000px; border-radius: 15px; overflow: hidden;">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>

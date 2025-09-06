@@ -11,7 +11,7 @@ class Barbero {
 
     // Obtener todos los barberos
     public function getBarberos() {
-        $stmt = $this->db->query("SELECT id_barbero, nombre FROM barberos ORDER BY nombre ASC");
+        $stmt = $this->db->query("SELECT id_barbero, nombre FROM barberos");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

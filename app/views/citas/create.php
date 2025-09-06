@@ -3,11 +3,11 @@ require_once __DIR__ . '/../../models/Barbero.php';
 require_once __DIR__ . '/../../models/Servicio.php';
 
 // Instanciar modelos
-$barberoModel = new Barbero();
-$servicioModel = new Servicio();
+$barberoModel = new Barbero($db);
+$servicioModel = new Servicio($db);
 
 $barberos = $barberoModel->obtenerBarberos();
-$servicios = $servicioModel->obtenerServicios();
+$servicios = $servicioModel->getServicios();
 ?>
 
 <section class="container py-5" style="scroll-margin-top: 60px; margin-top: 80px;">

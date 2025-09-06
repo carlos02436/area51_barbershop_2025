@@ -8,8 +8,8 @@ require_once __DIR__ . '/app/models/Servicio.php';
 require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
 
-$barberoModel = new Barbero();
-$servicioModel = new Servicio();
+$barberoModel = new Barbero($db);
+$servicioModel = new Servicio($db);
 
 // ==================== LÓGICA DE LOGIN ====================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario'], $_POST['password'])) {

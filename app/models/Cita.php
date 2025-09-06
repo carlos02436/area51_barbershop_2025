@@ -8,7 +8,7 @@ class Cita {
     }
 
     public function getServicios() {
-        $stmt = $this->db->query("SELECT nombre FROM servicios ORDER BY nombre ASC");
+        $stmt = $this->db->query("SELECT id_servicio, nombre FROM servicios ORDER BY nombre ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -48,15 +48,20 @@ class Cita {
 
     public function getCitasConNombres() {
         $stmt = $this->db->query("
-            SELECT c.id_cita, cl.nombre AS nombre_cliente, b.nombre AS nombre_barbero,
-                   s.nombre AS nombre_servicio, c.fecha_cita, c.hora_cita, c.estado
+            SELECT c.id_cita,
+                cl.nombre AS nombre_cliente,
+                b.nombre AS nombre_barbero,
+                s.nombre AS nombre_servicio,
+                c.fecha_cita,
+                c.hora_cita,
+                c.estado
             FROM citas c
-            INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente
-            INNER JOIN barberos b ON c.id_barbero = b.id_barbero
-            INNER JOIN servicios s ON c.id_servicio = s.id_servicio
+            LEFT JOIN clientes cl ON c.id_cliente = cl.id_cliente
+            LEFT JOIN barberos b ON c.id_barbero = b.id_barbero
+            LEFT JOIN servicios s ON c.id_servicio = s.id_servicio
             ORDER BY c.fecha_cita ASC, c.hora_cita ASC
         ");
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result ? $result : []; // siempre retornar array
+        return $result ? $result : [];
     }
 }
