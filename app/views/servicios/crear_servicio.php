@@ -57,12 +57,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </div>
-
-<!-- CSS para quitar el borde verde en focus -->
-<style>
-.form-control:focus {
-    border-color: #6c757d !important; /* borde gris de Bootstrap */
-    box-shadow: none !important;      /* quita la sombra verde */
-}
-</style>
 <main>
