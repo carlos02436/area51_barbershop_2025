@@ -12,10 +12,10 @@ if (!isset($citas) || !is_array($citas)) {
             </a> <h1 class="fw-bold display-5 text-white mb-0">📊 Citas</h1> 
         </div> 
         <!-- Contenedor con scroll vertical --> 
-        <div class="table-responsive rounded shadow-sm" style="max-height: 500px; overflow-y: auto;"> 
-                <table class="table table-striped table-hover mb-0"> 
+        <div class="table-wrapper rounded shadow-sm" style="max-height:500px; overflow-y:auto;">
+                <table class="table table-striped table-hover mb-0">
                     <thead class="table-dark">
-                        <tr>
+                        <tr style="position: sticky; top: 0; z-index: 1;">
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Barbero</th>

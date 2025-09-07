@@ -21,16 +21,16 @@ class CitasController {
             SELECT 
                 c.id_cita,
                 cl.nombre AS nombre_cliente,
-                COALESCE(cl.apellido, '') AS apellido_cliente
+                COALESCE(cl.apellido, '') AS apellido_cliente,
                 b.nombre AS nombre_barbero,
                 s.nombre AS nombre_servicio,
                 c.fecha_cita,
                 c.hora_cita,
                 c.estado
             FROM citas c
-            JOIN clientes cl ON c.id_cliente = cl.id_cliente
-            JOIN barberos b ON c.id_barbero = b.id_barbero
-            JOIN servicios s ON c.id_servicio = s.id_servicio
+            LEFT JOIN clientes cl ON c.id_cliente = cl.id_cliente
+            LEFT JOIN barberos b ON c.id_barbero = b.id_barbero
+            LEFT JOIN servicios s ON c.id_servicio = s.id_servicio
             ORDER BY c.fecha_cita ASC, c.hora_cita ASC
         ";
         $stmt = $this->db->query($sql);

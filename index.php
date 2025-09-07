@@ -8,7 +8,9 @@ require_once __DIR__ . '/app/models/Servicio.php';
 require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
 require_once __DIR__ . '/app/controllers/CitasController.php';
+require_once __DIR__ . '/app/controllers/ServicioController.php';
 
+$servicioController = new ServicioController();
 $citasController = new CitasController($db);
 $barberoModel = new Barbero();
 $servicioModel = new Servicio();
@@ -109,6 +111,53 @@ switch ($page) {
         }
         require __DIR__ . '/app/views/servicios/servicios.php';
         break;
+
+    case 'crear_servicio':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $servicioController->crearServicio([
+                'nombre' => $_POST['nombre'],
+                'descripcion' => $_POST['descripcion'],
+                'precio' => $_POST['precio'],
+                'img_servicio' => $_FILES['img_servicio'] ?? null,
+                'observacion' => $_POST['observacion'] ?? null
+            ]);
+            header('Location: index.php?page=servicios');
+            exit();
+        } else {
+            require __DIR__ . '/app/views/servicios/crear_servicio.php';
+        }
+        break;
+
+    case 'editar_servicio':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: index.php?page=servicios');
+            exit();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $servicioController->actualizarServicio($id, $_POST);
+            header('Location: index.php?page=servicios');
+            exit();
+        } else {
+            require __DIR__ . '/app/views/servicios/editar_servicio.php';
+        }
+        break;
+
+    case 'eliminar_servicio':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $servicioController->eliminarServicio($id);
+        }
+        header('Location: index.php?page=servicios');
+        exit();
 
     case 'barberos':
         if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
