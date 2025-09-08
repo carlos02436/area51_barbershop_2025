@@ -37,6 +37,7 @@ $error = $error ?? null;
                 style="border: 2px solid #00ff00;"
                 required 
                 autofocus
+                placeholder="Ingresar Usuario"
               >
             </div>
 
@@ -51,6 +52,13 @@ $error = $error ?? null;
                   class="form-control"
                   style="border: 2px solid #00ff00;"
                   required
+                  placeholder="Ingresar Contraseña"
+                >
+                <input 
+                  type="checkbox" 
+                  id="showPassword" 
+                  class="form-check-input"
+                  onclick="showPassword()"
                 >
                 <button 
                   type="button" 
