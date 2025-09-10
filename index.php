@@ -138,13 +138,8 @@ switch ($page) {
             header('Location: index.php?page=servicios');
             exit();
         }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $servicioController->actualizarServicio($id, $_POST);
-            header('Location: index.php?page=servicios');
-            exit();
-        } else {
-            require __DIR__ . '/app/views/servicios/editar_servicio.php';
-        }
+        // Solo incluimos la vista, la vista maneja POST
+        require __DIR__ . '/app/views/servicios/editar_servicio.php';
         break;
 
     case 'eliminar_servicio':
@@ -152,8 +147,14 @@ switch ($page) {
             header("Location: index.php?page=login");
             exit;
         }
+
         $id = $_GET['id'] ?? null;
         if ($id) {
+            $servicio = $servicioController->mostrarServicio($id);
+            if ($servicio && $servicio['img_servicio']) {
+                $rutaImagen = __DIR__ . '/uploads/' . $servicio['img_servicio'];
+                if (file_exists($rutaImagen)) unlink($rutaImagen);
+            }
             $servicioController->eliminarServicio($id);
         }
         header('Location: index.php?page=servicios');

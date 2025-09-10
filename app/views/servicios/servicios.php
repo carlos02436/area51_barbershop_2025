@@ -42,9 +42,9 @@ $servicios = $controller->listarServicios();
                             <td><?= $row['observacion'] ?></td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="index.php?page=editar_servicio&id=<?= $servicio['id'] ?>" class="btn btn-sm btn-warning" style="width: 80px;">Editar</a>
-                                    <a href="index.php?page=eliminar_servicio&id=<?= $servicio['id'] ?>" class="btn btn-sm btn-danger" style="width: 80px;" 
-                                    onclick="return confirm('¿Deseas eliminar este servicio?')">Eliminar</a>
+                                    <a href="index.php?page=editar_servicio&id=<?= $row['id_servicio'] ?>" class="btn btn-sm btn-warning" style="width: 80px;">Editar</a>
+                                    <a href="index.php?page=eliminar_servicio&id=<?= $row['id_servicio'] ?>" class="btn btn-sm btn-danger" style="width: 80px;"
+                                        onclick="return confirm('¿Deseas eliminar este servicio?')">Eliminar</a>
                                 </div>
                             </td>
                         </tr>
