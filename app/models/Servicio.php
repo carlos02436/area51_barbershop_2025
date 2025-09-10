@@ -4,12 +4,17 @@ require_once __DIR__ . '/../../config/database.php';
 class Servicio {
     private $db;
 
-    public function __construct() {
-        global $db; // Conexión PDO desde database.php
-        $this->db = $db;
+    public function __construct($db = null) {
+        // Si no se pasa la conexión, toma la global
+        if ($db) {
+            $this->db = $db;
+        } else {
+            global $db;
+            $this->db = $db;
+        }
     }
 
-    // 🔹 Listar todos los servicios con toda la información
+    // 🔹 Listar todos los servicios
     public function obtenerServicios() {
         $sql = "SELECT id_servicio, img_servicio, nombre, descripcion, precio, observacion 
                 FROM servicios";
@@ -34,10 +39,10 @@ class Servicio {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':img_servicio' => $data['img_servicio'] ?? null,
-            ':nombre' => $data['nombre'],
-            ':descripcion' => $data['descripcion'] ?? null,
-            ':precio' => $data['precio'],
-            ':observacion' => $data['observacion'] ?? null
+            ':nombre'       => $data['nombre'],
+            ':descripcion'  => $data['descripcion'] ?? null,
+            ':precio'       => $data['precio'],
+            ':observacion'  => $data['observacion'] ?? null
         ]);
     }
 
@@ -50,49 +55,24 @@ class Servicio {
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':img_servicio' => $data['img_servicio'] ?? null,
-            ':nombre' => $data['nombre'],
-            ':descripcion' => $data['descripcion'] ?? null,
-            ':precio' => $data['precio'],
-            ':observacion' => $data['observacion'] ?? null,
-            ':id' => $id
+            ':nombre'       => $data['nombre'],
+            ':descripcion'  => $data['descripcion'] ?? null,
+            ':precio'       => $data['precio'],
+            ':observacion'  => $data['observacion'] ?? null,
+            ':id'           => $id
         ]);
     }
 
     // 🔹 Eliminar servicio
-public function eliminarServicio($id) {
-    try {
-        // Validar que el ID sea numérico
+    public function eliminarServicio($id) {
         if (!is_numeric($id) || $id <= 0) {
-            throw new Exception("ID inválido: $id");
+            return false;
         }
 
-        // Preparar la sentencia
         $sql = "DELETE FROM servicios WHERE id_servicio = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-        // Ejecutar la sentencia
-        $stmt->execute();
-
-        // Verificar cuántas filas fueron afectadas
-        $filasEliminadas = $stmt->rowCount();
-
-        if ($filasEliminadas > 0) {
-            echo "Se eliminó el servicio con ID: $id";
-            return true;
-        } else {
-            echo "No se encontró ningún servicio con ID: $id";
-            return false;
-        }
-    } catch (PDOException $e) {
-        // Error de base de datos
-        echo "Error PDO: " . $e->getMessage();
-        return false;
-    } catch (Exception $e) {
-        // Otro tipo de error
-        echo "Error: " . $e->getMessage();
-        return false;
+        return $stmt->execute();
     }
-}
-
 }

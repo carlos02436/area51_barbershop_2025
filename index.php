@@ -9,6 +9,7 @@ require_once __DIR__ . '/app/models/Barbero.php';
 require_once __DIR__ . '/app/models/Dashboard.php';
 require_once __DIR__ . '/app/controllers/CitasController.php';
 require_once __DIR__ . '/app/controllers/ServicioController.php';
+require_once __DIR__ . '/app/controllers/BarberoController.php';
 
 $servicioController = new ServicioController();
 $citasController = new CitasController($db);
@@ -167,6 +168,80 @@ switch ($page) {
         }
         require __DIR__ . '/app/views/barberos/barberos.php';
         break;
+
+    case 'crear_barbero':
+        require __DIR__ . '/app/views/barberos/crear_barbero.php';
+        break;
+
+    case 'guardar_barbero':
+        require_once __DIR__ . '/app/controllers/BarberoController.php';
+        $controller = new BarberoController();
+
+        // Manejo de la imagen
+        $imgName = null;
+        if (isset($_FILES['img_barberos']) && $_FILES['img_barberos']['error'] == 0) {
+            $targetDir = __DIR__ . '/uploads/';
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true); // crea carpeta si no existe
+            }
+
+            $imgName = basename($_FILES['img_barberos']['name']);
+            $targetFile = $targetDir . $imgName;
+
+            if (!move_uploaded_file($_FILES['img_barberos']['tmp_name'], $targetFile)) {
+                $imgName = "default.png"; // en caso de error
+            }
+        } else {
+            $imgName = "default.png"; // si no se sube ninguna imagen
+        }
+
+        $controller->crear([
+            'nombre' => $_POST['nombre'],
+            'especialidad' => $_POST['especialidad'],
+            'telefono' => $_POST['telefono'],
+            'email' => $_POST['email'],
+            'fecha_contratacion' => $_POST['fecha_contratacion'],
+            'img_barberos' => $imgName
+        ]);
+
+        header("Location: index.php?page=barberos");
+        exit();
+
+    case 'editar_barbero':
+        require __DIR__ . '/app/views/barberos/editar_barbero.php';
+        break;
+
+    case 'actualizar_barbero':
+        $id = $_GET['id'] ?? null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
+            $nombreArchivo = $_FILES['img_barberos']['name'] ?? null;
+            if ($nombreArchivo) {
+                move_uploaded_file($_FILES['img_barberos']['tmp_name'], __DIR__ . '/uploads/' . $nombreArchivo);
+            } else {
+                $nombreArchivo = $_POST['img_actual'] ?? null;
+            }
+
+            $controller = new BarberoController();
+            $controller->actualizar($id, [
+                'img_barberos' => $nombreArchivo,
+                'nombre' => $_POST['nombre'],
+                'especialidad' => $_POST['especialidad'],
+                'telefono' => $_POST['telefono'],
+                'email' => $_POST['email'],
+                'fecha_contratacion' => $_POST['fecha_contratacion']
+            ]);
+        }
+        header('Location: index.php?page=barberos');
+        exit;
+
+    case 'eliminar_barbero':
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $controller = new BarberoController();
+            $controller->eliminar($id);
+        }
+        header('Location: index.php?page=barberos');
+        exit;
 
     case 'administradores':
         if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {

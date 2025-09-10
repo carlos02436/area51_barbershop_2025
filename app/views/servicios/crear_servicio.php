@@ -51,8 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="observacion" class="form-control border-secondary">
             </div>
             <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-neon" style="width:130px;">Crear Servicio</button>
                 <a href="index.php?page=servicios" class="btn btn-danger" style="width:130px;">Cancelar</a>
+                <button type="submit" class="btn btn-neon" style="width:130px;">Crear Servicio</button>
             </div>
         </form>
     </div>

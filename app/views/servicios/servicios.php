@@ -35,16 +35,30 @@ $servicios = $controller->listarServicios();
                     <?php foreach ($servicios as $row): ?>
                         <tr>
                             <td><?= $row['id_servicio'] ?></td>
-                            <td><?= $row['img_servicio'] ?></td>
+                            
+                            <!-- Mostrar miniatura de la imagen -->
+                            <td>
+                                <?php if (!empty($row['img_servicio'])): ?>
+                                    <img src="app/uploads/servicios/<?= htmlspecialchars($row['img_servicio']) ?>" 
+                                        alt="Imagen del servicio" 
+                                        class="img-thumbnail border-success"
+                                        style="max-width: 100px; max-height: 80px; border: 2px solid #28a745;">
+                                <?php else: ?>
+                                    <p class="text-warning small mb-0">⚠️ Sin imagen</p>
+                                <?php endif; ?>
+                            </td>
+                            
                             <td><?= $row['nombre'] ?></td>
                             <td><?= $row['descripcion'] ?></td>
                             <td>$<?= $row['precio'] ?></td>
                             <td><?= $row['observacion'] ?></td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="index.php?page=editar_servicio&id=<?= $row['id_servicio'] ?>" class="btn btn-sm btn-warning" style="width: 80px;">Editar</a>
-                                    <a href="index.php?page=eliminar_servicio&id=<?= $row['id_servicio'] ?>" class="btn btn-sm btn-danger" style="width: 80px;"
-                                        onclick="return confirm('¿Deseas eliminar este servicio?')">Eliminar</a>
+                                    <a href="index.php?page=editar_servicio&id=<?= $row['id_servicio'] ?>" 
+                                    class="btn btn-sm btn-warning" style="width: 80px;">Editar</a>
+                                    <a href="index.php?page=eliminar_servicio&id=<?= $row['id_servicio'] ?>" 
+                                    class="btn btn-sm btn-danger" style="width: 80px;"
+                                    onclick="return confirm('¿Deseas eliminar este servicio?')">Eliminar</a>
                                 </div>
                             </td>
                         </tr>

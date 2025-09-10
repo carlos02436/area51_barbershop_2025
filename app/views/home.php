@@ -112,7 +112,7 @@
                                 <!-- Imagen -->
                                 <div style="width: 100%; height: 200px; overflow: hidden; display: flex; 
                                             align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 20px;">
-                                    <img src="public/img/<?= htmlspecialchars($servicio['img_servicio']) ?>"
+                                    <img src="app/uploads/servicios/<?= htmlspecialchars($servicio['img_servicio']) ?>"
                                         alt="<?= htmlspecialchars($servicio['nombre']) ?>"
                                         style="width: 97%; height: 97%; object-fit: cover; border-radius: 20px;">
                                 </div>
@@ -147,7 +147,7 @@
     require_once __DIR__ . '/../controllers/BarberoController.php';
 
     $controller = new BarberoController();
-    $barberos = $controller->listarBarberos(); 
+    $barberos = $controller->listar(); 
     ?>
 
     <section id="barberos" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
@@ -158,7 +158,7 @@
                 <?php foreach ($barberos as $index => $barbero): ?>
                     <div class="row align-items-center mb-5 <?= ($index % 2 != 0) ? 'flex-md-row-reverse' : '' ?>">
                         <div class="col-md-6">
-                            <img src="public/img/<?= htmlspecialchars($barbero['img_barberos']) ?>"
+                            <img src="app/uploads/barberos/<?= htmlspecialchars($barbero['img_barberos']) ?>"
                                 alt="<?= htmlspecialchars($barbero['nombre']) ?>"
                                 style="border-radius: 20px; width: 70%; height: 70%;">
                         </div>
@@ -193,7 +193,7 @@
             <div class="row">
                 <?php foreach ($imagenes as $img): ?>
                     <div class="col-md-4 col-6 mb-4">
-                        <img src="public/img/<?= htmlspecialchars($img['img_galeria']) ?>"
+                        <img src="app/uploads/servicios/<?= htmlspecialchars($img['img_galeria']) ?>"
                             alt="<?= htmlspecialchars($img['nombre_galeria']) ?>"
                             class="img-fluid"
                             style="width: 100%; height: 90%; object-fit: cover; border-radius: 20px;">

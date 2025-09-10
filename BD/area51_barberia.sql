@@ -45,6 +45,7 @@ CREATE TABLE `barberos` (
   `nombre` VARCHAR(100) NOT NULL,
   `especialidad` VARCHAR(500) NOT NULL,
   `telefono` VARCHAR(20) DEFAULT NULL,
+  `email` VARCHAR(100) NULL,
   `fecha_contratacion` DATE DEFAULT NULL,
   PRIMARY KEY (`id_barbero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

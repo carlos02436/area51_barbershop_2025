@@ -33,18 +33,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
+
 <body>
     <div class="container py-5" style="margin-top:100px;">
         <h1 class="fw-bold text-white mb-4 text-center">✏️ Editar Servicio</h1>
         <div class="card text-white mx-auto" style="max-width: 600px; padding: 40px;">
-            <form action="index.php?page=editar_servicio&id=<?= $servicio['id_servicio'] ?>" 
-                method="POST" 
-                enctype="multipart/form-data" 
+            <form action="index.php?page=editar_servicio&id=<?= $servicio['id_servicio'] ?>"
+                method="POST"
+                enctype="multipart/form-data"
                 class="text-white">
 
                 <div class="mb-4">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control form-control-lg w-100" 
+                    <input type="text" name="nombre" id="nombre" class="form-control form-control-lg w-100"
                         value="<?= htmlspecialchars($servicio['nombre']) ?>" required>
                 </div>
 
@@ -55,21 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="mb-4">
                     <label for="precio" class="form-label">Precio</label>
-                    <input type="number" name="precio" id="precio" class="form-control form-control-lg w-100" step="0.01" 
+                    <input type="number" name="precio" id="precio" class="form-control form-control-lg w-100" step="0.01"
                         value="<?= $servicio['precio'] ?>">
                 </div>
 
                 <div class="mb-4">
                     <label for="img_servicio" class="form-label">Imagen</label>
                     <input type="file" name="img_servicio" id="img_servicio" class="form-control form-control-lg w-100">
-                    <?php if($servicio['img_servicio']): ?>
-                        <img src="../../uploads/<?= $servicio['img_servicio'] ?>" alt="Imagen actual" style="width:100px; margin-top:10px;">
+
+                    <?php if (!empty($servicio['img_servicio'])): ?>
+                        <div class="text-center mt-3">
+                            <p class="text-white mb-2">Imagen del servicio actual:</p>
+                            <img src="app/uploads/servicios/<?= htmlspecialchars($servicio['img_servicio']) ?>"
+                                alt="Imagen servicio"
+                                class="img-fluid rounded shadow"
+                                style="max-height: 300px;width: 220px;">
+                        </div>
+                    <?php else: ?>
+                        <p class="text-warning small mt-2">⚠️ No hay imagen registrada para este servicio.</p>
                     <?php endif; ?>
                 </div>
 
                 <div class="mb-4">
                     <label for="observacion" class="form-label">Observación</label>
-                    <input type="text" name="observacion" id="observacion" class="form-control form-control-lg w-100" 
+                    <input type="text" name="observacion" id="observacion" class="form-control form-control-lg w-100"
                         value="<?= htmlspecialchars($servicio['observacion']) ?>">
                 </div>
 
@@ -80,10 +90,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-
-    <style>
-    .form-select, .form-control {
-        border-radius: 0.35rem;
-    }
-    </style>
-<main>
+    <main>
