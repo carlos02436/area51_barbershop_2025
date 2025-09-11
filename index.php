@@ -53,6 +53,7 @@ include __DIR__ . '/app/views/plantillas/header.php';
 
 // ==================== ENRUTADOR ====================
 switch ($page) {
+
     case 'home':
         include __DIR__ . '/app/views/home.php';
         break;
@@ -65,6 +66,10 @@ switch ($page) {
         session_destroy();
         header("Location: index.php?page=login");
         exit();
+
+    case 'forgot_password':
+        require __DIR__ . '/app/views/forgot_password.php';
+        break;
 
     case 'dashboard':
         require __DIR__ . '/app/views/dashboard.php';

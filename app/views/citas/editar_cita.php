@@ -23,6 +23,19 @@
                     </select>
                 </div>
 
+                <!-- Barbero -->
+                <div class="mb-3 w-100 mx-auto">
+                    <label class="form-label">Barbero</label>
+                    <select name="id_barbero" class="form-select" required>
+                        <?php foreach ($barberos as $barberoItem): ?>
+                            <option value="<?= $barberoItem['id_barbero'] ?>"
+                                <?= $barberoItem['id_barbero'] == $cita['id_barbero'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($barberoItem['nombre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <!-- Servicio -->
                 <div class="mb-3 w-100 mx-auto">
                     <label class="form-label">Servicio</label>
@@ -39,7 +52,6 @@
                 <!-- Imagen del servicio -->
                 <div class="mb-3 text-center">
                     <?php
-                    // Buscar el servicio seleccionado para mostrar su imagen
                     $servicioSeleccionado = null;
                     foreach ($servicios as $servicioItem) {
                         if ($servicioItem['id_servicio'] == $cita['id_servicio']) {
@@ -48,7 +60,6 @@
                         }
                     }
                     ?>
-
                     <?php if ($servicioSeleccionado && !empty($servicioSeleccionado['img_servicio'])): ?>
                         <p class="text-success fw-bold mb-2 text-white">Imagen del servicio seleccionado:</p>
                         <img src="app/uploads/servicios/<?= htmlspecialchars($servicioSeleccionado['img_servicio']) ?>"
@@ -56,7 +67,7 @@
                              class="img-thumbnail border-success"
                              style="max-width:200px;">
                     <?php else: ?>
-                        <p class="text-warning small">⚠️ Sin imágen del servicio</p>
+                        <p class="text-warning small">⚠️ Sin imagen del servicio</p>
                     <?php endif; ?>
                 </div>
 

@@ -57,17 +57,33 @@ class Cita {
                     hora_cita = :hora_cita,
                     estado = :estado
                 WHERE id_cita = :id";
+
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([
-            ':id_cliente' => $datos['id_cliente'] ?? null,
-            ':id_barbero' => $datos['id_barbero'],
-            ':id_servicio' => $datos['id_servicio'],
+
+        $ok = $stmt->execute([
+            ':id_cliente'   => !empty($datos['id_cliente']) ? $datos['id_cliente'] : null,
+            ':id_barbero'   => $datos['id_barbero'],
+            ':id_servicio'  => $datos['id_servicio'],
             ':img_servicio' => $datos['img_servicio'] ?? null,
-            ':fecha_cita' => $datos['fecha_cita'],
-            ':hora_cita' => $datos['hora_cita'],
-            ':estado' => $datos['estado'] ?? 'pendiente',
-            ':id' => $id
+            ':fecha_cita'   => $datos['fecha_cita'],
+            ':hora_cita'    => $datos['hora_cita'],
+            ':estado'       => $datos['estado'] ?? 'pendiente',
+            ':id'           => $id
         ]);
+
+        if (!$ok) {
+            // Mostrar error SQL si algo falla
+            $error = $stmt->errorInfo();
+            throw new Exception("Error al actualizar la cita: " . $error[2]);
+        }
+
+        return true;
+    }
+
+    public function mostrar($id) {
+        $stmt = $this->db->prepare("SELECT * FROM citas WHERE id_cita = :id LIMIT 1");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     // Eliminar cita

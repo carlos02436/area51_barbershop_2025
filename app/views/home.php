@@ -17,7 +17,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-justify">
                         <div class="text-center">
-                            <img src="public/img/yeison3.png" alt="Barbero Yeison en Área 51"
+                            <img src="app/uploads/servicios/yeison3.png" alt="Barbero Yeison en Área 51"
                                 class="img-fluid about-us-image">
                         </div>
 
