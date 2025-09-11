@@ -54,12 +54,7 @@ $error = $error ?? null;
                   required
                   placeholder="Ingresar Contraseña"
                 >
-                <input 
-                  type="checkbox" 
-                  id="showPassword" 
-                  class="form-check-input"
-                  onclick="showPassword()"
-                >
+             
                 <button 
                   type="button" 
                   class="btn btn-neon" 

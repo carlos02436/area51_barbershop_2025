@@ -87,6 +87,7 @@ CREATE TABLE `citas` (
   `id_cliente` INT(11) NOT NULL,
   `id_barbero` INT(11) NOT NULL,
   `id_servicio` INT(11) NOT NULL,
+  `img_servicio` VARCHAR(255) NULL,
   `fecha_cita` DATE NOT NULL,
   `hora_cita` TIME NOT NULL,
   `estado` ENUM('pendiente','confirmada','cancelada','realizada') DEFAULT 'pendiente',

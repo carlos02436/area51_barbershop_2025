@@ -79,28 +79,46 @@ switch ($page) {
         break;
 
     case 'citas':
-        $citasController->index();
+        require_once __DIR__ . '/app/controllers/CitasController.php';
+        $citasController = new CitasController($db);
+        $citas = $citasController->listar();
+        require __DIR__ . '/app/views/citas/citas.php';
         break;
 
-    case 'crear':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $citasController->guardar(); 
-        } else {
-            $citasController->crearFormulario(); 
-        }
+    // mostrar formulario crear
+    case 'crear_cita':
+        require_once __DIR__ . '/app/controllers/CitasController.php';
+        $citasController = new CitasController($db);
+        $citasController->crearFormulario();
         break;
 
+    // guardar
+    case 'guardar_cita':
+        require_once __DIR__ . '/app/controllers/CitasController.php';
+        $citasController = new CitasController($db);
+        $citasController->guardar();
+        break;
 
+    // editar (vista)
     case 'editar_cita':
+        require_once __DIR__ . '/app/controllers/CitasController.php';
+        $citasController = new CitasController($db);
         $id = $_GET['id'] ?? null;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $citasController->actualizar($id, $_POST);
-        } else {
-            $citasController->editarFormulario($id);
-        }
+        $citasController->editarFormulario($id);
         break;
 
+    // actualizar (POST)
+    case 'actualizar_cita':
+        require_once __DIR__ . '/app/controllers/CitasController.php';
+        $citasController = new CitasController($db);
+        $id = $_GET['id'] ?? null;
+        $citasController->actualizar($id);
+        break;
+
+    // eliminar
     case 'eliminar_cita':
+        require_once __DIR__ . '/app/controllers/CitasController.php';
+        $citasController = new CitasController($db);
         $id = $_GET['id'] ?? null;
         $citasController->eliminar($id);
         break;

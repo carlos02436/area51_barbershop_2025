@@ -385,7 +385,7 @@
                         </p>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a class="btn btn-neon" href="index.php?page=crear">RESERVAR</a>
+                        <a class="btn btn-neon" href="index.php?page=crear_cita">RESERVAR</a>
                     </div>
                 </div>
             </div>

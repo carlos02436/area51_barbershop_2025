@@ -5,14 +5,16 @@ $id = $_GET['id'] ?? null;
 $barbero = $controller->mostrar($id);
 ?>
 <body>
-    <div class="container py-5" style="margin-top:80px;">
-        <h2 class="fw-bold text-white mb-4 text-center">✂️ Editar Barbero</h2>
+    <div class="container py-5" style="margin-top:100px;">
+        <h1 class="fw-bold text-white mb-4 text-center">💈 Editar Barbero</h1>
+        <div class="card text-white mx-auto" style="max-width: 600px; padding: 40px;">
+
+
 
         <form method="POST" 
               action="index.php?page=actualizar_barbero&id=<?= $id ?>" 
               enctype="multipart/form-data"
-              class="text-white p-4 rounded shadow-sm mx-auto" 
-              style="max-width: 650px;border: 2px solid #28a745;">
+              class="text-white p-4 rounded shadow-sm w-100"
 
             <!-- Nombre -->
             <div class="mb-3">
@@ -69,4 +71,5 @@ $barbero = $controller->mostrar($id);
             </div>
         </form>
     </div>
+</div>
 <main>

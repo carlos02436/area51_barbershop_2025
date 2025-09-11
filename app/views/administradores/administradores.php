@@ -1,10 +1,16 @@
 <?php
-require_once __DIR__ . '/../../config/database.php'; // Archivo de conexión
-session_start();
-if (!isset($_SESSION['admin_logged_in'])) header('Location: index.php?page=login');
+require_once __DIR__ . '/../database.php';
+require_once __DIR__ . '/../models/administrador.php';
+require_once __DIR__ . '/../models/usuario.php';
 
-$sql = "SELECT id, nombre, usuario, email FROM administradores ORDER BY nombre";
-$result = $conn->query($sql);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['admin_logged_in'])) {
+    header('Location: index.php?page=login');
+    exit;
+}
 ?>
 <body>
     <div class="container mt-5">
