@@ -10,6 +10,7 @@ USE `area51_barbershop_2025`;
 -- --------------------------------------------------------
 CREATE TABLE `administradores` (
   `id_admin` INT(11) NOT NULL AUTO_INCREMENT,
+  `img_admin` VARCHAR(255),
   `nombre` VARCHAR(100) NOT NULL,
   `usuario` VARCHAR(50) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
@@ -277,3 +278,27 @@ INSERT INTO videos (id_video, titulo, url, fecha_publicacion, publicado_por) VAL
 (1, '10 Cortes de moda 2025', 'https://youtu.be/rugYY0WMlj0?si=vz7wB3rEc3L35Q0u', '2025-01-05 05:00:00', NULL),
 (2, 'Como Hacer un Desvanecido en V', 'https://youtu.be/rpdpu_Ktnkw?si=AL0CTIwJccelfPB5', '2025-05-07 05:00:00', NULL),
 (3, 'El arte del cuidado personal', 'https://youtu.be/7_lQ_HQnMwY?si=JsMpORA77jeyLrLi', '2025-08-10 05:00:00', NULL);
+
+
+CREATE TABLE `pqrs` (
+  `id_pqrs` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
+  `apellidos` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(150) NOT NULL,
+  `tipo` ENUM('Petición','Queja','Reclamo','Sugerencia') NOT NULL,
+  `mensaje` TEXT NOT NULL,
+  `fecha_envio` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `estado` ENUM('Pendiente','En Proceso','Resuelto') NOT NULL DEFAULT 'Pendiente',
+  PRIMARY KEY (`id_pqrs`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+INSERT INTO `pqrs` (`nombre`, `apellidos`, `email`, `tipo`, `mensaje`, `estado`) VALUES
+('Carlos', 'Parra', 'carlos.parra@example.com', 'Petición', 'Solicito información sobre nuevos servicios.', 'Pendiente'),
+('María', 'López', 'maria.lopez@example.com', 'Queja', 'No recibí la confirmación de mi cita.', 'En Proceso'),
+('Juan', 'Rodríguez', 'juan.rodriguez@example.com', 'Reclamo', 'Mi servicio no se realizó correctamente.', 'Pendiente'),
+('Ana', 'Gómez', 'ana.gomez@example.com', 'Sugerencia', 'Sería bueno ofrecer descuentos por fidelidad.', 'Resuelto'),
+('Pedro', 'Martínez', 'pedro.martinez@example.com', 'Petición', 'Quisiera cambiar la fecha de mi cita.', 'En Proceso');
+-- --------------------------------------------------------
+
+

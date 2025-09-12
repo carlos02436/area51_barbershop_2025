@@ -71,6 +71,10 @@ switch ($page) {
         require __DIR__ . '/app/views/forgot_password.php';
         break;
 
+    case 'reset_password':
+        require 'app/views/reset_password.php';
+        break;
+
     case 'dashboard':
         require __DIR__ . '/app/views/dashboard.php';
         break;
@@ -273,6 +277,123 @@ switch ($page) {
         }
         require __DIR__ . '/app/views/administradores/administradores.php';
         break;
+
+    case 'crear_admin':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/administradores/crear_admin.php';
+        break;
+
+    case 'guardar_admin':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Limite 3 administradores
+            $stmt = $db->query("SELECT COUNT(*) as total FROM administradores");
+            $total = $stmt->fetch()['total'];
+
+            if ($total >= 3) {
+                $_SESSION['error_admin'] = "⚠️ Solo se permite un máximo de 3 administradores.";
+                header("Location: index.php?page=crear_admin");
+                exit();
+            }
+
+            $nombre = $_POST['nombre'];
+            $usuario = $_POST['usuario'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            // Imagen
+            $img_admin = null;
+            if (isset($_FILES['img_admin']) && $_FILES['img_admin']['error'] === 0) {
+                $img_admin = basename($_FILES['img_admin']['name']);
+                $targetDir = __DIR__ . '/app/uploads/admin/';
+                if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+                move_uploaded_file($_FILES['img_admin']['tmp_name'], $targetDir . $img_admin);
+            }
+
+            $stmt = $db->prepare("INSERT INTO administradores (nombre, usuario, email, password, img_admin) VALUES (:nombre, :usuario, :email, :password, :img_admin)");
+            $stmt->execute([
+                ':nombre' => $nombre,
+                ':usuario' => $usuario,
+                ':email' => $email,
+                ':password' => $password,
+                ':img_admin' => $img_admin
+            ]);
+
+            $_SESSION['success_admin'] = "Administrador creado correctamente.";
+            header("Location: index.php?page=administradores");
+            exit();
+        }
+        break;
+
+    case 'actualizar_admin':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_GET['id'] ?? null;
+            if (!$id) {
+                header('Location: index.php?page=administradores');
+                exit;
+            }
+
+            $nombre = $_POST['nombre'];
+            $usuario = $_POST['usuario'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            // Imagen
+            $img_admin = $_POST['img_actual'] ?? null;
+            if (isset($_FILES['img_admin']) && $_FILES['img_admin']['error'] === 0) {
+                $img_admin = basename($_FILES['img_admin']['name']);
+                $targetDir = __DIR__ . '/app/uploads/admin/';
+                if (!is_dir($targetDir)) mkdir($targetDir, 0777, true);
+                move_uploaded_file($_FILES['img_admin']['tmp_name'], $targetDir . $img_admin);
+            }
+
+            $stmt = $db->prepare("UPDATE administradores SET nombre=:nombre, usuario=:usuario, email=:email, password=:password, img_admin=:img_admin WHERE id_admin=:id");
+            $stmt->execute([
+                ':nombre' => $nombre,
+                ':usuario' => $usuario,
+                ':email' => $email,
+                ':password' => $password,
+                ':img_admin' => $img_admin,
+                ':id' => $id
+            ]);
+
+            $_SESSION['success_admin'] = "Administrador actualizado correctamente.";
+            header("Location: index.php?page=administradores");
+            exit();
+        }
+        break;
+
+    case 'editar_admin':
+        if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        require __DIR__ . '/app/views/administradores/editar_admin.php';
+        break;
+
+    case 'eliminar_admin':
+        if (!isset($_SESSION['admin_logged_in'])) {
+            header("Location: index.php?page=login");
+            exit;
+        }
+        $id_admin = $_GET['id'] ?? null;
+        if ($id_admin) {
+            // Eliminar foto si existe
+            $stmt = $db->prepare("SELECT img_admin FROM administradores WHERE id_admin=:id_admin");
+            $stmt->execute([':id_admin'=>$id_admin]);
+            $admin = $stmt->fetch();
+            if ($admin && $admin['img_admin'] && file_exists(__DIR__ . '/uploads/' . $admin['img_admin'])) {
+                unlink(__DIR__ . '/uploads/' . $admin['img_admin']);
+            }
+
+            // Eliminar registro
+            $stmt = $db->prepare("DELETE FROM administradores WHERE id_admin=:id_admin");
+            $stmt->execute([':id_admin'=>$id_admin]);
+        }
+        header('Location: index.php?page=administradores');
+        exit;
 
     case 'reportes':
         if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {

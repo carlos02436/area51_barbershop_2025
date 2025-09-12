@@ -32,12 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'cparra02436@gmail.com';  // 🔹 pon tu correo Gmail
-            $mail->Password   = 'bxoa jtvm qnaf tsbu'; // 🔹 tu clave o app password de Gmail
+            $mail->Username   = 'area51barberia2025@gmail.com';  // 🔹 pon tu correo Gmail
+            $mail->Password   = 'poun ajyb xqhh wraz'; // 🔹 tu clave o app password de Gmail
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
+            $mail->CharSet = 'UTF-8';       // Fuerza UTF-8
+            $mail->Encoding = 'base64';     // Evita que se rompan tildes y eñes
 
-            $mail->setFrom('TU_CORREO@gmail.com', 'Area51 BarberShop');
+
+            $mail->setFrom('area51barberia2025@gmail.com', 'Area51 BarberShop');
             $mail->addAddress($email);
 
             $mail->isHTML(false);

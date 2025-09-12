@@ -119,8 +119,56 @@ $_SESSION['last_activity'] = time();
                 </div>
             </div>
         </div>
+
+        <!-- youtube -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <i class="fab fa-youtube fa-3x mb-3 text-danger"></i>
+                    <h5 class="card-title text-white">YouTube</h5>
+                    <p class="card-text text-white">Actualiza tus videos de YouTube.</p>
+                    <a href="/area51_barbershop_2025/index.php?page=youtube" class="btn btn-danger">Actualizar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TikTok -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <i class="fab fa-tiktok fa-3x mb-3 text-black"></i>
+                    <h5 class="card-title text-white">TikTok</h5>
+                    <p class="card-text text-white">Actualiza tus videos de TikTok.</p>
+                    <a href="/area51_barbershop_2025/index.php?page=tiktok" class="btn btn-dark">Actualizar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión SIAU -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <i class="fa fa-user-tie fa-3x mb-3 text-info"></i>
+                    <h5 class="card-title text-white">SIAU</h5>
+                    <p class="card-text text-white">Acciones de mejoras para el negocio.</p>
+                    <a href="/area51_barbershop_2025/index.php?page=pqrs" class="btn btn-info">Gestionar PQRS</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Noticias -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <i class="fa fa-file-alt fa-3x mb-3 text-info"></i>
+                    <h5 class="card-title text-white">Noticias</h5>
+                    <p class="card-text text-white">Actualiza tus noticias y/o eventos.</p>
+                    <a href="/area51_barbershop_2025/index.php?page=pqrs" class="btn btn-info">Actualizar</a>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
     <div>
         <a href="/area51_barbershop_2025/index.php?page=logout" class="btn btn-danger" style="display: block;width:200px;margin: 20px auto;">
             Cerrar sesión
@@ -129,55 +177,58 @@ $_SESSION['last_activity'] = time();
 </div>
 
 <script>
-// Seguridad JS - solo cambiar rutas a login mediante index.php?page=login
-window.onload = function() {
-    if (window.performance && window.performance.navigation.type === 2) {
-        window.location.replace('/area51_barbershop_2025/index.php?page=login');
-    }
-    
-    checkSession();
-    setInterval(checkSession, 60000);
-
-    let lastActivity = Date.now();
-    const timeoutDuration = 30 * 60 * 1000;
-
-    ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
-        document.addEventListener(event, function() {
-            lastActivity = Date.now();
-        }, false);
-    });
-
-    setInterval(function() {
-        if (Date.now() - lastActivity > timeoutDuration) {
-            alert('Su sesión ha expirado por inactividad. Será redirigido al login.');
-            window.location.replace('/area51_barbershop_2025/index.php?page=login&msg=timeout');
-        }
-    }, 60000);
-};
-
-function checkSession() {
-    fetch('/area51_barbershop_2025/index.php?page=check_session', {
-        method: 'GET',
-        cache: 'no-cache',
-        headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (!data.logged_in) {
+    // Seguridad JS - solo cambiar rutas a login mediante index.php?page=login
+    window.onload = function() {
+        if (window.performance && window.performance.navigation.type === 2) {
             window.location.replace('/area51_barbershop_2025/index.php?page=login');
         }
-    })
-    .catch(error => {
-        console.error('Error verificando sesión:', error);
-        window.location.replace('/area51_barbershop_2025/index.php?page=login');
+
+        checkSession();
+        setInterval(checkSession, 60000);
+
+        let lastActivity = Date.now();
+        const timeoutDuration = 30 * 60 * 1000;
+
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+            document.addEventListener(event, function() {
+                lastActivity = Date.now();
+            }, false);
+        });
+
+        setInterval(function() {
+            if (Date.now() - lastActivity > timeoutDuration) {
+                alert('Su sesión ha expirado por inactividad. Será redirigido al login.');
+                window.location.replace('/area51_barbershop_2025/index.php?page=login&msg=timeout');
+            }
+        }, 60000);
+    };
+
+    function checkSession() {
+        fetch('/area51_barbershop_2025/index.php?page=check_session', {
+                method: 'GET',
+                cache: 'no-cache',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.logged_in) {
+                    window.location.replace('/area51_barbershop_2025/index.php?page=login');
+                }
+            })
+            .catch(error => {
+                console.error('Error verificando sesión:', error);
+                window.location.replace('/area51_barbershop_2025/index.php?page=login');
+            });
+    }
+
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) window.location.reload();
     });
-}
 
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted) window.location.reload();
-});
-
-window.addEventListener('popstate', function(event) {
-    checkSession();
-});
+    window.addEventListener('popstate', function(event) {
+        checkSession();
+    });
 </script>

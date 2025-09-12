@@ -9,10 +9,11 @@ ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área 51_Barber Shop</title>
+    <title>Área 51 - Barbershop</title>
     <!-- Bootstrap y FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -27,6 +28,7 @@ ob_start();
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="public/css/style.css">
 </head>
+
 <body>
     <!-- Encabezado -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="margin: 15px;border-radius: 25px;
@@ -96,4 +98,4 @@ ob_start();
             });
         });
     </script>
-<main>
+    <main>

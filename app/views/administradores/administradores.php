@@ -1,44 +1,78 @@
 <?php
-require_once __DIR__ . '/../database.php';
-require_once __DIR__ . '/../models/administrador.php';
-require_once __DIR__ . '/../models/usuario.php';
-
-if (session_status() == PHP_SESSION_NONE) {
+// Asegúrate de tener acceso a $db (PDO)
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: index.php?page=login');
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: index.php?page=login");
     exit;
 }
+
+// Obtener administradores de la base de datos
+$stmt = $db->query("SELECT * FROM administradores");
+$admins = $stmt->fetchAll();
 ?>
+
 <body>
-    <div class="container mt-5">
-        <h2 class="text-white mb-4">Gestión de Administradores</h2>
-        <table class="table table-dark table-striped">
-            <thead>
-                <tr>
+    <div class="container py-5">
+            <!-- Título y botón HOME -->
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start" style="margin-top:100px;">
+                <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle mb-3 mb-md-0" style="width: 60px; height: 60px;"> <i class="bi bi-house-fill fs-3"></i>
+                </a>
+                <h1 class="fw-bold display-5 text-white mb-0">💈 Gestión de Administradores</h1>
+            </div>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="index.php?page=crear_admin" class="btn btn-neon">➕ Nuevo Admin</a>
+            </div>    
+        
+            <div class="table-wrapper rounded shadow-sm" style="max-height:500px; overflow-y:auto;">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                <tr style="position: sticky; top: 0; z-index: 1;">
                     <th>ID</th>
+                    <th>Foto</th>
                     <th>Nombre</th>
                     <th>Usuario</th>
                     <th>Email</th>
                     <th>Acciones</th>
                 </tr>
-            </thead>
-            <tbody>
-                <?php while($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><?= $row['nombre'] ?></td>
-                    <td><?= $row['usuario'] ?></td>
-                    <td><?= $row['email'] ?></td>
-                    <td>
-                        <a href="editar_admin.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="eliminar_admin.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach($admins as $admin): ?>
+                    <tr>
+                        <td><?= $admin['id_admin'] ?></td>
+                        <td>
+                            <?php if (!empty($admin['img_admin'])): ?>
+                                <img src="app/uploads/admin/<?= htmlspecialchars($admin['img_admin']) ?>"
+                                    alt="Imagen del administrador"
+                                    class="img-thumbnail border-success"
+                                    style="max-width: 90px; max-height: 190px; border: 2px solid #28a745;">
+                            <?php else: ?>
+                                <p class="text-warning small mb-0">⚠️ Sin imagen</p>
+                            <?php endif; ?>
+                        </td>
+                        <td><?= htmlspecialchars($admin['nombre']) ?></td>
+                        <td><?= htmlspecialchars($admin['usuario']) ?></td>
+                        <td><?= htmlspecialchars($admin['email']) ?></td>
+                        <td>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="index.php?page=editar_admin&id=<?= $admin['id_admin'] ?>" class="btn btn-sm btn-warning" style="width: 80px;">Editar</a>
+                                <a href="index.php?page=eliminar_admin&id=<?= $admin['id_admin'] ?>" class="btn btn-sm btn-danger" style="width: 80px;">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <!-- Mensajes -->
+            <?php if (!empty($_SESSION['error_admin'])): ?>
+                <div class="alert alert-warning"><?= $_SESSION['error_admin']; unset($_SESSION['error_admin']); ?></div>
+            <?php endif; ?>
+
+            <?php if (!empty($_SESSION['success_admin'])): ?>
+                <div class="alert alert-success"><?= $_SESSION['success_admin']; unset($_SESSION['success_admin']); ?></div>
+            <?php endif; ?>
+        </div>
     </div>
 <main>
