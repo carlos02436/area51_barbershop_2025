@@ -47,7 +47,7 @@ class Cita {
     }
 
     // Actualizar cita
-    public function actualizar($id, array $datos) {
+    public function actualizar($id, $data) {
         $sql = "UPDATE citas SET
                     id_cliente = :id_cliente,
                     id_barbero = :id_barbero,
@@ -60,24 +60,16 @@ class Cita {
 
         $stmt = $this->db->prepare($sql);
 
-        $ok = $stmt->execute([
-            ':id_cliente'   => !empty($datos['id_cliente']) ? $datos['id_cliente'] : null,
-            ':id_barbero'   => $datos['id_barbero'],
-            ':id_servicio'  => $datos['id_servicio'],
-            ':img_servicio' => $datos['img_servicio'] ?? null,
-            ':fecha_cita'   => $datos['fecha_cita'],
-            ':hora_cita'    => $datos['hora_cita'],
-            ':estado'       => $datos['estado'] ?? 'pendiente',
+        return $stmt->execute([
+            ':id_cliente'   => $data['id_cliente'] ?? null,
+            ':id_barbero'   => $data['id_barbero'],
+            ':id_servicio'  => $data['id_servicio'],
+            ':img_servicio' => $data['img_servicio'] ?? null,
+            ':fecha_cita'   => $data['fecha_cita'],
+            ':hora_cita'    => $data['hora_cita'],
+            ':estado'       => $data['estado'] ?? 'pendiente',
             ':id'           => $id
         ]);
-
-        if (!$ok) {
-            // Mostrar error SQL si algo falla
-            $error = $stmt->errorInfo();
-            throw new Exception("Error al actualizar la cita: " . $error[2]);
-        }
-
-        return true;
     }
 
     public function mostrar($id) {

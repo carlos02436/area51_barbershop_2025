@@ -88,28 +88,23 @@ class CitasController {
         $fecha       = $_POST['fecha_cita'] ?? null;
         $hora        = $_POST['hora_cita'] ?? null;
         $estado      = $_POST['estado'] ?? 'pendiente';
+        $img_actual  = $_POST['img_actual'] ?? null; // imagen actual en caso de no subir nueva
 
         // Validar datos obligatorios
         if (!$id_barbero || !$id_servicio || !$fecha || !$hora) {
-            header("Location: index.php?page=editar_cita&id={$id}&error=Datos incompletos");
+            header("Location: index.php?page=editar_cita&id={$id}&error=" . urlencode("Datos incompletos"));
             exit;
         }
 
         // Obtener datos actuales de la cita
         $citaExistente = $this->model->obtenerPorId($id);
         if (!$citaExistente) {
-            header("Location: index.php?page=citas&error=Cita no encontrada");
+            header("Location: index.php?page=citas&error=" . urlencode("Cita no encontrada"));
             exit;
         }
 
-        // Obtener img_servicio del servicio (si cambia)
-        $imgServicio = $citaExistente['img_servicio']; // valor actual
-        if ($id_servicio != $citaExistente['id_servicio']) {
-            $stmt = $this->db->prepare("SELECT img_servicio FROM servicios WHERE id_servicio = :id LIMIT 1");
-            $stmt->execute([':id' => $id_servicio]);
-            $svc = $stmt->fetch(PDO::FETCH_ASSOC);
-            $imgServicio = $svc['img_servicio'] ?? $imgServicio;
-        }
+        // Procesar imagen: conservar actual si no se sube nueva
+        $imgServicio = $img_actual ?: $citaExistente['img_servicio'];
 
         // Preparar datos a actualizar
         $datos = [
@@ -127,7 +122,6 @@ class CitasController {
             header('Location: index.php?page=citas&success=1');
             exit;
         } catch (Exception $e) {
-            // Captura error SQL
             header("Location: index.php?page=editar_cita&id={$id}&error=" . urlencode($e->getMessage()));
             exit;
         }
