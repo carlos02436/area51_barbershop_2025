@@ -1,6 +1,8 @@
-// Formulario de reserva
 document.addEventListener('DOMContentLoaded', function () {
 
+    // --------------------------
+    // FORMULARIO DE RESERVA
+    // --------------------------
     const reservaForm = document.getElementById('reserva-form');
     if (reservaForm) {
         reservaForm.addEventListener('submit', function (e) {
@@ -10,26 +12,37 @@ document.addEventListener('DOMContentLoaded', function () {
             const fecha = document.getElementById('fecha').value;
             const servicio = document.getElementById('servicio').value;
 
-            console.log('Reserva recibida:', { nombre, email, fecha, servicio, });
+            console.log('Reserva recibida:', { nombre, email, fecha, servicio });
             alert('¡Gracias por tu reserva! Nos comunicaremos contigo pronto para confirmarla.');
             this.reset();
         });
     }
 
-    // Scroll suave en los links del menú
+    // --------------------------
+    // SCROLL SUAVE CON NAVBAR FIJO
+    // --------------------------
+    const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 80;
+
     document.querySelectorAll('a.nav-link').forEach(link => {
         link.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
+            const targetSelector = this.getAttribute('href');
+            const target = document.querySelector(targetSelector);
+
+            if (target && window.location.hash !== targetSelector) {
                 e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
+
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+
+                // Actualizar el hash sin saltar
+                history.pushState(null, null, targetSelector);
             }
         });
     });
 
-    // Observador para animaciones
+    // --------------------------
+    // OBSERVADOR PARA ANIMACIONES
+    // --------------------------
     const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -45,7 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(section);
     });
 
-    // Fondo animado del hero
+    // --------------------------
+    // FONDO ANIMADO DEL HERO
+    // --------------------------
     const heroBackgrounds = [
         'https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
         'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80',
@@ -72,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.hero').insertBefore(newBackground, heroBackground.nextSibling);
 
             setTimeout(() => {
-                newBackground.style.opacity = '1000';
+                newBackground.style.opacity = '1';
                 heroBackground.style.opacity = '0';
             }, 50);
 
@@ -85,121 +100,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setInterval(changeBackground, 5000);
     }
-});
 
-// cerrar el menu al seleccionar una de las opciones de navegación
-document.addEventListener('DOMContentLoaded', function () {
+    // --------------------------
+    // CIERRE AUTOMÁTICO DEL MENÚ HAMBURGUESA
+    // --------------------------
     const navLinks = document.querySelectorAll('.nav-link');
     const navbarCollapse = document.getElementById('navbarNav');
 
-    navLinks.forEach(function (link) {
+    navLinks.forEach(link => {
         link.addEventListener('click', function () {
-
-            // Verificar si el menú está visible (modo móvil)
             const isVisible = window.getComputedStyle(navbarCollapse).display !== 'none';
-
             if (isVisible && navbarCollapse.classList.contains('show')) {
-
-                // Cerrar el menú usando Collapse de Bootstrap
-                const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-                    toggle: false
-                });
+                const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
                 bsCollapse.hide();
             }
         });
     });
-});
 
-// Función para manejar los cambios de tamaño del navegador
-function handleResponsiveLayout() {
-    const width = window.innerWidth; // ancho de la pantalla
-    const body = document.body;
+    // --------------------------
+    // CIERRE DE DROPDOWN "MÁS"
+    // --------------------------
+    document.querySelectorAll('.dropdown-menu .dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const dropdownMenu = item.closest('.dropdown-menu');
+            const dropdownToggle = dropdownMenu?.previousElementSibling;
 
-    // Limpia clases anteriores (si hay)
-    body.classList.remove('mobile-view', 'tablet-view', 'desktop-view');
-
-    // Aplica clase según el tamaño
-    if (width < 768) {
-        // Teléfonos
-        body.classList.add('mobile-view');
-        console.log('Vista móvil activada');
-    } else if (width >= 768 && width < 1024) {
-        // Tablets
-        body.classList.add('tablet-view');
-        console.log('Vista tablet activada');
-    } else {
-        // PC de escritorio o portátil
-        body.classList.add('desktop-view');
-        console.log('Vista escritorio activada');
-    }
-}
-
-// Llamar cuando la página se carga
-window.addEventListener('DOMContentLoaded', handleResponsiveLayout);
-
-// Llamar cada vez que se cambia el tamaño de la ventana
-window.addEventListener('resize', handleResponsiveLayout);
-
-// Página Web responsiva
-function aplicarClaseResponsiva() {
-    const width = window.innerWidth;
-    const body = document.body;
-
-    // Limpiar clases anteriores
-    body.classList.remove('mobile-view', 'tablet-view', 'desktop-view');
-
-    // Agregar clase según tamaño
-    if (width < 768) {
-        body.classList.add('mobile-view');
-    } else if (width >= 768 && width < 1024) {
-        body.classList.add('tablet-view');
-    } else {
-        body.classList.add('desktop-view');
-    }
-}
-
-// Ejecutar al cargar y al cambiar el tamaño
-window.addEventListener('DOMContentLoaded', aplicarClaseResponsiva);
-window.addEventListener('resize', aplicarClaseResponsiva);
-
-
-// Cierra el dropdown "Más" al seleccionar una opción dentro del dropdown
-document.querySelectorAll('.dropdown-menu .dropdown-item').forEach(item => {
-    item.addEventListener('click', () => {
-        // Cierra solo el dropdown
-        const dropdownMenu = item.closest('.dropdown-menu');
-        const dropdownToggle = dropdownMenu?.previousElementSibling;
-
-        if (dropdownToggle && dropdownToggle.classList.contains('dropdown-toggle')) {
-            const dropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle);
-            if (dropdownInstance) {
-                dropdownInstance.hide();
+            if (dropdownToggle && dropdownToggle.classList.contains('dropdown-toggle')) {
+                const dropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle);
+                if (dropdownInstance) dropdownInstance.hide();
             }
-        }
 
-        // También cierra el menú hamburguesa si está abierto
-        const navbarCollapse = document.querySelector('.navbar-collapse');
-        if (navbarCollapse.classList.contains('show')) {
-            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-            if (bsCollapse) {
-                bsCollapse.hide();
-            }
-        }
-    });
-});
-
-// Cierra el menú hamburguesa al dar clic en un link del navbar (excepto "Más")
-document.querySelectorAll('.navbar-collapse .nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-        // Si NO es el botón "Más", cierra el menú hamburguesa
-        if (!link.classList.contains('dropdown-toggle')) {
-            const navbarCollapse = document.querySelector('.navbar-collapse');
             if (navbarCollapse.classList.contains('show')) {
                 const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                if (bsCollapse) {
-                    bsCollapse.hide();
-                }
+                if (bsCollapse) bsCollapse.hide();
             }
-        }
+        });
     });
-});
+})

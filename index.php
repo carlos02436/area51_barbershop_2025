@@ -403,6 +403,22 @@ switch ($page) {
         require __DIR__ . '/app/views/reportes/reportes.php';
         break;
 
+    case 'reportes_citas':
+        require __DIR__ . '/app/views/reportes/reportes_citas.php';
+        break;
+
+    case 'generar_pdf':
+        include 'app/views/reportes/generar_pdf.php';
+        break;
+
+    case 'reportes_ingresos':
+        include 'app/views/reportes/reportes_ingresos.php';
+        break;
+
+    case 'generar_pdf_ingresos':
+        include 'app/views/reportes/generar_pdf_ingresos.php';
+        break;
+
     default:
         echo "<section class='container py-5 text-center'>
                 <h2 class='text-danger'>404 - Página no encontrada</h2>

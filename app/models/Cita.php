@@ -6,6 +6,31 @@ class Cita {
         $this->db = $db;
     }
 
+    public function obtenerClientes() {
+        $stmt = $this->db->query("SELECT * FROM clientes");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerBarberos() {
+        $stmt = $this->db->query("SELECT * FROM barberos");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerServicios() {
+        $stmt = $this->db->query("SELECT * FROM servicios");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerHorasOcupadas($id_barbero, $fecha) {
+        $sql = "SELECT hora_cita FROM citas WHERE id_barbero = :id_barbero AND fecha_cita = :fecha";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':id_barbero' => $id_barbero,
+            ':fecha' => $fecha
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
     // Listar todas las citas con datos relacionados (cliente, barbero, servicio e imagen)
     public function obtenerTodas() {
         $sql = "SELECT c.id_cita, c.id_cliente, c.id_barbero, c.id_servicio, c.img_servicio,
@@ -28,7 +53,7 @@ class Cita {
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    }  
 
     // Crear nueva cita (espera array con claves: id_cliente, id_barbero, id_servicio, img_servicio, fecha_cita, hora_cita, estado)
     public function crear(array $datos) {

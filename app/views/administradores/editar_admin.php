@@ -17,8 +17,9 @@ if (!$admin) {
 ?>
 
 <body>
-<div class="container mt-5">
-    <h2 class="text-white mb-4">Editar Administrador</h2>
+<div class="container py-5" style="margin-top:100px;">
+    <h1 class="fw-bold text-white mb-4 text-center">✏️ Editar Administrador</h1>
+        <div class="card text-white mx-auto" style="max-width: 600px; padding: 40px;">
 
     <!-- Mensajes -->
     <?php if (!empty($_SESSION['error_admin'])): ?>
@@ -46,7 +47,7 @@ if (!$admin) {
             <label class="form-label text-white">Contraseña</label>
             <input type="password" name="password" class="form-control" value="<?= htmlspecialchars($admin['password']) ?>" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-5 text-center">
             <label class="form-label text-white">Foto</label>
             <?php if (!empty($admin['img_admin'])): ?>
                 <div class="mb-2">
@@ -57,8 +58,13 @@ if (!$admin) {
             <?php endif; ?>
             <input type="file" name="img_admin" class="form-control" accept="image/*">
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar Administrador</button>
-        <a href="index.php?page=administradores" class="btn btn-secondary">Cancelar</a>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-between w-100 mx-auto">
+            <a href="index.php?page=administradores" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-neon">Actualizar Admin</button>
+        </div>
     </form>
+    </div>
 </div>
 <main>

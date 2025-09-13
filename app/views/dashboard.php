@@ -33,7 +33,8 @@ $ingresosHoy = $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 $stmt = $db->prepare("
     SELECT 
         c.id_cita, 
-        cl.nombre AS cliente, 
+        cl.nombre AS nombre,        -- nombre del cliente
+        cl.apellido AS apellido,    -- apellido del cliente
         b.nombre AS barbero, 
         c.fecha_cita, 
         c.hora_cita, 
@@ -114,32 +115,34 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Barbero</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Servicio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php if (!empty($proximasCitas)): ?>
+                        <?php foreach ($proximasCitas as $cita): ?>
                             <tr>
-                                <th>Cliente</th>
-                                <th>Barbero</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th>Servicio</th>
+                                <td><?= htmlspecialchars($cita['nombre']) ?></td>
+                                <td><?= htmlspecialchars($cita['apellido']) ?></td>
+                                <td><?= htmlspecialchars($cita['barbero']) ?></td>
+                                <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
+                                <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
+                                <td><?= htmlspecialchars($cita['servicio']) ?></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($proximasCitas)): ?>
-                                <?php foreach ($proximasCitas as $cita): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($cita['cliente']) ?></td>
-                                        <td><?= htmlspecialchars($cita['barbero']) ?></td>
-                                        <td><?= htmlspecialchars($cita['fecha_cita']) ?></td>
-                                        <td><?= htmlspecialchars($cita['hora_cita']) ?></td>
-                                        <td><?= htmlspecialchars($cita['servicio']) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted py-3">No hay próximas citas</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-3">No hay próximas citas</td>
+                        </tr>
+                    <?php endif; ?>
+                    </tbody>
                     </table>
                 </div>
             </div>

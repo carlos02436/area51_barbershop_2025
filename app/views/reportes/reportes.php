@@ -29,7 +29,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         <i class="fa fa-chart-line fa-3x mb-3 text-primary"></i>
                         <h5 class="card-title text-white">Reporte de Citas</h5>
                         <p class="card-text text-white">Genera un resumen detallado de todas las citas registradas, incluyendo métricas y estadísticas.</p>
-                        <a href="index.php?page=reporte_citas" class="btn btn-primary">Generar Reporte</a>
+                        <a href="index.php?page=reportes_citas" class="btn btn-primary">Generar Reporte</a>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         <i class="fa fa-dollar-sign fa-3x mb-3 text-info"></i>
                         <h5 class="card-title text-white">Reporte de Ingresos</h5>
                         <p class="card-text text-white">Resumen de ingresos generados por los servicios prestados.</p>
-                        <a href="index.php?page=reporte_ingresos" class="btn btn-info">Generar Reporte</a>
+                        <a href="index.php?page=reportes_ingresos" class="btn btn-info">Generar Reporte</a>
                     </div>
                 </div>
             </div>

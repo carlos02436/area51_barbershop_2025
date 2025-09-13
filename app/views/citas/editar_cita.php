@@ -90,13 +90,6 @@
                 </div>
 
                 <script>
-                    // ⏰ Simular horas ocupadas (formato "08:00 am", "10:00 am", etc.)
-                    const horasOcupadas = [
-                        "09:00 am",
-                        "11:00 am",
-                        "02:00 pm"
-                    ];
-
                     // 📅 Generar horas en punto en formato 12h
                     function generarHoras(inicio, fin) {
                         const horas = [];
@@ -122,22 +115,19 @@
 
                     function cargarHorasSegunDia() {
                         const selectHora = document.getElementById('selectHora');
-                        const diaSemana = new Date().getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
+                        const diaSemana = new Date().getDay();
 
                         let horas = [];
+                        let horasOcupadas = []; // <--- inicializamos vacío
 
                         if (diaSemana === 0) {
-                            // Domingo: 09:00 am - 04:00 pm
                             horas = generarHoras("09:00 am", "04:00 pm");
                         } else {
-                            // Lunes a sábado: 08:00 am - 08:00 pm
                             horas = generarHoras("08:00 am", "08:00 pm");
                         }
 
-                        // Limpiar el select
                         selectHora.innerHTML = '<option value="">Seleccionar...</option>';
 
-                        // Agregar solo horas disponibles
                         horas.forEach(hora => {
                             if (!horasOcupadas.includes(hora)) {
                                 const option = document.createElement('option');
@@ -147,12 +137,17 @@
                             }
                         });
 
-                        // Seleccionar hora actual si existe
                         const horaActual = selectHora.getAttribute('data-hora-actual');
                         if (horaActual && !horasOcupadas.includes(horaActual)) {
                             selectHora.value = horaActual;
                         }
                     }
+
+                        // Seleccionar hora actual si existe
+                        const horaActual = selectHora.getAttribute('data-hora-actual');
+                        if (horaActual && !horasOcupadas.includes(horaActual)) {
+                            selectHora.value = horaActual;
+                        }
 
                     document.addEventListener('DOMContentLoaded', cargarHorasSegunDia);
                 </script>

@@ -10,7 +10,7 @@ class CitasController {
         $this->model = new Cita($db);
     }
 
-    // Listar y mostrar la vista (puedes incluir la vista desde index.php)
+    // Listar y mostrar la vista
     public function listar() {
         return $this->model->obtenerTodas();
     }
@@ -19,7 +19,7 @@ class CitasController {
         return $this->model->obtenerPorId($id);
     }
 
-    // Formulario de crear: trae clientes, barberos y servicios
+    // Formulario de crear
     public function crearFormulario() {
         $clientes = $this->db->query("SELECT id_cliente, nombre, apellido FROM clientes")->fetchAll(PDO::FETCH_ASSOC);
         $barberos = $this->db->query("SELECT id_barbero, nombre FROM barberos")->fetchAll(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ class CitasController {
         require __DIR__ . '/../views/citas/crear_cita.php';
     }
 
-    // Guardar nueva cita (copia img_servicio desde la tabla servicios)
+    // Guardar nueva cita (con consultas preparadas)
     public function guardar() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_cliente   = $_POST['id_cliente'] ?? null;
@@ -38,7 +38,10 @@ class CitasController {
             $hora_cita    = $_POST['hora_cita'] ?? null;
             $estado       = $_POST['estado'] ?? 'pendiente';
             $img_servicio = $_POST['img_servicio'] ?? null; 
+
             if ($id_cliente && $id_barbero && $id_servicio && $fecha_cita && $hora_cita) {
+
+                // 1️⃣ Guardar la cita en la base de datos
                 $sql = "INSERT INTO citas (id_cliente, id_barbero, id_servicio, fecha_cita, hora_cita, estado, img_servicio)
                         VALUES (?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $this->db->prepare($sql);
@@ -49,12 +52,48 @@ class CitasController {
                     $fecha_cita,
                     $hora_cita,
                     $estado,
-                    $img_servicio // 👈 guardamos la ruta de la imagen
+                    $img_servicio
                 ]);
 
-                header("Location: index.php?page=citas&success=1");
+                // 2️⃣ Obtener datos del cliente
+                $stmtCliente = $this->db->prepare("SELECT nombre, telefono FROM clientes WHERE id_cliente = ?");
+                $stmtCliente->execute([$id_cliente]);
+                $cliente = $stmtCliente->fetch(PDO::FETCH_ASSOC);
+
+                // 3️⃣ Obtener datos del barbero
+                $stmtBarbero = $this->db->prepare("SELECT nombre, telefono FROM barberos WHERE id_barbero = ?");
+                $stmtBarbero->execute([$id_barbero]);
+                $barbero = $stmtBarbero->fetch(PDO::FETCH_ASSOC);
+
+                // 4️⃣ Obtener datos del servicio
+                $stmtServicio = $this->db->prepare("SELECT nombre FROM servicios WHERE id_servicio = ?");
+                $stmtServicio->execute([$id_servicio]);
+                $servicio = $stmtServicio->fetch(PDO::FETCH_ASSOC);
+
+                // 5️⃣ Preparar los mensajes de WhatsApp
+                $mensaje_cliente = urlencode(
+                    "Hola {$cliente['nombre']}, tu cita para el servicio '{$servicio['nombre']}' en ÁREA 51 BARBER SHOP ha sido confirmada para el {$fecha_cita} a las {$hora_cita}."
+                );
+                $mensaje_barbero = urlencode(
+                    "Hola {$barbero['nombre']}, tienes una nueva cita para el servicio '{$servicio['nombre']}' con {$cliente['nombre']} el {$fecha_cita} a las {$hora_cita}."
+                );
+
+                $telefono_cliente = $cliente['telefono'];
+                $telefono_barbero = $barbero['telefono'];
+
+                try {
+                    file_get_contents("https://api.whatsapp.com/send?phone={$telefono_cliente}&text={$mensaje_cliente}");
+                    file_get_contents("https://api.whatsapp.com/send?phone={$telefono_barbero}&text={$mensaje_barbero}");
+                } catch (\Exception $e) {
+                    // Registrar error opcionalmente
+                }
+
+                // 6️⃣ Redirigir con éxito
+                header("Location: index.php?page=home#contacto");
                 exit;
+
             } else {
+                // Redirigir con error si faltan datos
                 header("Location: index.php?page=crear_cita&error=1");
                 exit;
             }
@@ -78,7 +117,7 @@ class CitasController {
 
     // Actualizar cita
     public function actualizar() {
-        $id = $_POST['id_cita'] ?? null; // 👈 ahora tomamos el ID del formulario
+        $id = $_POST['id_cita'] ?? null;
         $id_cliente = $_POST['id_cliente'] ?? null;
         $id_barbero = $_POST['id_barbero'] ?? null;
         $id_servicio = $_POST['id_servicio'] ?? null;
