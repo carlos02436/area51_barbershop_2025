@@ -46,36 +46,62 @@ class Cita {
         ]);
     }
 
-    // Actualizar cita
-    public function actualizar($id, $data) {
-        $sql = "UPDATE citas SET
-                    id_cliente = :id_cliente,
-                    id_barbero = :id_barbero,
-                    id_servicio = :id_servicio,
-                    img_servicio = :img_servicio,
-                    fecha_cita = :fecha_cita,
-                    hora_cita = :hora_cita,
+    public function actualizar($id, $datos) {
+        $sql = "UPDATE citas 
+                SET id_cliente = :id_cliente, 
+                    id_barbero = :id_barbero, 
+                    id_servicio = :id_servicio, 
+                    img_servicio = :img_servicio, 
+                    fecha_cita = :fecha_cita, 
+                    hora_cita = :hora_cita, 
                     estado = :estado
-                WHERE id_cita = :id";
+                WHERE id_cita = :id_cita";
 
         $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_cliente', $datos['id_cliente']);
+        $stmt->bindParam(':id_barbero', $datos['id_barbero']);
+        $stmt->bindParam(':id_servicio', $datos['id_servicio']);
+        $stmt->bindParam(':img_servicio', $datos['img_servicio']);
+        $stmt->bindParam(':fecha_cita', $datos['fecha_cita']);
+        $stmt->bindParam(':hora_cita', $datos['hora_cita']);
+        $stmt->bindParam(':estado', $datos['estado']); 
+        $stmt->bindParam(':id_cita', $id);
 
-        return $stmt->execute([
-            ':id_cliente'   => $data['id_cliente'] ?? null,
-            ':id_barbero'   => $data['id_barbero'],
-            ':id_servicio'  => $data['id_servicio'],
-            ':img_servicio' => $data['img_servicio'] ?? null,
-            ':fecha_cita'   => $data['fecha_cita'],
-            ':hora_cita'    => $data['hora_cita'],
-            ':estado'       => $data['estado'] ?? 'pendiente',
-            ':id'           => $id
-        ]);
+        return $stmt->execute();
     }
 
     public function mostrar($id) {
         $stmt = $this->db->prepare("SELECT * FROM citas WHERE id_cita = :id LIMIT 1");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Verificación de horas, para que no se crucen las citas
+    public function existeConflicto($id_barbero, $fecha_cita, $hora_cita, $id_cita = null) {
+        $sql = "SELECT COUNT(*) as total 
+                FROM citas 
+                WHERE id_barbero = :id_barbero 
+                AND fecha_cita = :fecha_cita 
+                AND hora_cita = :hora_cita";
+
+        // Si estamos editando, excluir la misma cita
+        if ($id_cita !== null) {
+            $sql .= " AND id_cita != :id_cita";
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_barbero', $id_barbero);
+        $stmt->bindParam(':fecha_cita', $fecha_cita);
+        $stmt->bindParam(':hora_cita', $hora_cita);
+
+        if ($id_cita !== null) {
+            $stmt->bindParam(':id_cita', $id_cita);
+        }
+
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['total'] > 0; // true si ya hay cita en ese horario
     }
 
     // Eliminar cita

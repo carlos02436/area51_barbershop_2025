@@ -53,10 +53,10 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <a href="index.php?page=editar_cita&id=<?= $cita['id_cita'] ?>" 
-                                       class="btn btn-warning btn-sm">Editar</a>
+                                       class="btn btn-warning btn-sm" style="width:80px;">Editar</a>
                                     <a href="index.php?page=eliminar_cita&id=<?= $cita['id_cita'] ?>" 
                                        class="btn btn-danger btn-sm" 
-                                       onclick="return confirm('¿Eliminar esta cita?')">Eliminar</a>
+                                       onclick="return confirm('¿Eliminar esta cita?')" style="width:80px;">Eliminar</a>
                                 </div>
                             </td>
                         </tr>

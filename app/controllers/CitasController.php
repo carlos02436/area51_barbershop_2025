@@ -37,8 +37,7 @@ class CitasController {
             $fecha_cita   = $_POST['fecha_cita'] ?? null;
             $hora_cita    = $_POST['hora_cita'] ?? null;
             $estado       = $_POST['estado'] ?? 'pendiente';
-            $img_servicio = $_POST['img_servicio'] ?? null; // 👈 capturamos la imagen
-
+            $img_servicio = $_POST['img_servicio'] ?? null; 
             if ($id_cliente && $id_barbero && $id_servicio && $fecha_cita && $hora_cita) {
                 $sql = "INSERT INTO citas (id_cliente, id_barbero, id_servicio, fecha_cita, hora_cita, estado, img_servicio)
                         VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -77,40 +76,24 @@ class CitasController {
         require __DIR__ . '/../views/citas/editar_cita.php';
     }
 
-    // Actualizar cita (si se cambia servicio, actualizar img_servicio)
-    public function actualizar($id) {
+    // Actualizar cita
+    public function actualizar() {
+        $id = $_POST['id_cita'] ?? null; // 👈 ahora tomamos el ID del formulario
         $id_cliente = $_POST['id_cliente'] ?? null;
         $id_barbero = $_POST['id_barbero'] ?? null;
         $id_servicio = $_POST['id_servicio'] ?? null;
         $fecha       = $_POST['fecha_cita'] ?? null;
         $hora        = $_POST['hora_cita'] ?? null;
         $estado      = $_POST['estado'] ?? 'pendiente';
+        $imgServicio = $_POST['img_servicio'] ?? null;
 
-        // Validar datos obligatorios
-        if (!$id_barbero || !$id_servicio || !$fecha || !$hora) {
+        if (!$id || !$id_barbero || !$id_servicio || !$fecha || !$hora) {
             header("Location: index.php?page=editar_cita&id={$id}&error=Datos incompletos");
             exit;
         }
 
-        // Obtener datos actuales de la cita
-        $citaExistente = $this->model->obtenerPorId($id);
-        if (!$citaExistente) {
-            header("Location: index.php?page=citas&error=Cita no encontrada");
-            exit;
-        }
-
-        // Obtener img_servicio del servicio (si cambia)
-        $imgServicio = $citaExistente['img_servicio']; // valor actual
-        if ($id_servicio != $citaExistente['id_servicio']) {
-            $stmt = $this->db->prepare("SELECT img_servicio FROM servicios WHERE id_servicio = :id LIMIT 1");
-            $stmt->execute([':id' => $id_servicio]);
-            $svc = $stmt->fetch(PDO::FETCH_ASSOC);
-            $imgServicio = $svc['img_servicio'] ?? $imgServicio;
-        }
-
-        // Preparar datos a actualizar
         $datos = [
-            'id_cliente'   => $id_cliente ?: null,
+            'id_cliente'   => $id_cliente,
             'id_barbero'   => $id_barbero,
             'id_servicio'  => $id_servicio,
             'img_servicio' => $imgServicio,
@@ -124,7 +107,6 @@ class CitasController {
             header('Location: index.php?page=citas&success=1');
             exit;
         } catch (Exception $e) {
-            // Captura error SQL
             header("Location: index.php?page=editar_cita&id={$id}&error=" . urlencode($e->getMessage()));
             exit;
         }

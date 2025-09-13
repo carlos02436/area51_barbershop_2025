@@ -121,7 +121,7 @@ switch ($page) {
         require_once __DIR__ . '/app/controllers/CitasController.php';
         $citasController = new CitasController($db);
         $id = $_GET['id'] ?? null;
-        $citasController->actualizar($id);
+        $citasController->actualizar();
         break;
 
     // eliminar

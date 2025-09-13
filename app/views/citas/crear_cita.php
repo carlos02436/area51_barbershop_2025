@@ -90,58 +90,80 @@
                 <!-- Hora -->
                 <div class="mb-3" id="horaContainer">
                     <label class="form-label">Hora</label>
-                    <select name="hora_cita" id="selectHora" class="form-select" required>
+                    <select name="hora_cita" id="selectHora" class="form-select" required
+                        data-hora-actual="<?= $cita['hora_cita'] ?? '' ?>">
                         <option value="">Seleccionar...</option>
-                        <?php
-                        $barbero_id = $cita['barbero_id'] ?? null;
-                        $fecha = $cita['fecha_cita'] ?? null;
-
-                        // Horario de apertura y cierre
-                        $inicio = new DateTime("08:00");
-                        $fin = new DateTime("21:00");
-                        $intervalo = new DateInterval("PT1H"); // intervalos de 1 hora
-
-                        // Traer horas ocupadas en la fecha y barbero seleccionados
-                        $horas_ocupadas = [];
-                        $citas_dia = 0;
-
-                        if ($fecha && $barbero_id) {
-                            $stmt = $this->db->prepare("SELECT hora_cita FROM citas WHERE fecha_cita = ? AND barbero_id = ?");
-                            $stmt->execute([$fecha, $barbero_id]);
-                            $horas_ocupadas = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-                            $stmt2 = $this->db->prepare("SELECT COUNT(*) FROM citas WHERE fecha_cita = ? AND barbero_id = ?");
-                            $stmt2->execute([$fecha, $barbero_id]);
-                            $citas_dia = $stmt2->fetchColumn();
-                        }
-
-                        for ($hora = clone $inicio; $hora <= $fin; $hora->add($intervalo)) {
-                            $h = $hora->format("H:i:s");
-                            $texto = $hora->format("h:i A");
-
-                            $ocupada = in_array($h, $horas_ocupadas);
-                            $disabled = false;
-
-                            if ($barbero_id == 1) {
-                                // Bloquear almuerzo
-                                if ($hora >= new DateTime("12:00") && $hora < new DateTime("14:00")) {
-                                    $disabled = true;
-                                }
-                                // Límite de 8 personas → deshabilitar todas las horas
-                                if ($citas_dia >= 8) {
-                                    $disabled = true;
-                                }
-                            }
-
-                            if ($ocupada) {
-                                $disabled = true;
-                            }
-
-                            echo '<option value="'.$h.'" '.($disabled ? "disabled" : "").'>'.$texto.($disabled ? " (ocupada)" : "").'</option>';
-                        }
-                        ?>
                     </select>
                 </div>
+
+                <script>
+                    // Función para generar horas en punto entre dos horas
+                    function generarHorasEnPunto(inicio, fin) {
+                        const horas = [];
+                        let startHour = parseInt(inicio.split(':')[0]);
+                        let endHour = parseInt(fin.split(':')[0]);
+                        let startPeriod = inicio.toLowerCase().includes('pm') ? 'pm' : 'am';
+                        let endPeriod = fin.toLowerCase().includes('pm') ? 'pm' : 'am';
+
+                        if (startPeriod === 'pm' && startHour !== 12) startHour += 12;
+                        if (endPeriod === 'pm' && endHour !== 12) endHour += 12;
+                        if (endPeriod === 'am' && endHour === 12) endHour = 0;
+
+                        for (let h = startHour; h <= endHour; h++) {
+                            let hour12 = h % 12 === 0 ? 12 : h % 12;
+                            let period = h >= 12 ? 'pm' : 'am';
+                            horas.push(`${hour12.toString().padStart(2, '0')}:00 ${period}`);
+                        }
+
+                        return horas;
+                    }
+
+                    function actualizarHoras() {
+                        const fechaInput = document.getElementById('fechaCita');
+                        const selectHora = document.getElementById('selectHora');
+                        const horaActual = selectHora.getAttribute('data-hora-actual');
+
+                        const fechaSeleccionada = new Date(fechaInput.value);
+                        const dia = fechaSeleccionada.getDay(); // 0 = domingo
+
+                        let horas = [];
+
+                        if (dia === 0) {
+                            horas = generarHorasEnPunto("09:00 am", "04:00 pm");
+                        } else {
+                            horas = generarHorasEnPunto("08:00 am", "08:00 pm");
+                        }
+
+                        // Limpiar opciones previas
+                        selectHora.innerHTML = '<option value="">Seleccionar...</option>';
+
+                        // Agregar horas disponibles (que no están ocupadas)
+                        horas.forEach(hora => {
+                            if (!horasOcupadas.includes(hora.toLowerCase())) {
+                                const option = document.createElement('option');
+                                option.value = hora;
+                                option.textContent = hora;
+                                selectHora.appendChild(option);
+                            }
+                        });
+
+                        // Seleccionar hora actual si está disponible
+                        if (horaActual && !horasOcupadas.includes(horaActual.toLowerCase())) {
+                            selectHora.value = horaActual;
+                        }
+                    }
+
+                    // Evento al cambiar la fecha
+                    document.getElementById('fechaCita').addEventListener('change', actualizarHoras);
+
+                    // También puedes llamarla en DOMContentLoaded si ya hay una fecha seleccionada
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const fechaInput = document.getElementById('fechaCita');
+                        if (fechaInput.value) {
+                            actualizarHoras();
+                        }
+                    });
+                </script>
 
                 <!-- Estado -->
                 <div class="mb-3">
@@ -166,102 +188,51 @@
 
     <script>
     // ====================== CLIENTE ======================
-    document.querySelector('select[name="id_servicio"]').addEventListener('change', function(){
-        let servicioId = this.value;
-        if(!servicioId) return;
+        document.querySelector('select[name="id_servicio"]').addEventListener('change', function(){
+            let servicioId = this.value;
+            if(!servicioId) return;
 
-        fetch('index.php?page=obtener_img_servicio&id_servicio=' + servicioId)
-        .then(res => res.json())
-        .then(data => {
-            if(data.img){
-                document.getElementById('contenedorImgServicio').style.display = 'block';
-                document.getElementById('imgServicio').src = data.img;
-                document.getElementById('inputImgServicio').value = data.img;
-            } else {
-                document.getElementById('contenedorImgServicio').style.display = 'none';
-                document.getElementById('inputImgServicio').value = '';
-            }
-        });
-    });
-
-    // Guardar cliente nuevo
-    document.getElementById('guardarCliente').addEventListener('click', function() {
-        let nombre = document.getElementById('nombreNuevo').value.trim();
-        let apellido = document.getElementById('apellidoNuevo').value.trim();
-        let email = document.getElementById('emailNuevo').value.trim();
-
-        if(nombre === '' || apellido === '' || email === ''){
-            alert("Complete todos los campos del registro.");
-            return;
-        }
-
-        fetch('index.php?page=guardar_cliente', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({nombre, apellido, email})
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                alert("Cliente registrado correctamente.");
-                document.getElementById('selectCliente').innerHTML += `<option value="${data.id_cliente}" selected>${nombre} ${apellido}</option>`;
-                document.getElementById('registroCliente').style.display = 'none';
-                document.getElementById('clienteMsg').textContent = "Cliente registrado: " + nombre + " " + apellido;
-            } else {
-                alert("Error al registrar cliente.");
-            }
-        });
-    });
-
-    // ====================== REFERENCIAS ======================
-    const selectBarbero = document.getElementById('selectBarbero');
-    const inputFecha   = document.getElementById('inputFecha');
-    const selectHora   = document.getElementById('selectHora');
-
-    // ====================== HORAS ======================
-    async function actualizarHoras(){
-        const barbero = selectBarbero.value;
-        const fecha = inputFecha.value;
-
-        if(!barbero || !fecha) return;
-
-        const res = await fetch(`index.php?page=horas_disponibles&id_barbero=${barbero}&fecha=${fecha}`);
-        const horasDisponibles = await res.json();
-
-        selectHora.innerHTML = '';
-        if(horasDisponibles.length === 0){
-            selectHora.disabled = true;
-            selectHora.innerHTML = `<option value="">No hay horas disponibles</option>`;
-            return;
-        }
-
-        // Horario de trabajo
-        let horasTodas = barbero == 1 
-            ? ["08:00","09:00","10:00","11:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00"]
-            : ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00"];
-
-        // Construir el select
-        let optionDefault = document.createElement('option');
-        optionDefault.value = "";
-        optionDefault.textContent = "Seleccionar...";
-        selectHora.appendChild(optionDefault);
-
-        horasTodas.forEach(h => {
-            let option = document.createElement('option');
-            option.value = h;
-            option.textContent = h;
-            if(!horasDisponibles.includes(h)){
-                option.disabled = true;
-                option.textContent += " (ocupada)";
-            }
-            selectHora.appendChild(option);
+            fetch('index.php?page=obtener_img_servicio&id_servicio=' + servicioId)
+            .then(res => res.json())
+            .then(data => {
+                if(data.img){
+                    document.getElementById('contenedorImgServicio').style.display = 'block';
+                    document.getElementById('imgServicio').src = data.img;
+                    document.getElementById('inputImgServicio').value = data.img;
+                } else {
+                    document.getElementById('contenedorImgServicio').style.display = 'none';
+                    document.getElementById('inputImgServicio').value = '';
+                }
+            });
         });
 
-        selectHora.disabled = false;
-    }
+        // Guardar cliente nuevo
+        document.getElementById('guardarCliente').addEventListener('click', function() {
+            let nombre = document.getElementById('nombreNuevo').value.trim();
+            let apellido = document.getElementById('apellidoNuevo').value.trim();
+            let email = document.getElementById('emailNuevo').value.trim();
 
-    // ====================== EVENTOS ======================
-    selectBarbero.addEventListener('change', actualizarHoras);
-    inputFecha.addEventListener('change', actualizarHoras);
-</script>
+            if(nombre === '' || apellido === '' || email === ''){
+                alert("Complete todos los campos del registro.");
+                return;
+            }
+
+            fetch('index.php?page=guardar_cliente', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({nombre, apellido, email})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    alert("Cliente registrado correctamente.");
+                    document.getElementById('selectCliente').innerHTML += `<option value="${data.id_cliente}" selected>${nombre} ${apellido}</option>`;
+                    document.getElementById('registroCliente').style.display = 'none';
+                    document.getElementById('clienteMsg').textContent = "Cliente registrado: " + nombre + " " + apellido;
+                } else {
+                    alert("Error al registrar cliente.");
+                }
+            });
+        });
+    </script>
 <main>
