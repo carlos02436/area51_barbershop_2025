@@ -114,7 +114,7 @@ $_SESSION['last_activity'] = time();
                 <div class="card-body">
                     <i class="fa fa-file-alt fa-3x mb-3 text-danger"></i>
                     <h5 class="card-title text-white">Reportes</h5>
-                    <p class="card-text text-white">Generar reportes PDF/Excel de citas y ventas.</p>
+                    <p class="card-text text-white">Generar reportes PDF de citas y servicios.</p>
                     <a href="/area51_barbershop_2025/index.php?page=reportes" class="btn btn-danger">Ver Reportes</a>
                 </div>
             </div>

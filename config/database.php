@@ -1,6 +1,7 @@
 <?php
 // config/database.php
 
+
 $host = "localhost";   
 $dbname = "area51_barbershop_2025"; // tu base de datos
 $username = "root";    // tu usuario de MySQL
