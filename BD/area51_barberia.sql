@@ -239,20 +239,21 @@ INSERT INTO tiktok (id_tiktok, url, video_id, descripcion, fecha_registro) VALUE
 -- --------------------------------------------------------
 -- Tabla: videos
 -- --------------------------------------------------------
-CREATE TABLE videos (
-  id_video INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  titulo VARCHAR(200) NOT NULL,
-  url VARCHAR(500) NOT NULL,
-  fecha_publicacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  publicado_por INT(11) DEFAULT NULL,
-  estado VARCHAR(50) NOT NULL DEFAULT,
+CREATE TABLE `videos` (
+  `id_video` INT(11) NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(255) NOT NULL,
+  `link` VARCHAR(255) NOT NULL,
+  `fecha_publicacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `publicado_por` VARCHAR(100) NOT NULL,
+  `estado` ENUM('activo','inactivo') DEFAULT 'activo',
+  PRIMARY KEY (`id_video`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Datos para la tabla videos
-INSERT INTO videos (id_video, titulo, url, fecha_publicacion, publicado_por, estado) VALUES
-(1, '10 Cortes de moda 2025', 'https://youtu.be/rugYY0WMlj0?si=vz7wB3rEc3L35Q0u', '2025-01-05 05:00:00', NULL, 'activo'),
-(2, 'Como Hacer un Desvanecido en V', 'https://youtu.be/rpdpu_Ktnkw?si=AL0CTIwJccelfPB5', '2025-05-07 05:00:00', NULL, 'activo'),
-(3, 'El arte del cuidado personal', 'https://youtu.be/7_lQ_HQnMwY?si=JsMpORA77jeyLrLi', '2025-08-10 05:00:00', NULL, 'activo');
+INSERT INTO videos (id_video, titulo, link, fecha_publicacion, publicado_por, estado) VALUES
+(1, '10 Cortes de moda 2025', 'https://youtu.be/rugYY0WMlj0?si=vz7wB3rEc3L35Q0u', '2025-01-05 05:00:00', 'carlos', 'activo'),
+(2, 'Como Hacer un Desvanecido en V', 'https://youtu.be/rpdpu_Ktnkw?si=AL0CTIwJccelfPB5', '2025-05-07 05:00:00', 'carlos', 'activo'),
+(3, 'El arte del cuidado personal', 'https://youtu.be/7_lQ_HQnMwY?si=JsMpORA77jeyLrLi', '2025-08-10 05:00:00', 'carlos', 'activo');
 
 
 CREATE TABLE `pqrs` (

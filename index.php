@@ -407,6 +407,19 @@ switch ($page) {
         require __DIR__ . '/app/views/reportes/reportes_citas.php';
         break;
 
+    case 'youtube':
+        require __DIR__ . '/app/views/videos/youtube.php';
+        break;
+    case 'crear_youtube':
+        require __DIR__ . '/app/views/videos/crear_youtube.php';
+        break;
+    case 'editar_youtube':
+        require __DIR__ . '/app/views/videos/editar_youtube.php';
+        break;
+    case 'eliminar_youtube':
+        require __DIR__ . '/app/views/videos/eliminar_youtube.php';
+        break;
+
     case 'generar_pdf':
         include 'app/views/reportes/generar_pdf.php';
         break;
