@@ -124,29 +124,6 @@ INSERT INTO `dashboard` VALUES
 (1, 1, '2025-02-01', 8.00, 5, 75000.00, '2025-08-29 20:16:50');
 
 -- --------------------------------------------------------
--- Tabla: eventos
--- --------------------------------------------------------
-CREATE TABLE `eventos` (
-  `id_evento` INT(11) NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(200) NOT NULL,
-  `descripcion` TEXT NOT NULL,
-  `fecha_evento` DATE NOT NULL,
-  `fecha_publicacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `publicado_por` INT(11) DEFAULT NULL,
-  PRIMARY KEY (`id_evento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `eventos` VALUES
-(1, 'Noche de Estilo', 'Evento de cortes gratuitos para clientes VIP.', '2025-02-01', '2025-08-29 20:16:49', NULL),
-(2, 'Taller de Barba', 'Capacitación sobre técnicas de afeitado.', '2025-02-05', '2025-08-29 20:16:49', NULL),
-(3, 'Competencia de Barberos', 'Concurso entre barberos locales.', '2025-02-10', '2025-08-29 20:16:49', NULL),
-(4, 'Charla de Estilismo', 'Conferencia sobre tendencias actuales.', '2025-02-12', '2025-08-29 20:16:49', NULL),
-(5, 'Show en Vivo', 'Demostración de cortes modernos.', '2025-02-15', '2025-08-29 20:16:49', NULL),
-(6, 'Semana del Cliente', 'Promociones y regalos para clientes frecuentes.', '2025-02-18', '2025-08-29 20:16:49', NULL),
-(7, 'Feria de Belleza', 'Participación en feria local de estética.', '2025-02-20', '2025-08-29 20:16:49', NULL),
-(8, 'Curso Intensivo', 'Entrenamiento para nuevos barberos.', '2025-02-25', '2025-08-29 20:16:49', NULL);
-
--- --------------------------------------------------------
 -- Tabla: galeria
 -- --------------------------------------------------------
 CREATE TABLE `galeria` (
@@ -242,9 +219,6 @@ INSERT INTO `testimonios` VALUES
 (3, 'Carlos Martínez', 'Siempre salgo feliz con mi look, barberos muy capacitados.', 'yeisonBarber.png', '2025-08-30 02:05:36'),
 (4, 'Luis Torres', 'La mejor barbería de la ciudad, ambiente único y cortes de primera.', 'yeisonBarber.png', '2025-08-30 02:05:36');
 
--- --------------------------------------------------------
--- Tabla: tiktok
--- --------------------------------------------------------
 -- --------------------------------------------------------
 -- Tabla: tiktok
 -- --------------------------------------------------------

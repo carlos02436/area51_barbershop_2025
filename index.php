@@ -415,8 +415,40 @@ switch ($page) {
         include 'app/views/reportes/reportes_ingresos.php';
         break;
 
+    case 'reportes_barberos':
+        include 'app/views/reportes/reportes_barberos.php';
+        break;
+
+    case 'reportes_hrbarberos':
+        include 'app/views/reportes/reportes_hrbarberos.php';
+        break;
+
+    case 'reportes_servicio':
+        include 'app/views/reportes/reportes_servicio.php';
+        break;
+        
+    case 'reportes_eventos':
+        include 'app/views/reportes/reportes_eventos.php';
+        break;
+
     case 'generar_pdf_ingresos':
         include 'app/views/reportes/generar_pdf_ingresos.php';
+        break;
+
+    case 'generar_pdf_barbero':
+        include 'app/views/reportes/generar_pdf_barbero.php';
+        break;
+
+    case 'generar_pdf_hr':
+        include 'app/views/reportes/generar_pdf_hr.php';
+        break;
+
+    case 'generar_pdf_servicio':
+        include 'app/views/reportes/generar_pdf_servicio.php';
+        break;
+
+    case 'generar_pdf_eventos':
+        include 'app/views/reportes/generar_pdf_eventos.php';
         break;
 
     default:

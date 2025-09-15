@@ -53,7 +53,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         <i class="fa fa-user-tie fa-3x mb-3 text-success"></i>
                         <h5 class="card-title text-white">Barbero más Solicitado</h5>
                         <p class="card-text text-white">Identifica al barbero con mayor cantidad de citas asignadas.</p>
-                        <a href="index.php?page=reporte_barberoSolicitado" class="btn btn-success">Generar Reporte</a>
+                        <a href="index.php?page=reportes_barberos" class="btn btn-success">Generar Reporte</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         <i class="fa fa-clock fa-3x mb-3 text-danger"></i>
                         <h5 class="card-title text-white">Hrs trabajadas Barbero</h5>
                         <p class="card-text text-white">Consulta las horas efectivas trabajadas por cada barbero.</p>
-                        <a href="index.php?page=reporte_hrBaberos" class="btn btn-danger">Generar Reporte</a>
+                        <a href="index.php?page=reportes_hrbarberos" class="btn btn-danger">Generar Reporte</a>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         <i class="fa fa-scissors fa-3x mb-3 text-warning"></i>
                         <h5 class="card-title text-white">Servicio más Solicitado</h5>
                         <p class="card-text text-white">Descubre cuáles son los servicios más solicitados por los clientes.</p>
-                        <a href="index.php?page=reporte_ventas" class="btn btn-warning">Generar Reporte</a>
+                        <a href="index.php?page=reportes_servicio" class="btn btn-warning">Generar Reporte</a>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         <i class="fa fa-calendar-alt fa-3x mb-3 text-white"></i>
                         <h5 class="card-title text-white">Reporte de Eventos</h5>
                         <p class="card-text text-white">Ahora puedes saber qué eventos han sido realizados en el año.</p>
-                        <a href="index.php?page=reporte_ventas" class="btn" style="background-color: white; color: black;">Generar Reporte</a>
+                        <a href="index.php?page=reportes_eventos" class="btn" style="background-color: white; color: black;">Generar Reporte</a>
                     </div>
                 </div>
             </div>
