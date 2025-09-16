@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../controllers/PQRSController.php';
 
 $controller = new PQRSController($db); // ✅ pasamos $db correctamente
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_POST['estado']
     );
 
-    header('Location: index.php?page=pqrs');
+    header('Location: index.php?page=PQRS');
     exit();
 }
 ?>
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="index.php?page=pqrs" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?page=PQRS" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-neon">Actualizar PQRS</button>
                 </div>
             </form>

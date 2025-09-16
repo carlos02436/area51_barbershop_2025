@@ -7,7 +7,7 @@ class PQRS {
     }
 
     public function listar() {
-        $stmt = $this->db->prepare("SELECT * FROM pqrs ORDER BY fecha_envio DESC");
+        $stmt = $this->db->prepare("SELECT * FROM pqrs WHERE estado != 'Resuelto' ORDER BY fecha_envio DESC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
