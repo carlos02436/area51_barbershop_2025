@@ -1,40 +1,49 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../controllers/PQRSController.php';
 
 $pqrsController = new PQRSController($db);
 $registros = $pqrsController->listar();
 ?>
 <body>
-    <h2>Gestión de PQRS</h2>
-    <a href="crear_pqrs.php" class="btn btn-success mb-3">Crear nuevo</a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Mensaje</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($registros as $row): ?>
-                <tr>
-                    <td><?= $row['id_pqrs'] ?></td>
-                    <td><?= htmlspecialchars($row['nombre'] . ' ' . $row['apellidos']) ?></td>
-                    <td><?= htmlspecialchars($row['email']) ?></td>
-                    <td><?= $row['tipo'] ?></td>
-                    <td><?= nl2br(htmlspecialchars($row['mensaje'])) ?></td>
-                    <td><?= $row['estado'] ?></td>
-                    <td>
-                        <a href="index.php?page=editar_pqrs&id=<?= $row['id_pqrs'] ?>" class="btn btn-primary btn-sm">Editar</a>
-                        <a href="index.php?page=eliminar_pqrs&id=<?= $row['id_pqrs'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Marcar como resuelto?')">Eliminar</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="container py-5">
+                <!-- Título y botón HOME -->
+                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start" style="margin-top:100px;">
+                    <a href="index.php?page=panel" class="btn btn-neon d-flex justify-content-center align-items-center rounded-circle mb-3 mb-md-0" style="width: 60px; height: 60px;"> <i class="bi bi-house-fill fs-3"></i>
+                    </a>
+                    <h1 class="fw-bold display-5 text-white mb-0">📊 Gestión PQRS</h1>
+                </div>
+
+                <!-- Contenedor con scroll vertical -->
+                <div class="table-wrapper rounded shadow-sm" style="max-height:500px; overflow-y:auto;">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr style="position: sticky; top: 0; z-index: 1;">
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                                <th>Mensaje</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                        </tr>
+                        </thead>
+                <tbody>
+                    <?php foreach ($registros as $row): ?>
+                        <tr>
+                            <td><?= $row['id_pqrs'] ?></td>
+                            <td><?= htmlspecialchars($row['nombre'] . ' ' . $row['apellidos']) ?></td>
+                            <td><?= htmlspecialchars($row['email']) ?></td>
+                            <td><?= $row['tipo'] ?></td>
+                            <td><?= nl2br(htmlspecialchars($row['mensaje'])) ?></td>
+                            <td><?= $row['estado'] ?></td>
+                            <td class="text-center">
+                                <a href="index.php?page=editar_pqrs&id=<?= $row['id_pqrs'] ?>" class="btn btn-warning btn-sm" style="width:80px;">Editar</a>
+                                <a href="index.php?page=eliminar_pqrs&id=<?= $row['id_pqrs'] ?>" class="btn btn-danger btn-sm" style="width:80px;" onclick="return confirm('¿Marcar como resuelto?')">Eliminar</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 <main>
