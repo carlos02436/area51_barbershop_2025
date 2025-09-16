@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/models/VideoModel.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/Video.php'; // <-- incluir el modelo
 
 class VideoController {
 
@@ -10,8 +11,8 @@ class VideoController {
     }
 
     // Mostrar videos activos
-    public function index() {
-        return $this->model->getVideosActivos();
+    public function index($limit = 3) {
+        return $this->model->getVideosActivos($limit);
     }
 
     // Crear video
@@ -20,8 +21,8 @@ class VideoController {
     }
 
     // Editar video
-    public function editar($id, $titulo, $link) {
-        return $this->model->editarVideo($id, $titulo, $link);
+    public function editar($id, $titulo, $link, $publicado_por) {
+        return $this->model->editarVideo($id, $titulo, $link, $publicado_por);
     }
 
     // Eliminar video (inactivo)

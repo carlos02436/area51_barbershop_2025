@@ -33,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 ?>
-
 <body>
     <div class="container py-5" style="margin-top:100px;">
         <h1 class="fw-bold text-white mb-4 text-center">✏️ Editar Servicio</h1>
@@ -90,4 +89,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-    <main>
+<main>

@@ -1,8 +1,7 @@
 <?php
-require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 
 class VideoModel {
-
     private $db;
 
     public function __construct($db) {
@@ -39,12 +38,13 @@ class VideoModel {
     }
 
     // Editar video
-    public function editarVideo($id, $titulo, $link) {
-        $sql = "UPDATE videos SET titulo = :titulo, link = :link WHERE id_video = :id";
+    public function editarVideo($id, $titulo, $link, $publicado_por) {
+        $sql = "UPDATE videos SET titulo = :titulo, link = :link, publicado_por = :publicado_por WHERE id_video = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':titulo' => $titulo,
             ':link' => $link,
+            ':publicado_por' => $publicado_por,
             ':id' => $id
         ]);
     }

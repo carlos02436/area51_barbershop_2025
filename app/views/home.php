@@ -182,8 +182,8 @@
     $galeriaController = new GaleriaController();
     $imagenes = $galeriaController->listarImagenes(9);
 
-    $videoController = new VideoController();
-    $videos = $videoController->listarVideos(3);
+    $videoController = new VideoController($db);
+    $videos = $videoController->index(); // obtiene 3 videos por defecto
     ?>
 
     <!-- Sección Galería -->
@@ -210,8 +210,8 @@
             <div class="row g-4" id="video-container">
                 <?php foreach ($videos as $row):
                     // Extraer ID del video para embed
-                    preg_match('/[\\?&]v=([^&#]+)/', $row['url'], $matches);
-                    $videoId = isset($matches[1]) ? $matches[1] : basename(parse_url($row['url'], PHP_URL_PATH));
+                    preg_match('/[\\?&]v=([^&#]+)/', $row['link'], $matches);
+                    $videoId = isset($matches[1]) ? $matches[1] : basename(parse_url($row['link'], PHP_URL_PATH));
                 ?>
                     <div class="col-md-4 mb-4">
                         <div class="embed-responsive embed-responsive-16by9 video-wrapper">
