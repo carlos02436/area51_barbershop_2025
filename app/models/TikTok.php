@@ -9,14 +9,16 @@ class TikTok {
         $this->db = $db;
     }
 
-    public function obtenerVideos($limite = 10) {
-        $sql = "SELECT url, video_id, descripcion 
-                FROM tiktok 
-                ORDER BY id_tiktok ASC 
+    // Obtener los últimos videos activos
+    public function obtenerVideos($limite = 3) {
+        $sql = "SELECT id_tiktok, url, video_id, descripcion, fecha_registro, estado
+                FROM tiktok
+                WHERE estado = 'activo'
+                ORDER BY fecha_registro DESC
                 LIMIT :limite";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':limite', (int)$limite, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

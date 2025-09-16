@@ -222,19 +222,20 @@ INSERT INTO `testimonios` VALUES
 -- --------------------------------------------------------
 -- Tabla: tiktok
 -- --------------------------------------------------------
-CREATE TABLE tiktok (
-  id_tiktok INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  url VARCHAR(255) NOT NULL,
-  video_id VARCHAR(50) NOT NULL,
-  descripcion VARCHAR(255) DEFAULT NULL,
-  fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `tiktok` (
+  `id_tiktok` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `video_id` varchar(50) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `publicado_por` varchar(100) DEFAULT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `estado` enum('activo','inactivo') NOT NULL DEFAULT 'activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Datos para la tabla tiktok
-INSERT INTO tiktok (id_tiktok, url, video_id, descripcion, fecha_registro) VALUES
-(1, 'https://www.tiktok.com/@ysarmiento.barber/video/7492250638236110086', '7492250638236110086', NULL, '2025-08-30 01:48:49'),
-(2, 'https://www.tiktok.com/@ysarmiento.barber/video/7493208342282767621', '7493208342282767621', NULL, '2025-08-30 01:48:49'),
-(3, 'https://www.tiktok.com/@ysarmiento.barber/video/7494847153395813637', '7494847153395813637', NULL, '2025-08-30 01:48:49');
+INSERT INTO `tiktok` (`id_tiktok`, `url`, `video_id`, `descripcion`, `publicado_por`, `fecha_registro`, `estado`) VALUES
+(1, 'https://www.tiktok.com/@ysarmiento.barber/video/7492250638236110086', '7492250638236110086', NULL, NULL, '2025-08-30 06:48:49', 'activo'),
+(2, 'https://www.tiktok.com/@ysarmiento.barber/video/7493208342282767621', '7493208342282767621', NULL, NULL, '2025-08-30 06:48:49', 'activo'),
+(3, 'https://www.tiktok.com/@ysarmiento.barber/video/7494847153395813637', '7494847153395813637', NULL, NULL, '2025-08-30 06:48:49', 'activo');
 
 -- --------------------------------------------------------
 -- Tabla: videos

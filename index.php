@@ -427,6 +427,28 @@ switch ($page) {
 
 //==================================================================
 
+//======================== VIDEOS TIKTOK ==========================
+
+    case 'tiktok':
+        require __DIR__ . '/app/views/tiktok/tiktok.php';
+        break;
+
+    case 'crear_tiktok':
+        require __DIR__ . '/app/views/tiktok/crear_tiktok.php';
+        break;
+
+    case 'editar_tiktok':
+        require __DIR__ . '/app/views/tiktok/editar_tiktok.php';
+        break;
+
+    case 'eliminar_tiktok':
+        require __DIR__ . '/app/views/tiktok/eliminar_tiktok.php';
+        break;
+
+//==================================================================
+
+//=========================== REPORTES =============================
+
     case 'generar_pdf':
         include 'app/views/reportes/generar_pdf.php';
         break;
@@ -470,6 +492,8 @@ switch ($page) {
     case 'generar_pdf_eventos':
         include 'app/views/reportes/generar_pdf_eventos.php';
         break;
+
+//==================================================================
 
     default:
         echo "<section class='container py-5 text-center'>

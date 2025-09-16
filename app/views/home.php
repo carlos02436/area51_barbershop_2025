@@ -227,7 +227,7 @@
                 <?php
                 require_once __DIR__ . '/../controllers/TikTokController.php';
 
-                $tiktokController = new TikTokController();
+                $tiktokController = new TikTokController($db);
                 $tiktoks = $tiktokController->listarVideos(10);
                 ?>
 
