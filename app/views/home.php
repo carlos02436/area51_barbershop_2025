@@ -228,7 +228,7 @@
                 require_once __DIR__ . '/../controllers/TikTokController.php';
 
                 $tiktokController = new TikTokController($db);
-                $tiktoks = $tiktokController->listarVideos(10);
+                $tiktoks = $tiktokController->listarVideos(3);
                 ?>
 
                 <!-- Sección TikTok -->
@@ -364,7 +364,7 @@
                         <a href="https://www.facebook.com/share/1AYqvPUhT9/?mibextid=wwXIfr" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f mt-3"></i></a>
                         <a href="http://wa.me/573124732236" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://www.instagram.com/area51barbershop_lajagua/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@ysarmiento.barber?_t=ZS-8voHYlVk1Ym&_r=1" aria-label="TikTok" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.tiktok.com/@ysarmiento.barber" aria-label="TikTok" target="_blank"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
 

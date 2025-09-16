@@ -6,13 +6,41 @@ class TikTokController {
     private $tiktokModel;
 
     public function __construct($db) {
-        $this->db = $db;                 // Guardamos la conexión PDO
-        $this->tiktokModel = new TikTok(); // Instanciamos el modelo
+        $this->db = $db;
+        $this->tiktokModel = new TikTok();
+    }
+
+    // Función privada para limpiar la URL y quitar parámetros
+    private function limpiarUrlTikTok($url) {
+        $parsedUrl = parse_url($url);
+        return $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'];
+    }
+
+    // Función privada para extraer el video_id de la URL TikTok
+    private function extraerVideoId($url) {
+        $parsedUrl = parse_url($url);
+        if (!isset($parsedUrl['path'])) {
+            return null;
+        }
+        
+        // Ruta típica: /@usuario/video/7546526690428620038
+        $partes = explode('/', trim($parsedUrl['path'], '/'));
+        
+        $videoIndex = array_search('video', $partes);
+        if ($videoIndex !== false && isset($partes[$videoIndex + 1])) {
+            return $partes[$videoIndex + 1];
+        }
+        
+        return null;
     }
 
     // Listar los últimos videos activos
     public function listarVideos($limite = 3) {
-        return $this->tiktokModel->obtenerVideos($limite);
+        $sql = "SELECT * FROM tiktok WHERE estado = 'activo' ORDER BY fecha_registro DESC LIMIT :limite";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Obtener un TikTok por ID
@@ -22,28 +50,42 @@ class TikTokController {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Crear un nuevo TikTok
-    public function crear($url, $video_id, $descripcion, $publicado_por) {
+    // Crear un nuevo TikTok con URL limpia y video_id extraído automáticamente
+    public function crear($url, $descripcion, $publicado_por) {
+        $urlLimpia = $this->limpiarUrlTikTok($url);
+        $video_id = $this->extraerVideoId($urlLimpia);
+
+        if (!$video_id) {
+            throw new Exception("URL inválida, no se pudo extraer video_id");
+        }
+
         $sql = "INSERT INTO tiktok (url, video_id, descripcion, publicado_por, fecha_registro, estado) 
                 VALUES (:url, :video_id, :descripcion, :publicado_por, NOW(), 'activo')";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
-            ':url'          => $url,
+            ':url'          => $urlLimpia,
             ':video_id'     => $video_id,
             ':descripcion'  => $descripcion,
             ':publicado_por'=> $publicado_por
         ]);
     }
 
-    // Editar un TikTok existente
-    public function editar($id, $video_id, $url, $descripcion, $publicado_por) {
+    // Editar un TikTok existente, actualizando URL y video_id
+    public function editar($id, $url, $descripcion, $publicado_por) {
+        $urlLimpia = $this->limpiarUrlTikTok($url);
+        $video_id = $this->extraerVideoId($urlLimpia);
+
+        if (!$video_id) {
+            throw new Exception("URL inválida, no se pudo extraer video_id");
+        }
+
         $sql = "UPDATE tiktok 
-                SET video_id = :video_id, url = :url, descripcion = :descripcion, publicado_por = :publicado_por 
+                SET url = :url, video_id = :video_id, descripcion = :descripcion, publicado_por = :publicado_por 
                 WHERE id_tiktok = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
+            ':url'           => $urlLimpia,
             ':video_id'      => $video_id,
-            ':url'           => $url,
             ':descripcion'   => $descripcion,
             ':publicado_por' => $publicado_por,
             ':id'            => $id
@@ -54,6 +96,6 @@ class TikTokController {
     public function eliminar($id_tiktok) {
         $sql = "UPDATE tiktok SET estado = 'inactivo' WHERE id_tiktok = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([':id' => $id_tiktok]);
+        $stmt->execute([':id_tiktok' => $id_tiktok]);
     }
 }

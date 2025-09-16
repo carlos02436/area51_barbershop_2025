@@ -7,6 +7,9 @@ require_once __DIR__ . '/../../../config/database.php';
 // Inicializar el controlador
 $controller = new TiktokController($db);
 
+// Obtener nombre del admin en sesión
+$nombreAdmin = $_SESSION['admin_nombre'] ?? 'Admin';
+
 // Obtener ID del TikTok a editar
 $id = $_GET['id'] ?? null;
 
@@ -19,13 +22,14 @@ if (!$tiktok) {
 
 // Procesar formulario al enviar
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $video_id = $_POST['video_id'] ?? '';
     $url = $_POST['url'] ?? '';
     $descripcion = $_POST['descripcion'] ?? '';
-    $publicado_por = $_POST['publicado_por'] ?? $tiktok['publicado_por'];
+    
+    // Forzar que publicado_por sea el admin en sesión
+    $publicado_por = $nombreAdmin;
 
-    // Actualizar TikTok
-    $controller->editar($id, $video_id, $url, $descripcion, $publicado_por);
+    // Actualizar TikTok sin modificar video_id
+    $controller->editar($id, $url, $descripcion, $publicado_por);
 
     // Redirigir a la lista de TikToks
     header('Location: index.php?page=tiktok');
@@ -38,12 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="card text-white mx-auto" style="max-width: 600px; padding: 30px;">
             <form method="POST">
-                <div class="mb-3">
-                    <label class="form-label text-white">Video ID</label>
-                    <input type="text" name="video_id" class="form-control" 
-                           value="<?= htmlspecialchars($tiktok['video_id'] ?? '') ?>" required>
-                </div>
-
                 <div class="mb-3">
                     <label class="form-label text-white">URL del TikTok</label>
                     <input type="url" name="url" class="form-control" 
@@ -58,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-3">
                     <label class="form-label text-white">Publicado Por</label>
                     <input type="text" name="publicado_por" class="form-control" 
-                           value="<?= htmlspecialchars($tiktok['publicado_por'] ?? '') ?>" required>
+                           value="<?= htmlspecialchars($nombreAdmin) ?>" readonly>
                 </div>
 
                 <div class="d-flex justify-content-between">

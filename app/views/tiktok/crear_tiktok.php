@@ -4,20 +4,26 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/../../controllers/TikTokController.php';
 require_once __DIR__ . '/../../../config/database.php';
 
-$controller = new VideoController($db);
+$controller = new TikTokController($db); // Usar TikTokController
 
-// Nombre del admin logueado
 $nombreAdmin = $_SESSION['admin_nombre'] ?? 'Admin';
 
+// Función para extraer el video_id desde la URL
+function extraerVideoID($url) {
+    if (preg_match('/video\/(\d+)/', $url, $matches)) {
+        return $matches[1];
+    }
+    return null;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $titulo = $_POST['titulo'] ?? '';
-    $link = $_POST['url'] ?? '';
-    $publicado_por = $nombreAdmin; // Tomar el nombre del admin
+    $url          = $_POST['url'] ?? '';
+    $video_id     = extraerVideoID($url); // extraer automáticamente
+    $descripcion  = $_POST['descripcion'] ?? '';
+    $publicado_por= $nombreAdmin;
 
-    // Crear el video
-    $controller->crear($titulo, $link, $publicado_por);
+    $controller->crear($url, $video_id, $descripcion, $publicado_por);
 
-    // Redirigir a la página de videos
     header('Location: index.php?page=tiktok');
     exit;
 }
@@ -28,18 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="card text-white mx-auto" style="max-width: 600px; padding: 30px;">
             <form method="POST">
                 <div class="mb-3">
-                    <label class="form-label text-white">Título</label>
-                    <input type="text" name="titulo" class="form-control" required>
+                    <label class="form-label text-white">URL del Video</label>
+                    <input type="url" name="url" class="form-control" required>
                 </div>
+                <!-- video_id eliminado del formulario -->
+
                 <div class="mb-3">
-                    <label class="form-label text-white">Link del Video</label>
-                    <input type="url" name="link" class="form-control" required>
+                    <label class="form-label text-white">Descripción</label>
+                    <textarea name="descripcion" class="form-control" required></textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label text-white">Publicado Por</label>
-                    <input type="text" name="publicado_por" class="form-control" 
-                        value="<?= htmlspecialchars($nombreAdmin) ?>" readonly>
+                    <label class="form-label text-white">Publicado por</label>
+                    <input type="text" name="publicado_por" class="form-control" value="<?= htmlspecialchars($nombreAdmin) ?>" readonly>
                 </div>
+
                 <div class="d-flex justify-content-between">
                     <a href="index.php?page=tiktok" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-neon">Publicar</button>

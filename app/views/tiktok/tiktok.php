@@ -32,7 +32,6 @@ $tiktoks = $controller->listarVideos($limit = 3); // Ajusta el límite según ne
                     <tr style="position: sticky; top: 0; z-index: 1;">
                         <th>ID</th>
                         <th>URL</th>
-                        <th>Video ID</th>
                         <th>Descripción</th>
                         <th>Publicado Por</th>
                         <th>Fecha Registro</th>
@@ -50,7 +49,6 @@ $tiktoks = $controller->listarVideos($limit = 3); // Ajusta el límite según ne
                                 <span class="text-muted">No disponible</span>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($tiktok['video_id'] ?? 'No disponible') ?></td>
                         <td><?= htmlspecialchars($tiktok['descripcion'] ?? '') ?></td>
                         <td><?= htmlspecialchars($tiktok['publicado_por'] ?? 'Desconocido') ?></td>
                         <td><?= $tiktok['fecha_registro'] ?? '' ?></td>
