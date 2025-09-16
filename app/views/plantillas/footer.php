@@ -11,6 +11,7 @@
                         <li><a href="index.php?page=home#galeria" style="color: white; text-decoration: none;">Galería</a></li>
                         <li><a href="index.php?page=home#barberos" style="color: white; text-decoration: none;">Barberos</a></li>
                         <li><a href="index.php?page=home#contacto" style="color: white; text-decoration: none;">Contacto</a></li>
+                        <li><a href="index.php?page=crear_pqrs" style="color: white; text-decoration: none;">PQRS</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER SERVICIOS -->

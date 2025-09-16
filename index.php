@@ -495,6 +495,26 @@ switch ($page) {
 
 //==================================================================
 
+//=================== PQRS ====================
+
+    case 'PQRS':
+        require __DIR__ . '/app/views/PQRS/PQRS.php';
+        break;
+
+    case 'crear_pqrs':
+        require __DIR__ . '/app/views/PQRS/crear_pqrs.php';
+        break;
+
+    case 'editar_pqrs':
+        require __DIR__ . '/app/views/PQRS/editar_pqrs.php';
+        break;
+        
+    case 'eliminar_pqrs':
+        require __DIR__ . '/app/views/PQRS/eliminar_pqrs.php';
+        break;
+
+//==================================================================
+
     default:
         echo "<section class='container py-5 text-center'>
                 <h2 class='text-danger'>404 - Página no encontrada</h2>

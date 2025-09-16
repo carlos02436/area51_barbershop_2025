@@ -151,7 +151,7 @@ $_SESSION['last_activity'] = time();
                         <i class="fa fa-user-tie fa-3x mb-3 text-info"></i>
                         <h5 class="card-title text-white">SIAU</h5>
                         <p class="card-text text-white">Acciones de mejoras para el negocio.</p>
-                        <a href="/area51_barbershop_2025/index.php?page=pqrs" class="btn btn-info">Gestionar PQRS</a>
+                        <a href="/area51_barbershop_2025/index.php?page=PQRS" class="btn btn-info">Gestionar PQRS</a>
                     </div>
                 </div>
             </div>
