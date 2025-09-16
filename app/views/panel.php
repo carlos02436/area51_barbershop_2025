@@ -163,7 +163,7 @@ $_SESSION['last_activity'] = time();
                         <i class="fa fa-file-alt fa-3x mb-3 text-info"></i>
                         <h5 class="card-title text-white">Noticias</h5>
                         <p class="card-text text-white">Actualiza tus noticias y/o eventos.</p>
-                        <a href="/area51_barbershop_2025/index.php?page=pqrs" class="btn btn-info">Actualizar</a>
+                        <a href="/area51_barbershop_2025/index.php?page=noticias" class="btn btn-info">Actualizar</a>
                     </div>
                 </div>
             </div>

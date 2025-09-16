@@ -515,6 +515,26 @@ switch ($page) {
 
 //==================================================================
 
+//=================== PQRS ====================
+
+    case 'noticias':
+        require __DIR__ . '/app/views/noticias/noticias.php';
+        break;
+
+    case 'crear_noticias':
+        require __DIR__ . '/app/views/noticias/crear_noticias.php';
+        break;
+
+    case 'editar_noticias':
+        require __DIR__ . '/app/views/noticias/editar_noticias.php';
+        break;
+        
+    case 'eliminar_noticias':
+        require __DIR__ . '/app/views/noticias/eliminar_noticias.php';
+        break;
+
+//==================================================================
+
     default:
         echo "<section class='container py-5 text-center'>
                 <h2 class='text-danger'>404 - Página no encontrada</h2>
