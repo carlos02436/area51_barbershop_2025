@@ -6,37 +6,34 @@ class Noticias {
 
     /**
      * Constructor recibe una instancia PDO
-     *
-     * @param PDO $db
      */
     public function __construct(PDO $db) {
         $this->db = $db;
     }
 
     /**
-     * Devuelve todas las noticias ordenadas por fecha_publicacion DESC
-     *
-     * @return array|false
+     * Devuelve las noticias ordenadas por fecha_publicacion DESC
+     * Si $limite no es null, aplica LIMIT en la consulta.
      */
-    public function listar() {
+    public function listar($limite = null) {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM noticias ORDER BY fecha_publicacion DESC");
+            $sql = "SELECT * FROM noticias ORDER BY fecha_publicacion DESC";
+            if ($limite !== null) {
+                $sql .= " LIMIT :limite";
+            }
+            $stmt = $this->db->prepare($sql);
+
+            if ($limite !== null) {
+                $stmt->bindValue(':limite', (int)$limite, PDO::PARAM_INT);
+            }
+
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // Puedes loguear el error si lo deseas
             return false;
         }
     }
 
-    /**
-     * Crea una noticia. Devuelve el id insertado o false en error.
-     *
-     * @param string $titulo
-     * @param string $contenido
-     * @param string|null $publicado_por
-     * @return string|false
-     */
     public function crear($titulo, $contenido, $publicado_por = null) {
         try {
             $stmt = $this->db->prepare("
@@ -55,12 +52,6 @@ class Noticias {
         }
     }
 
-    /**
-     * Obtiene una noticia por id_noticia
-     *
-     * @param int $id
-     * @return array|false
-     */
     public function ver($id) {
         try {
             $stmt = $this->db->prepare("SELECT * FROM noticias WHERE id_noticia = :id LIMIT 1");
@@ -72,15 +63,6 @@ class Noticias {
         }
     }
 
-    /**
-     * Actualiza una noticia. Devuelve true/false según éxito.
-     *
-     * @param int $id
-     * @param string $titulo
-     * @param string $contenido
-     * @param string|null $publicado_por
-     * @return bool
-     */
     public function editar($id, $titulo, $contenido, $publicado_por = null) {
         try {
             $stmt = $this->db->prepare("
@@ -100,12 +82,6 @@ class Noticias {
         }
     }
 
-    /**
-     * Elimina una noticia por id_noticia. Devuelve true/false.
-     *
-     * @param int $id
-     * @return bool
-     */
     public function eliminar($id) {
         try {
             $stmt = $this->db->prepare("DELETE FROM noticias WHERE id_noticia = :id");

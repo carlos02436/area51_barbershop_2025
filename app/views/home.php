@@ -250,22 +250,17 @@
     <!-- Scripts de TikTok -->
     <script async src="https://www.tiktok.com/embed.js"></script>
 
+    <!-- Noticias -->
     <?php
-    require_once __DIR__ . '/../controllers/NoticiaController.php';
+    require_once __DIR__ . '/../controllers/NoticiasController.php';
+    if (!isset($db)) {
+        require_once __DIR__ . '/../config/database.php';
+    }
 
-    $noticiaController = new NoticiaController();
-    $noticias = $noticiaController->listarNoticias(3);
+    $noticiasController = new NoticiasController($db);
+    $noticias = $noticiasController->listar(3);
     ?>
 
-    <!-- Sección Noticias -->
-    <?php
-    require_once __DIR__ . '/../controllers/NoticiaController.php';
-
-    $noticiaController = new NoticiaController();
-    $noticias = $noticiaController->listarNoticias(3);
-    ?>
-
-    <!-- Sección Noticias -->
     <section id="noticias" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Noticias y Eventos</h2>
@@ -322,7 +317,6 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
-
                 </div>
 
                 <!-- Controles (flechas) -->
@@ -391,5 +385,4 @@
             </div>
         </div>
     </section>
-
-    <main>
+<main>

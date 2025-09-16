@@ -8,27 +8,22 @@ class NoticiasController {
         $this->model = new Noticias($db);
     }
 
-    // ================== LISTAR NOTICIAS ==================
-    public function listar() {
-        return $this->model->listar();
+    public function listar($limite = null) {
+        return $this->model->listar($limite);
     }
 
-    // ================== CREAR NOTICIA ==================
     public function crear($titulo, $contenido, $publicado_por = null) {
         return $this->model->crear($titulo, $contenido, $publicado_por);
     }
 
-    // ================== VER UNA NOTICIA ==================
     public function ver($id) {
         return $this->model->ver($id);
     }
 
-    // ================== EDITAR NOTICIA ==================
     public function editar($id, $titulo, $contenido, $publicado_por = null) {
         return $this->model->editar($id, $titulo, $contenido, $publicado_por);
     }
 
-    // ================== ELIMINAR NOTICIA ==================
     public function eliminar($id) {
         return $this->model->eliminar($id);
     }

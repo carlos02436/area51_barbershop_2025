@@ -1,16 +1,21 @@
 <?php
 require_once __DIR__ . '/../../controllers/NoticiasController.php';
+if (!isset($db)) {
+    require_once __DIR__ . '/../../config/database.php';
+}
 
 $controller = new NoticiasController($db);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller->crear(
-        $_POST['titulo'],
-        $_POST['contenido'],
-        $_POST['publicado_por']
-    );
-    header("Location: index.php?page=noticias");
-    exit();
+    $titulo = trim($_POST['titulo'] ?? '');
+    $contenido = trim($_POST['contenido'] ?? '');
+    $publicado_por = trim($_POST['publicado_por'] ?? null);
+
+    if ($titulo !== '' && $contenido !== '') {
+        $controller->crear($titulo, $contenido, $publicado_por);
+        header("Location: index.php?page=noticias");
+        exit();
+    }
 }
 ?>
 <body>
@@ -18,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="fw-bold text-white mb-4 text-center">📰 Crear Noticia</h1>
         <div class="card text-white mx-auto" style="max-width: 600px; padding: 40px;">
             <form action="index.php?page=crear_noticias" method="POST" class="text-white">
-
                 <div class="mb-3">
                     <label for="titulo" class="form-label">Título</label>
                     <input type="text" name="titulo" id="titulo" class="form-control" required>
