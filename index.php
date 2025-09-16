@@ -535,6 +535,26 @@ switch ($page) {
 
 //==================================================================
 
+//=================== TESTIMONIOS ====================
+
+    case 'testimonios':
+        require __DIR__ . '/app/views/testimonios/testimonios.php';
+        break;
+
+    case 'crear_testimonios':
+        require __DIR__ . '/app/views/testimonios/crear_testimonios.php';
+        break;
+
+    case 'editar_testimonios':
+        require __DIR__ . '/app/views/testimonios/editar_testimonios.php';
+        break;
+        
+    case 'eliminar_testimonios':
+        require __DIR__ . '/app/views/testimonios/eliminar_testimonios.php';
+        break;
+
+//==================================================================
+
     default:
         echo "<section class='container py-5 text-center'>
                 <h2 class='text-danger'>404 - Página no encontrada</h2>

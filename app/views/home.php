@@ -250,45 +250,6 @@
     <!-- Scripts de TikTok -->
     <script async src="https://www.tiktok.com/embed.js"></script>
 
-    <!-- Noticias -->
-    <?php
-    require_once __DIR__ . '/../controllers/NoticiasController.php';
-    if (!isset($db)) {
-        require_once __DIR__ . '/../config/database.php';
-    }
-
-    $noticiasController = new NoticiasController($db);
-    $noticias = $noticiasController->listar(3);
-    ?>
-
-    <section id="noticias" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
-        <div class="container">
-            <h2 class="text-center mb-5 section-title">Noticias y Eventos</h2>
-            <div class="row">
-                <?php if (!empty($noticias)): ?>
-                    <?php foreach ($noticias as $row): ?>
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="card h-100 bg-transparent border-0">
-                                <div class="card-body d-flex flex-column text-white"
-                                    style="background: rgba(0, 0, 0, 0.5); border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
-                                    <h5 class="card-title">
-                                        <i class="far fa-newspaper me-2"></i><?= htmlspecialchars($row['titulo']) ?>
-                                    </h5>
-                                    <p class="card-text text-justify"><?= htmlspecialchars($row['contenido']) ?></p>
-                                    <p class="card-text mt-auto">
-                                        <small>Publicado: <?= date("d-m-Y", strtotime($row['fecha_publicacion'])) ?></small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="text-white">No hay noticias disponibles.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
-
     <?php
     require_once __DIR__ . '/../controllers/TestimonioController.php';
 
