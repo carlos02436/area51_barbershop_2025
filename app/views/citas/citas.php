@@ -16,6 +16,10 @@ $citas = $citasController->listarCitas(); // JOIN con clientes, barberos y servi
             <h1 class="fw-bold display-5 text-white mb-0">📰 Gestión de Citas</h1>
         </div>
 
+        <div class="d-flex justify-content-end mb-3">
+            <a href="index.php?page=crear_cita" class="btn btn-neon">➕ Nueva Cita</a>
+        </div>
+
         <div class="table-wrapper rounded shadow-sm" style="max-height:500px; overflow-y:auto;">
             <table class="table table-striped table-hover mb-0">
                 <thead class="table-dark">
