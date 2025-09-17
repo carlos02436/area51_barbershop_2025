@@ -88,48 +88,22 @@ switch ($page) {
         break;
 
     case 'citas':
-        require_once __DIR__ . '/app/controllers/CitasController.php';
-        $citasController = new CitasController($db);
-        $citas = $citasController->listar();
-        require __DIR__ . '/app/views/citas/citas.php';
+        require_once __DIR__ . '/app/views/citas/citas.php';
         break;
 
     // mostrar formulario crear
     case 'crear_cita':
-        require_once __DIR__ . '/app/controllers/CitasController.php';
-        $citasController = new CitasController($db);
-        $citasController->crearFormulario();
-        break;
-
-    // guardar
-    case 'guardar_cita':
-        require_once __DIR__ . '/app/controllers/CitasController.php';
-        $citasController = new CitasController($db);
-        $citasController->guardar();
+        require __DIR__ . '/app/views/citas/crear_cita.php';
         break;
 
     // editar (vista)
     case 'editar_cita':
-        require_once __DIR__ . '/app/controllers/CitasController.php';
-        $citasController = new CitasController($db);
-        $id = $_GET['id'] ?? null;
-        $citasController->editarFormulario($id);
-        break;
-
-    // actualizar (POST)
-    case 'actualizar_cita':
-        require_once __DIR__ . '/app/controllers/CitasController.php';
-        $citasController = new CitasController($db);
-        $id = $_GET['id'] ?? null;
-        $citasController->actualizar();
+        require_once __DIR__ . '/app/views/citas/editar_cita.php';
         break;
 
     // eliminar
     case 'eliminar_cita':
-        require_once __DIR__ . '/app/controllers/CitasController.php';
-        $citasController = new CitasController($db);
-        $id = $_GET['id'] ?? null;
-        $citasController->eliminar($id);
+        require_once __DIR__ . '/app/views/citas/eliminar_cita.php';
         break;
 
     case 'servicios':

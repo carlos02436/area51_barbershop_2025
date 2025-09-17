@@ -250,10 +250,45 @@
     <!-- Scripts de TikTok -->
     <script async src="https://www.tiktok.com/embed.js"></script>
 
+    <!-- Noticias -->
     <?php
-    require_once __DIR__ . '/../controllers/TestimonioController.php';
+    require_once __DIR__ . '/../controllers/NoticiasController.php';
 
-    $testimonioController = new TestimonioController();
+    $noticiasController = new NoticiasController($db);
+    $noticias = $noticiasController->listarNoticias(); // Trae las últimas 3 noticias
+    ?>
+
+    <section id="noticias" class="py-5 fade-in-section" style="scroll-margin-top:80px;">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">Noticias y Eventos</h2>
+            <div class="row g-4" id="video-container">
+
+            <?php foreach ($noticias as $noticia): ?>
+                <div class="col-md-6 col-lg-4 d-flex justify-content-center mb-4">
+                    <div class="card w-100 text-white" 
+                     style="background: rgba(0,0,0,0.6); border: none; 
+                            backdrop-filter: blur(6px); 
+                            box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+                            border-radius: 12px;">
+                        <div class="card-body">
+                            <h5 class="card-title text-white"><?= htmlspecialchars($noticia['titulo']) ?></h5>
+                            <p class="card-text text-light">
+                                <?= nl2br(htmlspecialchars(substr($noticia['contenido'], 0, 120))) ?>...
+                            </p>
+                            <small class="text-muted" style="color: #bbb !important;">
+                                Fecha: <?= date('d/m/Y H:i', strtotime($noticia['fecha_publicacion'])) ?>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+    <?php
+    require_once __DIR__ . '/../controllers/TestimoniosController.php';
+
+    $testimonioController = new TestimoniosController();
     $testimonios = $testimonioController->listarTestimonios();
     ?>
 

@@ -1,138 +1,109 @@
 <?php
-class Cita {
+class Citas {
     private $db;
 
     public function __construct($db) {
         $this->db = $db;
     }
 
-    public function obtenerClientes() {
-        $stmt = $this->db->query("SELECT * FROM clientes");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function obtenerBarberos() {
-        $stmt = $this->db->query("SELECT * FROM barberos");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function obtenerServicios() {
-        $stmt = $this->db->query("SELECT * FROM servicios");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function obtenerHorasOcupadas($id_barbero, $fecha) {
-        $sql = "SELECT hora_cita FROM citas WHERE id_barbero = :id_barbero AND fecha_cita = :fecha";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([
-            ':id_barbero' => $id_barbero,
-            ':fecha' => $fecha
-        ]);
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    }
-
-    // Listar todas las citas con datos relacionados (cliente, barbero, servicio e imagen)
-    public function obtenerTodas() {
-        $sql = "SELECT c.id_cita, c.id_cliente, c.id_barbero, c.id_servicio, c.img_servicio,
-                       c.fecha_cita, c.hora_cita, c.estado, c.fecha_creacion,
-                       CONCAT(cl.nombre, ' ', COALESCE(cl.apellido,'')) AS cliente,
-                       b.nombre AS barbero, s.nombre AS servicio, s.img_servicio AS servicio_img
-                FROM citas c
-                LEFT JOIN clientes cl ON c.id_cliente = cl.id_cliente
-                LEFT JOIN barberos b ON c.id_barbero = b.id_barbero
-                LEFT JOIN servicios s ON c.id_servicio = s.id_servicio
-                ORDER BY c.fecha_cita ASC, c.hora_cita ASC";
-        $stmt = $this->db->prepare($sql);
+    // Listar todas las citas
+    public function listar() {
+        $stmt = $this->db->prepare("
+            SELECT c.*, cl.nombre AS nombre_cliente, b.nombre AS nombre_barbero, s.nombre AS nombre_servicio
+            FROM citas c
+            INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente
+            INNER JOIN barberos b ON c.id_barbero = b.id_barbero
+            INNER JOIN servicios s ON c.id_servicio = s.id_servicio
+            ORDER BY c.fecha_cita DESC, c.hora_cita ASC
+        ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Obtener una cita por ID
-    public function obtenerPorId($id) {
-        $sql = "SELECT * FROM citas WHERE id_cita = :id LIMIT 1";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([':id' => $id]);
+    // Obtener una cita
+    public function obtener($id) {
+        $stmt = $this->db->prepare("
+            SELECT c.*, cl.nombre AS nombre_cliente, b.nombre AS nombre_barbero, s.nombre AS nombre_servicio
+            FROM citas c
+            INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente
+            INNER JOIN barberos b ON c.id_barbero = b.id_barbero
+            INNER JOIN servicios s ON c.id_servicio = s.id_servicio
+            WHERE c.id_cita = :id
+            LIMIT 1
+        ");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }  
-
-    // Crear nueva cita (espera array con claves: id_cliente, id_barbero, id_servicio, img_servicio, fecha_cita, hora_cita, estado)
-    public function crear(array $datos) {
-        $sql = "INSERT INTO citas (id_cliente, id_barbero, id_servicio, img_servicio, fecha_cita, hora_cita, estado, fecha_creacion)
-                VALUES (:id_cliente, :id_barbero, :id_servicio, :img_servicio, :fecha_cita, :hora_cita, :estado, NOW())";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([
-            ':id_cliente' => $datos['id_cliente'] ?? null,
-            ':id_barbero' => $datos['id_barbero'],
-            ':id_servicio' => $datos['id_servicio'],
-            ':img_servicio' => $datos['img_servicio'] ?? null,
-            ':fecha_cita' => $datos['fecha_cita'],
-            ':hora_cita' => $datos['hora_cita'],
-            ':estado' => $datos['estado'] ?? 'pendiente'
-        ]);
     }
 
-    public function actualizar($id, $datos) {
-        $sql = "UPDATE citas 
-                SET id_cliente = :id_cliente, 
-                    id_barbero = :id_barbero, 
-                    id_servicio = :id_servicio, 
-                    img_servicio = :img_servicio, 
-                    fecha_cita = :fecha_cita, 
-                    hora_cita = :hora_cita, 
-                    estado = :estado
-                WHERE id_cita = :id_cita";
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id_cliente', $datos['id_cliente']);
-        $stmt->bindParam(':id_barbero', $datos['id_barbero']);
-        $stmt->bindParam(':id_servicio', $datos['id_servicio']);
-        $stmt->bindParam(':img_servicio', $datos['img_servicio']);
-        $stmt->bindParam(':fecha_cita', $datos['fecha_cita']);
-        $stmt->bindParam(':hora_cita', $datos['hora_cita']);
-        $stmt->bindParam(':estado', $datos['estado']); 
-        $stmt->bindParam(':id_cita', $id);
-
+    // Crear cita
+    public function crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
+        $stmt = $this->db->prepare("
+            INSERT INTO citas (id_cliente, id_barbero, id_servicio, fecha_cita, hora_cita)
+            VALUES (:id_cliente, :id_barbero, :id_servicio, :fecha_cita, :hora_cita)
+        ");
+        $stmt->bindParam(':id_cliente', $id_cliente);
+        $stmt->bindParam(':id_barbero', $id_barbero);
+        $stmt->bindParam(':id_servicio', $id_servicio);
+        $stmt->bindParam(':fecha_cita', $fecha_cita);
+        $stmt->bindParam(':hora_cita', $hora_cita);
         return $stmt->execute();
     }
 
-    public function mostrar($id) {
-        $stmt = $this->db->prepare("SELECT * FROM citas WHERE id_cita = :id LIMIT 1");
-        $stmt->execute([':id' => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    // Verificación de horas, para que no se crucen las citas
-    public function existeConflicto($id_barbero, $fecha_cita, $hora_cita, $id_cita = null) {
-        $sql = "SELECT COUNT(*) as total 
-                FROM citas 
-                WHERE id_barbero = :id_barbero 
-                AND fecha_cita = :fecha_cita 
-                AND hora_cita = :hora_cita";
-
-        // Si estamos editando, excluir la misma cita
-        if ($id_cita !== null) {
-            $sql .= " AND id_cita != :id_cita";
-        }
-
-        $stmt = $this->db->prepare($sql);
+    // Actualizar cita
+    public function actualizar($id, $id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
+        $stmt = $this->db->prepare("
+            UPDATE citas 
+            SET id_cliente = :id_cliente,
+                id_barbero = :id_barbero,
+                id_servicio = :id_servicio,
+                fecha_cita = :fecha_cita,
+                hora_cita = :hora_cita
+            WHERE id_cita = :id
+        ");
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id_cliente', $id_cliente);
         $stmt->bindParam(':id_barbero', $id_barbero);
+        $stmt->bindParam(':id_servicio', $id_servicio);
         $stmt->bindParam(':fecha_cita', $fecha_cita);
         $stmt->bindParam(':hora_cita', $hora_cita);
-
-        if ($id_cita !== null) {
-            $stmt->bindParam(':id_cita', $id_cita);
-        }
-
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $row['total'] > 0; // true si ya hay cita en ese horario
+        return $stmt->execute();
     }
 
-    // Eliminar cita
-    public function eliminar($id) {
-        $sql = "DELETE FROM citas WHERE id_cita = :id";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([':id' => $id]);
+    // Cancelar cita
+    public function cancelar($id) {
+        $stmt = $this->db->prepare("UPDATE citas SET estado = 'cancelada' WHERE id_cita = :id");
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
+    // Obtener horas ocupadas para un barbero y fecha
+    public function horasOcupadas($id_barbero, $fecha_cita) {
+        $stmt = $this->db->prepare("
+            SELECT hora_cita 
+            FROM citas 
+            WHERE id_barbero = :id_barbero 
+            AND fecha_cita = :fecha_cita
+            AND estado IN ('pendiente','confirmada','realizada')
+        ");
+        $stmt->bindParam(':id_barbero', $id_barbero);
+        $stmt->bindParam(':fecha_cita', $fecha_cita);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    // Contar citas de un barbero en un día
+    public function contarCitasDia($id_barbero, $fecha_cita) {
+        $stmt = $this->db->prepare("
+            SELECT COUNT(*) 
+            FROM citas 
+            WHERE id_barbero = :id_barbero 
+            AND fecha_cita = :fecha_cita
+            AND estado IN ('pendiente','confirmada','realizada')
+        ");
+        $stmt->bindParam(':id_barbero', $id_barbero);
+        $stmt->bindParam(':fecha_cita', $fecha_cita);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 }

@@ -169,7 +169,7 @@ CREATE TABLE `noticias` (
   `titulo` VARCHAR(200) NOT NULL,
   `contenido` TEXT NOT NULL,
   `fecha_publicacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `publicado_por` INT(11) DEFAULT NULL,
+  `publicado_por` VARCHAR(100) DEFAULT NULL,
   PRIMARY KEY (`id_noticia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

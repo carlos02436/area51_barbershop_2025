@@ -1,94 +1,63 @@
 <?php
-// app/models/Noticias.php
-
 class Noticias {
     private $db;
 
-    /**
-     * Constructor recibe una instancia PDO
-     */
-    public function __construct(PDO $db) {
+    public function __construct($db) {
         $this->db = $db;
     }
 
-    /**
-     * Devuelve las noticias ordenadas por fecha_publicacion DESC
-     * Si $limite no es null, aplica LIMIT en la consulta.
-     */
-    public function listar($limite = null) {
-        try {
-            $sql = "SELECT * FROM noticias ORDER BY fecha_publicacion DESC";
-            if ($limite !== null) {
-                $sql .= " LIMIT :limite";
-            }
-            $stmt = $this->db->prepare($sql);
-
-            if ($limite !== null) {
-                $stmt->bindValue(':limite', (int)$limite, PDO::PARAM_INT);
-            }
-
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return false;
-        }
+    public function listar() {
+        // Ahora hacemos join para traer el nombre del admin
+        $stmt = $this->db->prepare("
+            SELECT n.*, a.nombre AS nombre_admin 
+            FROM noticias n
+            LEFT JOIN administradores a ON n.publicado_por = a.id_admin
+            WHERE n.estado = 'activo'
+            ORDER BY n.fecha_publicacion DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function crear($titulo, $contenido, $publicado_por = null) {
-        try {
-            $stmt = $this->db->prepare("
-                INSERT INTO noticias (titulo, contenido, fecha_publicacion, publicado_por)
-                VALUES (:titulo, :contenido, NOW(), :publicado_por)
-            ");
-            $stmt->bindValue(':titulo', $titulo, PDO::PARAM_STR);
-            $stmt->bindValue(':contenido', $contenido, PDO::PARAM_STR);
-            $stmt->bindValue(':publicado_por', $publicado_por, PDO::PARAM_STR);
-            if ($stmt->execute()) {
-                return $this->db->lastInsertId();
-            }
-            return false;
-        } catch (PDOException $e) {
-            return false;
-        }
+    public function obtener($id) {
+        $stmt = $this->db->prepare("
+            SELECT n.*, a.nombre AS nombre_admin
+            FROM noticias n
+            LEFT JOIN administradores a ON n.publicado_por = a.id_admin
+            WHERE id_noticia = :id
+            LIMIT 1
+        ");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function ver($id) {
-        try {
-            $stmt = $this->db->prepare("SELECT * FROM noticias WHERE id_noticia = :id LIMIT 1");
-            $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return false;
-        }
+    public function crear($titulo, $contenido, $id_admin) {
+        $stmt = $this->db->prepare("
+            INSERT INTO noticias (titulo, contenido, publicado_por, estado)
+            VALUES (:titulo, :contenido, :id_admin, 'activo')
+        ");
+        $stmt->bindParam(':titulo', $titulo);
+        $stmt->bindParam(':contenido', $contenido);
+        $stmt->bindParam(':id_admin', $id_admin);
+        return $stmt->execute();
     }
 
-    public function editar($id, $titulo, $contenido, $publicado_por = null) {
-        try {
-            $stmt = $this->db->prepare("
-                UPDATE noticias
-                SET titulo = :titulo,
-                    contenido = :contenido,
-                    publicado_por = :publicado_por
-                WHERE id_noticia = :id
-            ");
-            $stmt->bindValue(':titulo', $titulo, PDO::PARAM_STR);
-            $stmt->bindValue(':contenido', $contenido, PDO::PARAM_STR);
-            $stmt->bindValue(':publicado_por', $publicado_por, PDO::PARAM_STR);
-            $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            return false;
-        }
+    public function actualizar($id, $titulo, $contenido) {
+        $stmt = $this->db->prepare("
+            UPDATE noticias 
+            SET titulo = :titulo, contenido = :contenido 
+            WHERE id_noticia = :id
+        ");
+        $stmt->bindParam(':titulo', $titulo);
+        $stmt->bindParam(':contenido', $contenido);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
     }
 
     public function eliminar($id) {
-        try {
-            $stmt = $this->db->prepare("DELETE FROM noticias WHERE id_noticia = :id");
-            $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            return false;
-        }
+        $stmt = $this->db->prepare("UPDATE noticias SET estado = 'inactivo' WHERE id_noticia = :id");
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
     }
 }
