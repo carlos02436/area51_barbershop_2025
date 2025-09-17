@@ -7,13 +7,13 @@ class Noticias {
     }
 
     public function listar() {
-        // Ahora hacemos join para traer el nombre del admin
         $stmt = $this->db->prepare("
             SELECT n.*, a.nombre AS nombre_admin 
             FROM noticias n
             LEFT JOIN administradores a ON n.publicado_por = a.id_admin
             WHERE n.estado = 'activo'
             ORDER BY n.fecha_publicacion DESC
+            LIMIT 3
         ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

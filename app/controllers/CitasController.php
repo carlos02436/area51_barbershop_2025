@@ -55,4 +55,8 @@ class CitasController {
     public function horasOcupadas($id_barbero, $fecha_cita) {
         return $this->citas->horasOcupadas($id_barbero, $fecha_cita);
     }
+
+    public function eliminarCita($id) {
+        return $this->citas->eliminar($id);
+    }
 }

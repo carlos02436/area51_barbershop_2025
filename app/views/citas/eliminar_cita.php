@@ -1,13 +1,18 @@
 <?php
+require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../controllers/CitasController.php';
-require_once __DIR__ . '/../../config/database.php';
 
-$controller = new CitasController($db);
-
-$id = $_GET['id'] ?? null;
-if ($id) {
-    $controller->cancelarCita($id);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-header('Location: index.php?page=citas');
-exit();
+$citasController = new CitasController($db);
+
+$id = $_GET['id'] ?? null;
+
+if ($id) {
+    $citasController->eliminarCita($id);
+}
+
+header("Location: index.php?page=citas");
+exit;
