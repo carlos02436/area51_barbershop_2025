@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../libs/dompdf/autoload.inc.php';
 require_once __DIR__ . '/../../../config/database.php';
 

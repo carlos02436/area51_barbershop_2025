@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/PQRSController.php';
 
 $controller = new PQRSController($db);

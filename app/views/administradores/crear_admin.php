@@ -1,4 +1,6 @@
-
+<?php
+require_once __DIR__ . '/../auth_admin.php';
+?>
 <body>
     <div class="container py-5" style="margin-top:100px;">
         <h1 class="fw-bold text-white mb-4 text-center">➕ Crear Admin</h1>

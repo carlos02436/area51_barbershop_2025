@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/ServicioController.php';
 
 $id = $_GET['id'] ?? null;

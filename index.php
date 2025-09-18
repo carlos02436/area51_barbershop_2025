@@ -75,10 +75,6 @@ switch ($page) {
         require 'app/views/reset_password.php';
         break;
 
-    case 'dashboard':
-        require __DIR__ . '/app/views/dashboard.php';
-        break;
-
     case 'panel':
         if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
             header("Location: index.php?page=login");
@@ -446,6 +442,10 @@ switch ($page) {
     case 'reportes_eventos':
         include 'app/views/reportes/reportes_eventos.php';
         break;
+    
+    case 'dashboard':
+        require __DIR__ . '/app/views/dashboard.php';
+        break;
 
     case 'generar_pdf_ingresos':
         include 'app/views/reportes/generar_pdf_ingresos.php';
@@ -465,6 +465,10 @@ switch ($page) {
 
     case 'generar_pdf_eventos':
         include 'app/views/reportes/generar_pdf_eventos.php';
+        break;
+
+    case 'generar_pdf_dashboard':
+        include 'app/views/reportes/generar_pdf_dashboard.php';
         break;
 
 //==================================================================

@@ -1,6 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
-
+require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/TikTokController.php';
 require_once __DIR__ . '/../../../config/database.php';
 
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $descripcion  = $_POST['descripcion'] ?? '';
     $publicado_por= $nombreAdmin;
 
-    $controller->crear($url, $video_id, $descripcion, $publicado_por);
+    $controller->crear($url, $video_id, $descripcion);
 
     header('Location: index.php?page=tiktok');
     exit;

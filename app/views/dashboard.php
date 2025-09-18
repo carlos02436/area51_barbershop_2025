@@ -1,5 +1,6 @@
 <?php
 // Requerimientos de archivos
+require_once __DIR__ . '/auth_admin.php';
 require_once __DIR__ . '/../../config/database.php'; // Ajusta si es necesario
 require_once __DIR__ . '/../controllers/dashboardController.php';
 require_once __DIR__ . '/../models/Cita.php';
@@ -71,7 +72,6 @@ $stmt = $db->query("
 $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <body>
-    
     <div class="container py-5" style="margin-top:100px;">
         <!-- Título y botón HOME -->
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-5 text-center text-md-start">
@@ -193,7 +193,15 @@ $ultimosClientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
+                        
+        <!-- Botón PDF -->
+        <div class="d-flex justify-content-end py-3">
+            <a href="app/views/reportes/generar_pdf_dashboard.php" 
+            target="_blank" 
+            class="btn btn-neon">
+                📄 Descargar PDF
+            </a>
+        </div>
         </div>
     </div>
-
 <main>

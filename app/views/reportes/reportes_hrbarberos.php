@@ -1,7 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../auth_admin.php';
 
 if (!isset($_SESSION['admin_logged_in'])) {
     header('Location: index.php?page=login');

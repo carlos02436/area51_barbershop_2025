@@ -62,7 +62,7 @@ if (!$admin) {
                     </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 text-center">
                     <label class="form-label text-white">Foto</label>
                     <?php if (!empty($admin['img_admin'])): ?>
                         <div class="mb-2">
