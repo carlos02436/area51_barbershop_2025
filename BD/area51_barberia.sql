@@ -522,4 +522,36 @@ ALTER TABLE `tiktok`
 --
 ALTER TABLE `videos`
   MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- REGISTRO DE INGRESOS DIARIOS
+--
+BEGIN
+    DECLARE inicio DATE;
+    DECLARE fin DATE;
+
+    SET inicio = CURDATE();
+    SET fin = CURDATE();
+
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM ingresos
+        WHERE fecha_inicio = inicio 
+          AND fecha_fin = fin 
+          AND periodo = 'diario'
+    ) THEN
+        INSERT INTO ingresos (periodo, fecha_inicio, fecha_fin, total_ingresos, total_citas, creado_en)
+        SELECT 
+            'diario' AS periodo,
+            inicio AS fecha_inicio,
+            fin AS fecha_fin,
+            COALESCE(SUM(s.precio), 0) AS total_ingresos,
+            COALESCE(COUNT(c.id_cita), 0) AS total_citas,
+            NOW() AS creado_en
+        FROM citas c
+        JOIN servicios s ON c.id_servicio = s.id_servicio
+        WHERE c.fecha_cita = inicio
+          AND c.estado = 'confirmada';
+    END IF;
+END
 COMMIT;

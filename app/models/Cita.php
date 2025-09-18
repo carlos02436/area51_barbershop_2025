@@ -32,36 +32,32 @@ class Citas {
     // Obtener una cita
     public function obtener($id) {
         $stmt = $this->db->prepare("
-            SELECT 
-                c.*, 
-                cl.nombre AS nombre_cliente, 
-                cl.apellido AS apellido_cliente,
-                b.nombre AS nombre_barbero, 
-                s.nombre AS nombre_servicio
+            SELECT c.*, 
+                cl.nombre as cliente, cl.apellido, cl.telefono as telefono_cliente,
+                b.nombre as barbero, b.telefono as telefono_barbero,
+                s.nombre as servicio, s.img_servicio
             FROM citas c
             INNER JOIN clientes cl ON c.id_cliente = cl.id_cliente
             INNER JOIN barberos b ON c.id_barbero = b.id_barbero
             INNER JOIN servicios s ON c.id_servicio = s.id_servicio
-            WHERE c.id_cita = :id
-            LIMIT 1
+            WHERE c.id_cita = ?
         ");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Crear cita
+    // Crear cita (ahora devuelve el ID insertado)
     public function crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
         $stmt = $this->db->prepare("
-            INSERT INTO citas (id_cliente, id_barbero, id_servicio, fecha_cita, hora_cita)
-            VALUES (:id_cliente, :id_barbero, :id_servicio, :fecha_cita, :hora_cita)
+            INSERT INTO citas (id_cliente, id_barbero, id_servicio, fecha_cita, hora_cita, estado, fecha_creacion)
+            VALUES (?, ?, ?, ?, ?, 'pendiente', NOW())
         ");
-        $stmt->bindParam(':id_cliente', $id_cliente);
-        $stmt->bindParam(':id_barbero', $id_barbero);
-        $stmt->bindParam(':id_servicio', $id_servicio);
-        $stmt->bindParam(':fecha_cita', $fecha_cita);
-        $stmt->bindParam(':hora_cita', $hora_cita);
-        return $stmt->execute();
+        $ok = $stmt->execute([$id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita]);
+
+        if ($ok) {
+            return $this->db->lastInsertId(); // ✅ devuelve ID de la cita creada
+        }
+        return false;
     }
 
     // Actualizar cita
@@ -98,7 +94,7 @@ class Citas {
         return $stmt->execute();
     }
 
-    // Obtener horas ocupadas para un barbero y fecha
+    // Horas ocupadas
     public function horasOcupadas($id_barbero, $fecha_cita) {
         $stmt = $this->db->prepare("
             SELECT hora_cita 
@@ -128,26 +124,52 @@ class Citas {
         return (int)$stmt->fetchColumn();
     }
 
-    // Validar disponibilidad completa
+    // Validar disponibilidad
     public function validarDisponibilidad($id_barbero, $fecha_cita, $hora_cita) {
         $dayOfWeek = date('w', strtotime($fecha_cita));
+        $hora_cita = date('H:i:s', strtotime($hora_cita));
 
-        // Hora ocupada
         if (in_array($hora_cita, $this->horasOcupadas($id_barbero, $fecha_cita))) {
             return false;
         }
 
-        // Validar máximo citas para barbero 1
         if ($id_barbero == 1 && $this->contarCitasDia($id_barbero, $fecha_cita) >= 8) {
             return false;
         }
 
-        // Reglas especiales barbero 1
         if ($id_barbero == 1) {
-            if ($dayOfWeek == 0) return false; // domingo
-            if ($hora_cita >= '12:00:00' && $hora_cita < '14:00:00') return false; // lunch
+            if ($dayOfWeek == 0) {
+                return false; // domingo
+            }
+            if ($hora_cita >= '12:00:00' && $hora_cita < '14:00:00') {
+                return false; // almuerzo
+            }
         }
 
-        return true; // disponible
+        return true;
+    }
+
+    // Última cita creada (con teléfonos)
+    public function ultimaCita() {
+        $stmt = $this->db->query("
+            SELECT 
+                c.id_cita,
+                cli.nombre AS cliente,
+                cli.apellido AS apellido,
+                cli.telefono AS telefono_cliente,
+                b.nombre AS barbero,
+                b.telefono AS telefono_barbero,
+                s.nombre AS servicio,
+                c.fecha_cita,
+                c.hora_cita,
+                c.img_servicio
+            FROM citas c
+            INNER JOIN clientes cli ON c.id_cliente = cli.id_cliente
+            INNER JOIN barberos b ON c.id_barbero = b.id_barbero
+            INNER JOIN servicios s ON c.id_servicio = s.id_servicio
+            ORDER BY c.id_cita DESC
+            LIMIT 1
+        ");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

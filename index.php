@@ -87,6 +87,10 @@ switch ($page) {
         require_once __DIR__ . '/app/views/citas/citas.php';
         break;
 
+    case 'whatsapp':
+        require_once __DIR__ . '/app/helpers/whatsapp.php';
+        break;
+
     // mostrar formulario crear
     case 'crear_cita':
         require __DIR__ . '/app/views/citas/crear_cita.php';

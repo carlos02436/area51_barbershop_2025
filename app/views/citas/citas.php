@@ -45,7 +45,8 @@ $citas = $citasController->listarCitas(); // JOIN con clientes, barberos y servi
                                     <?php if(!empty($c['servicio_imagen'])): ?>
                                         <img src="app/uploads/servicios/<?= htmlspecialchars($c['servicio_imagen']) ?>" 
                                             alt="<?= htmlspecialchars($c['servicio']) ?>" 
-                                            style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+                                            class="img-thumbnail border-success"
+                                            style="max-width: 100px; max-height: 80px; border: 2px solid #28a745;">
                                     <?php else: ?>
                                         <span class="text-muted">Sin imagen</span>
                                     <?php endif; ?>

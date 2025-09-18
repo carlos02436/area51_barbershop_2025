@@ -44,7 +44,7 @@ $admins = $stmt->fetchAll();
                                 <img src="app/uploads/admin/<?= htmlspecialchars($admin['img_admin']) ?>"
                                     alt="Imagen del administrador"
                                     class="img-thumbnail border-success"
-                                    style="max-width: 90px; max-height: 190px; border: 2px solid #28a745;">
+                                    style="max-width:90px; max-height:190px; border: 2px solid #0f0;border-radius: 5px;"">
                             <?php else: ?>
                                 <p class="text-warning small mb-0">⚠️ Sin imagen</p>
                             <?php endif; ?>

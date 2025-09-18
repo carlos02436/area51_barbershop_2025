@@ -43,7 +43,7 @@ $servicios = $controller->listarServicios();
                                     <img src="app/uploads/servicios/<?= htmlspecialchars($row['img_servicio']) ?>" 
                                         alt="Imagen del servicio" 
                                         class="img-thumbnail border-success"
-                                        style="max-width: 100px; max-height: 80px; border: 2px solid #28a745;">
+                                        style="max-width:90px; max-height:90px; border: 2px solid #0f0;border-radius: 5px;">
                                 <?php else: ?>
                                     <p class="text-warning small mb-0">⚠️ Sin imagen</p>
                                 <?php endif; ?>

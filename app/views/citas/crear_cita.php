@@ -14,23 +14,25 @@ $horasDisponibles = [];
 
 // Generar horas según barbero y fecha
 function generarHoras($id_barbero, $fecha, $ocupadas) {
-    $dayOfWeek = date('w', strtotime($fecha));
+    $dayOfWeek = date('w', strtotime($fecha)); // 0=Domingo, 1=Lunes,...
     $horas = [];
 
     if ($id_barbero == 1) { // Yeison Sarmiento
-        if ($dayOfWeek == 0) return [];
-        for ($h=8; $h<20; $h++) {
-            if ($h >= 12 && $h < 14) continue;
+        if ($dayOfWeek == 0) return []; // No trabaja domingos
+        for ($h = 8; $h < 20; $h++) {
+            if ($h >= 12 && $h < 14) continue; // Descanso 12-14
             $hora = str_pad($h,2,'0',STR_PAD_LEFT).":00:00";
             if (!in_array($hora, $ocupadas)) $horas[] = $hora;
         }
     } else {
-        if ($dayOfWeek != 0) { $inicio=8; $fin=20; } else { $inicio=8; $fin=16; }
-        for ($h=$inicio; $h<$fin; $h++) {
+        $inicio = ($dayOfWeek == 0) ? 8 : 8;
+        $fin = ($dayOfWeek == 0) ? 16 : 20; // Domingo 8-16, otros 8-20
+        for ($h = $inicio; $h < $fin; $h++) {
             $hora = str_pad($h,2,'0',STR_PAD_LEFT).":00:00";
             if (!in_array($hora, $ocupadas)) $horas[] = $hora;
         }
     }
+
     return $horas;
 }
 
@@ -42,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $fecha_cita = $_POST['fecha_cita'];
     $hora_cita = $_POST['hora_cita'];
 
-    // ✅ Validar que todos los campos estén completos antes de crear
     if(!empty($id_cliente) && !empty($id_barbero) && !empty($id_servicio) && !empty($fecha_cita) && !empty($hora_cita)){
         $ok = $controller->crearCita($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita);
         if ($ok) {
@@ -58,6 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
 if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
     $ocupadas = $controller->horasOcupadas($_POST['id_barbero'], $_POST['fecha_cita']);
     $horasDisponibles = generarHoras($_POST['id_barbero'], $_POST['fecha_cita'], $ocupadas);
+}
+
+// Obtener imagen del servicio seleccionado
+$imgServicio = '';
+if (isset($_POST['id_servicio']) && $_POST['id_servicio'] != '') {
+    $sIndex = array_search($_POST['id_servicio'], array_column($servicios, 'id_servicio'));
+    if ($sIndex !== false) $imgServicio = $servicios[$sIndex]['img_servicio'];
 }
 ?>
 <body>
@@ -116,7 +124,6 @@ if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
                         <?php endif; ?>
                     </select>
                 </div>
-
                 <!-- Servicio -->
                 <div class="mb-3">
                     <label>Servicio</label>
@@ -131,11 +138,9 @@ if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
                     </select>
                 </div>
 
-                <!-- Imagen -->
-                <div class="mb-3 text-center">
-                    <img id="imgServicio" src="<?= isset($_POST['id_servicio']) 
-                        ? $servicios[array_search($_POST['id_servicio'], array_column($servicios,'id_servicio'))]['img_servicio'] 
-                        : '' ?>" style="max-width:150px; max-height:150px;">
+                <!-- Imagen (oculta inicialmente) -->
+                <div class="mb-3 text-center" id="imagenContainer" style="display: none;">
+                    <img id="imgServicio" src="" style="max-width:150px; max-height:200px; border: 3px solid #00ff00; border-radius: 8px;">
                 </div>
 
                 <!-- Botones -->
@@ -148,10 +153,24 @@ if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
     </div>
 
     <script>
-    function mostrarImagen(){
-        const sel = document.getElementById('servicio');
-        const img = sel.selectedOptions[0].dataset.img;
-        document.getElementById('imgServicio').src = img ? img : '';
-    }
+        function mostrarImagen(){
+            const sel = document.getElementById('servicio');
+            const img = sel.selectedOptions[0].dataset.img;
+            const imgContainer = document.getElementById('imagenContainer');
+            const imgElement = document.getElementById('imgServicio');
+            
+            if (sel.value !== '' && img) {
+                // Construir la ruta completa de la imagen
+                imgElement.src = 'app/uploads/servicios/' + img;
+                imgContainer.style.display = 'block';
+            } else {
+                imgContainer.style.display = 'none';
+            }
+        }
+
+        // Mostrar imagen si ya hay un servicio seleccionado al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarImagen();
+        });
     </script>
 <main>
