@@ -91,6 +91,13 @@ class Citas {
         return $stmt->execute();
     }
 
+    // Eliminar cita
+    public function eliminar($id) {
+        $stmt = $this->db->prepare("DELETE FROM citas WHERE id_cita = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     // Obtener horas ocupadas para un barbero y fecha
     public function horasOcupadas($id_barbero, $fecha_cita) {
         $stmt = $this->db->prepare("
@@ -118,13 +125,29 @@ class Citas {
         $stmt->bindParam(':id_barbero', $id_barbero, PDO::PARAM_INT);
         $stmt->bindParam(':fecha_cita', $fecha_cita);
         $stmt->execute();
-        return $stmt->fetchColumn();
+        return (int)$stmt->fetchColumn();
     }
 
-    public function eliminar($id) {
-        $sql = "DELETE FROM citas WHERE id_cita = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+    // Validar disponibilidad completa
+    public function validarDisponibilidad($id_barbero, $fecha_cita, $hora_cita) {
+        $dayOfWeek = date('w', strtotime($fecha_cita));
+
+        // Hora ocupada
+        if (in_array($hora_cita, $this->horasOcupadas($id_barbero, $fecha_cita))) {
+            return false;
+        }
+
+        // Validar máximo citas para barbero 1
+        if ($id_barbero == 1 && $this->contarCitasDia($id_barbero, $fecha_cita) >= 8) {
+            return false;
+        }
+
+        // Reglas especiales barbero 1
+        if ($id_barbero == 1) {
+            if ($dayOfWeek == 0) return false; // domingo
+            if ($hora_cita >= '12:00:00' && $hora_cita < '14:00:00') return false; // lunch
+        }
+
+        return true; // disponible
     }
 }

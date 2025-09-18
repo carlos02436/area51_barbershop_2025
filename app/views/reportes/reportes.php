@@ -1,8 +1,5 @@
 <?php
-// Inicia sesión solo si no hay ninguna activa
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../auth_admin.php';
 
 // Verifica si el administrador está logueado
 if (!isset($_SESSION['admin_logged_in'])) {
@@ -10,7 +7,6 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit; // Siempre usa exit después de redireccionar
 }
 ?>
-
 <body>
     <div class="container py-5">
         <!-- Título y botón HOME -->

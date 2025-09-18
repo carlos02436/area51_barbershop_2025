@@ -1,11 +1,11 @@
 <?php
+require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/CitasController.php';
 if (!isset($db)) require_once __DIR__ . '/../../config/database.php';
 
 $citasController = new CitasController($db);
 $citas = $citasController->listarCitas(); // JOIN con clientes, barberos y servicios
 ?>
-
 <body>
     <div class="container py-5" style="margin-top:100px;">
         <!-- Título y botón HOME -->
@@ -14,10 +14,6 @@ $citas = $citasController->listarCitas(); // JOIN con clientes, barberos y servi
                 <i class="bi bi-house-fill fs-3"></i>
             </a>
             <h1 class="fw-bold display-5 text-white mb-0">📰 Gestión de Citas</h1>
-        </div>
-
-        <div class="d-flex justify-content-end mb-3">
-            <a href="index.php?page=crear_cita" class="btn btn-neon">➕ Nueva Cita</a>
         </div>
 
         <div class="table-wrapper rounded shadow-sm" style="max-height:500px; overflow-y:auto;">
