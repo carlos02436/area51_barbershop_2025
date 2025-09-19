@@ -304,7 +304,7 @@
                     <?php foreach ($testimonios as $index => $t): ?>
                         <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="margin: 15px auto;">
                             <div class="d-flex flex-column align-items-center">
-                                <img src="public/img/<?= htmlspecialchars($t['img']) ?>"
+                                <img src="app/uploads/testimonios/<?= htmlspecialchars($t['img']) ?>"
                                     alt="<?= htmlspecialchars($t['nombre']) ?>"
                                     class="rounded-circle mb-4"
                                     style="width: 90px; height: 90px; object-fit: cover;">
@@ -371,11 +371,13 @@
                         <p>
                             ¡No esperes más! Agenda tu cita con nosotros y prepárate para salir renovado.
                             Ponte en contacto a través de nuestro WhatsApp, redes sociales o visítanos directamente.
-                            ¡Tu próxima transformación comienza aquí!
+                            ¡Solamente registrate y haz que tu próxima transformación con estilo
+                            comience ahora...!
                         </p>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <a class="btn btn-neon" href="index.php?page=crear_cita">RESERVAR</a>
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a class="btn btn-dark" href="index.php?page=crear_cliente">Registrarse</a>
+                        <a class="btn btn-neon" href="index.php?page=crear_cita">Reservar</a>
                     </div>
                 </div>
             </div>

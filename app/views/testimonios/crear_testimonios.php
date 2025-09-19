@@ -11,7 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $img = !empty($_FILES['img']['name']) ? $_FILES['img']['name'] : null;
 
     if ($img) {
-        move_uploaded_file($_FILES['img']['tmp_name'], __DIR__ . '/../../uploads/' . $img);
+        // Ruta final de la imagen
+        $rutaDestino = __DIR__ . '/../../uploads/testimonios/' . $img;
+        move_uploaded_file($_FILES['img']['tmp_name'], $rutaDestino);
     }
 
     $controller->crear($_POST['nombre'], $_POST['mensaje'], $img);

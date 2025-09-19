@@ -12,6 +12,10 @@ class TestimoniosController {
         return $this->testimonioModel->obtenerTestimonios();
     }
 
+    public function obtenerPorId($id) {
+        return $this->testimonioModel->ver($id);
+    }
+
     public function crear($nombre, $mensaje, $img = null) {
         return $this->testimonioModel->crear($nombre, $mensaje, $img);
     }

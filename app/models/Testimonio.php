@@ -10,12 +10,12 @@ class Testimonio {
     }
 
     public function obtenerTestimonios() {
-        $sql = "SELECT nombre, mensaje, img 
-                FROM testimonios 
+        $sql = "SELECT id_testimonio, nombre, mensaje, img, fecha_registro
+                FROM testimonios
                 ORDER BY id_testimonio ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
       // ================== CREAR ==================

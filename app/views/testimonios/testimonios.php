@@ -19,10 +19,6 @@ $registros = $controller->listarTestimonios();
             <h1 class="fw-bold display-5 text-white mb-0">💬 Gestión Testimonios</h1>
         </div>
 
-        <div class="mb-3">
-            <a href="index.php?page=crear_testimonios" class="btn btn-success">➕ Nuevo Testimonio</a>
-        </div>
-
         <div class="table-wrapper rounded shadow-sm" style="max-height:500px; overflow-y:auto;">
             <table class="table table-striped table-hover mb-0">
                 <thead class="table-dark">
@@ -43,15 +39,27 @@ $registros = $controller->listarTestimonios();
                             <td><?= nl2br(htmlspecialchars($row['mensaje'])) ?></td>
                             <td>
                                 <?php if (!empty($row['img'])): ?>
-                                    <img src="uploads/<?= htmlspecialchars($row['img']) ?>" alt="Imagen" width="60">
+                                    <img src="app/uploads/testimonios/<?= htmlspecialchars($row['img']) ?>" alt="Imagen"
+                                     class="img-thumbnail border-success"
+                                        style="max-width:90px; max-height:90px; border: 2px solid #0f0;border-radius: 5px;">
                                 <?php else: ?>
                                     N/A
                                 <?php endif; ?>
                             </td>
                             <td><?= $row['fecha_registro'] ?></td>
                             <td>
-                                <a href="index.php?page=editar_testimonios&id=<?= $row['id_testimonio'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="index.php?page=eliminar_testimonios&id=<?= $row['id_testimonio'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este testimonio?')">Eliminar</a>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="index.php?page=editar_testimonios&id=<?= $row['id_testimonio'] ?>" 
+                                    class="btn btn-warning btn-sm" style="width: 80px;">
+                                    Editar
+                                    </a>
+                                    <a href="index.php?page=eliminar_testimonios&id=<?= $row['id_testimonio'] ?>" 
+                                    class="btn btn-danger btn-sm" 
+                                    style="width: 80px;" 
+                                    onclick="return confirm('¿Seguro que deseas eliminar este testimonio?')">
+                                    Eliminar
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>

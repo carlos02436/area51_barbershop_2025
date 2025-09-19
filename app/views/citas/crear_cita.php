@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../../../vendor/autoload.php';
-use Twilio\Rest\Client;
 require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/CitasController.php';
 
@@ -78,39 +76,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
                                "⏰ *Hora:* {$hora_cita}\n\n".
                                "¡Prepárate para un excelente servicio! ✂️";
 
+            // Enviar mensajes vía Node.js
+            $urlNode = 'http://localhost:3000/enviarWhatsApp'; // Endpoint Node.js
+            $data = [
+                'cliente' => ['telefono' => $cliente['telefono'], 'mensaje' => $mensaje_cliente],
+                'barbero' => ['telefono' => $barbero['telefono'], 'mensaje' => $mensaje_barbero]
+            ];
 
-            // Twilio
-            $sid = getenv('TWILIO_SID');
-            $token = getenv('TWILIO_TOKEN');
-            $client_twilio = new Client($sid, $token);
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/json\r\n",
+                    'method'  => 'POST',
+                    'content' => json_encode($data),
+                ]
+            ];
+            $context  = stream_context_create($options);
+            @file_get_contents($urlNode, false, $context); // Se ignora el error si no responde
 
-            // Número Sandbox Twilio WhatsApp (si estás usando Sandbox)
-            $numero_barberia = 'whatsapp:+573124732236';
-
-            // Enviar mensaje al cliente
-            if (!empty($cliente['telefono'])) {
-                $client_twilio->messages->create(
-                    'whatsapp:'.$cliente['telefono'],
-                    [
-                        'from' => $numero_barberia,
-                        'body' => $mensaje_cliente
-                    ]
-                );
-            }
-
-            // Enviar mensaje al barbero
-            if (!empty($barbero['telefono'])) {
-                $client_twilio->messages->create(
-                    'whatsapp:'.$barbero['telefono'],
-                    [
-                        'from' => $numero_barberia,
-                        'body' => $mensaje_barbero
-                    ]
-                );
-            }
-
-            // Redirigir a la página de citas
-            header('Location: index.php?page=citas');
+            // Redirigir a la página Home
+            header('Location: index.php?page=home#contacto');
             exit();
 
         } else {
@@ -215,23 +199,23 @@ if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
     </div>
 
     <script>
-    function mostrarImagen(){
-        const sel = document.querySelector('select[name="id_servicio"]');
-        const img = sel.selectedOptions[0].dataset.img;
-        const imgContainer = document.getElementById('imagenContainer');
-        const imgElement = document.getElementById('imgServicio');
+        function mostrarImagen(){
+            const sel = document.querySelector('select[name="id_servicio"]');
+            const img = sel.selectedOptions[0].dataset.img;
+            const imgContainer = document.getElementById('imagenContainer');
+            const imgElement = document.getElementById('imgServicio');
 
-        if (sel.value !== '' && img) {
-            imgElement.src = 'app/uploads/servicios/' + img;
-            imgContainer.style.display = 'block';
-        } else {
-            imgContainer.style.display = 'none';
+            if (sel.value !== '' && img) {
+                imgElement.src = 'app/uploads/servicios/' + img;
+                imgContainer.style.display = 'block';
+            } else {
+                imgContainer.style.display = 'none';
+            }
         }
-    }
 
-    // Mostrar imagen al cargar la página si ya hay servicio seleccionado
-    document.addEventListener('DOMContentLoaded', function() {
-        mostrarImagen();
-    });
+        // Mostrar imagen al cargar la página si ya hay servicio seleccionado
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarImagen();
+        });
     </script>
 <main>

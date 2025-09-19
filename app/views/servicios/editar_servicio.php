@@ -69,8 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <p class="text-white mb-2">Imagen del servicio actual:</p>
                             <img src="app/uploads/servicios/<?= htmlspecialchars($servicio['img_servicio']) ?>"
                                 alt="Imagen servicio"
-                                class="img-fluid rounded shadow"
-                                style="max-height: 300px;width: 220px;">
+                                style="max-width:150px; max-height:200px; border: 3px solid #00ff00; border-radius: 8px;"
                         </div>
                     <?php else: ?>
                         <p class="text-warning small mt-2">⚠️ No hay imagen registrada para este servicio.</p>
