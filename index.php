@@ -497,6 +497,26 @@ switch ($page) {
 
 //==================================================================
 
+//=================== CLIENTES ====================
+
+    case 'Cliente':
+        require __DIR__ . '/app/views/clientes/Cliente.php';
+        break;
+
+    case 'crear_cliente':
+        require __DIR__ . '/app/views/clientes/crear_cliente.php';
+        break;
+
+    case 'editar_cliente':
+        require __DIR__ . '/app/views/clientes/editar_cliente.php';
+        break;
+        
+    case 'eliminar_cliente':
+        require __DIR__ . '/app/views/clientes/eliminar_cliente.php';
+        break;
+
+//==================================================================
+
 //=================== NOTICIAS ====================
 
     case 'noticias':

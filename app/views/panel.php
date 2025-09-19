@@ -179,6 +179,18 @@ $_SESSION['last_activity'] = time();
                     </div>
                 </div>
             </div>
+
+            <!-- Clientes -->
+            <div class="col-md-4 mb-3">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="fa fa-3x mb-3 text-danger">👥</i>
+                        <h5 class="card-title text-white">Clientes</h5>
+                        <p class="card-text text-white">Accede a tus clientes.</p>
+                        <a href="/area51_barbershop_2025/index.php?page=Cliente" class="btn btn-danger">Gestionar Clientes</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div>
