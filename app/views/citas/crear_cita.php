@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
             $client_twilio = new Client($sid, $token);
 
             // Número Sandbox Twilio WhatsApp (si estás usando Sandbox)
-            $numero_barberia = 'whatsapp:+14155238886';
+            $numero_barberia = 'whatsapp:+573124732236';
 
             // Enviar mensaje al cliente
             if (!empty($cliente['telefono'])) {
