@@ -87,8 +87,8 @@ switch ($page) {
         require_once __DIR__ . '/app/views/citas/citas.php';
         break;
 
-    case 'whatsapp':
-        require_once __DIR__ . '/app/helpers/whatsapp.php';
+    case 'enviar_whatsapp':
+        require_once __DIR__ . '/../vendor/autoload.php';
         break;
 
     // mostrar formulario crear

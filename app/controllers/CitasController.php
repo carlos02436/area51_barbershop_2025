@@ -1,7 +1,6 @@
 <?php
 // controllers/CitasController.php
 require_once __DIR__ . '/../models/Cita.php';
-require_once __DIR__ . '/../helpers/whatsapp.php'; // ✅ para enviar mensajes
 
 class CitasController {
     private $citas;
@@ -37,29 +36,6 @@ class CitasController {
         if ($citaId) {
             // Traer datos completos de la cita (con JOIN para obtener la imagen)
             $cita = $this->citas->obtener($citaId);
-
-            // ✅ MENSJES DE WHATSAPP SE MANTIENEN
-            $mensajeCliente = "Tu cita en AREA51 BARBER SHOP fue confirmada:\n\n".
-                "📅 Fecha: {$cita['fecha_cita']}\n".
-                "⏰ Hora: {$cita['hora_cita']}\n".
-                "💈 Barbero: {$cita['barbero']}\n".
-                "✂️ Servicio: {$cita['servicio']}\n\n".
-                "Gracias por preferirnos 🙌.";
-
-            $mensajeBarbero = "Hola {$cita['barbero']} 👋\n".
-                "Tienes una nueva cita registrada:\n\n".
-                "👤 Cliente: {$cita['cliente']} {$cita['apellido']}\n".
-                "📅 Fecha: {$cita['fecha_cita']}\n".
-                "⏰ Hora: {$cita['hora_cita']}\n".
-                "✂️ Servicio: {$cita['servicio']}";
-
-            // ✅ ENVÍO DE WHATSAPP SE MANTIENE
-            if (!empty($cita['telefono_cliente'])) {
-                enviarWhatsapp($cita['telefono_cliente'], $mensajeCliente);
-            }
-            if (!empty($cita['telefono_barbero'])) {
-                enviarWhatsapp($cita['telefono_barbero'], $mensajeBarbero);
-            }
 
             return true;
         }

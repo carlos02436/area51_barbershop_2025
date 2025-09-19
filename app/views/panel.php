@@ -167,6 +167,18 @@ $_SESSION['last_activity'] = time();
                     </div>
                 </div>
             </div>
+
+            <!-- Sección Testimonios -->
+            <div class="col-md-4 mb-3">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body">
+                        <i class="fa fa-3x mb-3 text-warning">💬</i>
+                        <h5 class="card-title text-white">Testimonios</h5>
+                        <p class="card-text text-white">Actualiza tus noticias y/o eventos.</p>
+                        <a href="/area51_barbershop_2025/index.php?page=testimonios" class="btn btn-warning">Ver Testimonios</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div>
