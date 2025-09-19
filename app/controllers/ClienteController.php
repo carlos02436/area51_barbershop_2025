@@ -46,7 +46,7 @@ class ClienteController {
                 return ['error' => 'El cliente ya está registrado.', 'cliente' => $clienteExistente];
             }
 
-            $id_cliente = $this->crearCliente($nombre, $apellido, $telefono, $correo);
+            $id_cliente = $this->crearCliente($nombre, $apellido, $telefono = null, $correo = null);
             return ['success' => 'Cliente creado correctamente.', 'id_cliente' => $id_cliente];
         }
         return null;
