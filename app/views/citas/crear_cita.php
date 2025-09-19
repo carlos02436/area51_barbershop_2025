@@ -78,9 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
                                "⏰ *Hora:* {$hora_cita}\n\n".
                                "¡Prepárate para un excelente servicio! ✂️";
 
-            // --- Twilio Sandbox configuración ---
-            $sid = 'AC894e8c4422e75a0af301e0a969158fc8';
-            $token = '9bbd0d403f0b9ee4e05c7d49a5d1662e';
+
+            // Twilio
+            $sid = getenv('TWILIO_SID');
+            $token = getenv('TWILIO_TOKEN');
             $client_twilio = new Client($sid, $token);
 
             // Número Sandbox Twilio WhatsApp (si estás usando Sandbox)
