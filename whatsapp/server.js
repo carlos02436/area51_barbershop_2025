@@ -12,10 +12,13 @@ app.use(cors());
 let client;
 let qrCodeData = '';
 
+// Función para formatear número WhatsApp
+const formatoNumero = (num) => num.replace(/\D/g, '') + '@c.us';
+
 function iniciarWhatsApp() {
   venom
     .create(
-      'session-barberia',
+      'session-barberia', // Carpeta donde se guarda la sesión
       (statusSession) => {
         console.log('Estado de sesión:', statusSession);
       },
@@ -24,8 +27,9 @@ function iniciarWhatsApp() {
         console.log('QR actualizado');
       },
       {
-        headless: true,
-        multidevice: true
+        headless: "new", // nueva implementación headless
+        multidevice: true,
+        useChrome: true // Puppeteer usará Chromium interno
       }
     )
     .then((c) => {
@@ -48,34 +52,47 @@ function iniciarWhatsApp() {
 
 iniciarWhatsApp();
 
-// Endpoint seguro para enviar mensajes
+// Endpoint para enviar mensajes
 app.post('/send-message', async (req, res) => {
-  if (!client) return res.status(500).send('WhatsApp no está listo');
+  console.log('🚀 /send-message recibido', req.body); // LOG para verificar
 
   const { cliente, barbero } = req.body;
 
-  // Validación de datos
   if (!cliente || !cliente.telefono || !cliente.mensaje ||
       !barbero || !barbero.telefono || !barbero.mensaje) {
     return res.status(400).send('Datos incompletos para enviar mensajes');
   }
 
+  // Espera hasta que el client esté listo
+  const esperarCliente = () => new Promise((resolve) => {
+    const intervalo = setInterval(() => {
+      if (client) {
+        clearInterval(intervalo);
+        resolve();
+      }
+    }, 500);
+  });
+
+  await esperarCliente();
+
   try {
-    // Agregar @c.us a los números si no lo tienen
-    const numeroCliente = cliente.telefono.includes('@c.us') ? cliente.telefono : cliente.telefono + '@c.us';
-    const numeroBarbero = barbero.telefono.includes('@c.us') ? barbero.telefono : barbero.telefono + '@c.us';
+    const numeroCliente = formatoNumero(cliente.telefono);
+    const numeroBarbero = formatoNumero(barbero.telefono);
+
+    console.log('Enviando a cliente:', numeroCliente, cliente.mensaje);
+    console.log('Enviando a barbero:', numeroBarbero, barbero.mensaje);
 
     await client.sendText(numeroCliente, cliente.mensaje);
     await client.sendText(numeroBarbero, barbero.mensaje);
 
-    console.log(`Mensajes enviados a ${numeroCliente} y ${numeroBarbero}`);
     res.send('✅ Mensajes enviados correctamente');
   } catch (error) {
-    console.error('Error enviando mensajes:', error);
-    res.status(500).send('❌ Error enviando los mensajes');
+    console.error('❌ Error enviando mensajes:', error);
+    res.status(500).send('Error enviando mensajes');
   }
 });
 
+// Endpoint para mostrar QR
 app.get('/qr', (req, res) => {
   if (!qrCodeData) return res.send('QR aún no disponible, espera unos segundos...');
   res.send(`<h3>Escanea este QR con WhatsApp Web para iniciar sesión</h3>

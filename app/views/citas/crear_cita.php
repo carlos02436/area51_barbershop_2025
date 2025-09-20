@@ -12,26 +12,29 @@ $servicios = $db->query("SELECT * FROM servicios")->fetchAll(PDO::FETCH_ASSOC);
 $error = '';
 $horasDisponibles = [];
 
+// Función para generar horas disponibles
 function generarHoras($id_barbero, $fecha, $ocupadas) {
     $dayOfWeek = date('w', strtotime($fecha));
     $horas = [];
-    if ($id_barbero == 1) {
+
+    if ($id_barbero == 1) { // Barbero especial
         if ($dayOfWeek == 0) return [];
         for ($h = 8; $h < 20; $h++) {
-            if ($h >= 12 && $h < 14) continue;
+            if ($h >= 12 && $h < 14) continue; // Descanso
             $hora = str_pad($h,2,'0',STR_PAD_LEFT).":00:00";
             if (!in_array($hora, $ocupadas)) $horas[] = $hora;
         }
-    } else {
-        $inicio = 8; $fin = 20;
-        for ($h = $inicio; $h < $fin; $h++) {
+    } else { // Otros barberos
+        for ($h = 8; $h < 20; $h++) {
             $hora = str_pad($h,2,'0',STR_PAD_LEFT).":00:00";
             if (!in_array($hora, $ocupadas)) $horas[] = $hora;
         }
     }
+
     return $horas;
 }
 
+// Procesar envío del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $id_cliente = $_POST['id_cliente'];
     $id_barbero = $_POST['id_barbero'];
@@ -43,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
         $ok = $controller->crearCita($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita);
 
         if ($ok) {
+            // Preparar datos
             $servicio = $servicios[array_search($id_servicio, array_column($servicios, 'id_servicio'))];
             $cliente = $clientes[array_search($id_cliente, array_column($clientes, 'id_cliente'))];
             $barbero = $barberos[array_search($id_barbero, array_column($barberos, 'id_barbero'))];
@@ -71,28 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
                                "¡Prepárate para un excelente servicio! ✂️";
 
             // Enviar mensajes en segundo plano sin bloquear la respuesta
-            ignore_user_abort(true);
-            set_time_limit(0);
-
             $data = [
                 'cliente' => ['telefono'=>$cliente['telefono'], 'mensaje'=>$mensaje_cliente],
                 'barbero' => ['telefono'=>$barbero['telefono'], 'mensaje'=>$mensaje_barbero]
             ];
 
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/json\r\n",
-                    'method'  => 'POST',
-                    'content' => json_encode($data),
-                    'ignore_errors' => true,
-                ]
-            ];
-
-            $context  = stream_context_create($options);
-            @file_get_contents('http://localhost:3000/send-message', false, $context);
+            $cmd = 'curl -X POST -H "Content-Type: application/json" -d \'' . json_encode($data) . '\' http://localhost:3000/send-message > NUL 2>&1 &';
+            exec($cmd);
 
             // Redirigir inmediatamente
-            header('Location: index.php?page=home#contacto');
+            header('Location: /area51_barbershop_2025/index.php?page=crear_cita');
             exit();
         } else {
             $error = "Hora no disponible o fuera del horario permitido";
@@ -100,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     }
 }
 
-// Calcular horas disponibles
+// Calcular horas disponibles si se cambian id_barbero o fecha
 if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
     $ocupadas = $controller->horasOcupadas($_POST['id_barbero'], $_POST['fecha_cita']);
     $horasDisponibles = generarHoras($_POST['id_barbero'], $_POST['fecha_cita'], $ocupadas);
