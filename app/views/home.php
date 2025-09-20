@@ -9,7 +9,7 @@
     </header>
 
     <!-- sección nosotros -->
-    <section id="nosotros" class="py-5 fade-in-section gx-10" style="scroll-margin-top: 80px;">
+    <section id="nosotros" class="py-5 fade-in-section gx-10">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Nosotros</h2>
 
@@ -99,7 +99,7 @@
     ?>
 
     <!-- Sección Servicios -->
-    <section id="servicios" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
+    <section id="servicios" class="py-5 fade-in-section">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Nuestros Servicios</h2>
             <div class="row">
@@ -150,7 +150,7 @@
     $barberos = $controller->listar(); 
     ?>
 
-    <section id="barberos" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
+    <section id="barberos" class="py-5 fade-in-section">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Sección de Barberos</h2>
             <div class="container">
@@ -187,7 +187,7 @@
     ?>
 
     <!-- Sección Galería -->
-    <section id="galeria" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
+    <section id="galeria" class="py-5 fade-in-section">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Galería de estilos</h2>
             <div class="row">
@@ -204,7 +204,7 @@
     </section>
 
     <!-- Sección Videos -->
-    <section id="videos" class="py-5 fade-in-section" style="scroll-margin-top: 80px;">
+    <section id="videos" class="py-5 fade-in-section">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Videos y algo más...</h2>
             <div class="row g-4" id="video-container">
@@ -258,7 +258,7 @@
     $noticias = $noticiasController->listarNoticias(); // Trae las últimas 3 noticias
     ?>
 
-    <section id="noticias" class="py-5 fade-in-section" style="scroll-margin-top:80px;">
+    <section id="noticias" class="py-5 fade-in-section">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Noticias y Eventos</h2>
             <div class="row g-4" id="video-container">
@@ -294,7 +294,7 @@
 
     <!-- Testimonios -->
     <section id="testimonios" class="py-5 fade-in-section"
-        style="padding-top: 150px; padding-bottom: 150px; margin: auto; scroll-margin-top: 80px;">
+        style="padding-top: 150px; padding-bottom: 150px; margin: auto;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Testimonios</h2>
 
@@ -333,7 +333,7 @@
     </section>
 
     <!-- Contacto -->
-    <section id="contacto" class="py-5 fade-in-section contacto-section" style="scroll-margin-top: 80px;background:transparent;">
+    <section id="contacto" class="py-5 fade-in-section contacto-section" style="background:transparent;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Contacto</h2>
 

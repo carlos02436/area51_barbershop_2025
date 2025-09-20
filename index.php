@@ -558,11 +558,11 @@ switch ($page) {
 //==================================================================
 
     default:
-        echo "<section class='container py-5 text-center'>
-                <h2 class='text-danger'>404 - Página no encontrada</h2>
-                <p>Lo sentimos, la página que buscas no existe.</p>
-                <a href='index.php' class='btn btn-primary mt-3'>Volver al inicio</a>
-              </section>";
+    echo "<section class='container py-5 text-center' style='margin-top:100px;'>
+            <h2 class='text-danger'>404 - Página no encontrada</h2>
+            <p>Lo sentimos, la página que buscas no existe.</p>
+            <a href='index.php' class='btn btn-neon mt-3'>Volver al inicio</a>
+        </section>";
         break;
 }
 

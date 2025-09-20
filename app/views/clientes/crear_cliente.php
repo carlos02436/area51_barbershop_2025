@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $controller->crearCliente($nombre, $apellido, $telefono, $correo);
 
-    header("Location: ../../index.php?page=Cliente");
+    header("Location: /area51_barbershop_2025/index.php?page=home#contacto");
     exit;
 }
 ?>
@@ -22,23 +22,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="card-body p-4">
                 <form method="POST">
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre" required>
+                        <label for="nombre" class="form-label text-white">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese nombre completo" required>
                     </div>
                     <div class="mb-3">
-                        <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese el apellido" required>
+                        <label for="apellido" class="form-label text-white">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese apellidos completos" required>
                     </div>
                     <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el teléfono">
+                        <label for="telefono" class="form-label text-white">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese su teléfono">
                     </div>
                     <div class="mb-3">
-                        <label for="correo" class="form-label">Correo</label>
-                        <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo">
+                        <label for="correo" class="form-label text-white">Correo</label>
+                        <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese su correo">
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a href="../../index.php?page=home#contacto" class="btn btn-danger">Cancelar</a>
+                        <a href="/area51_barbershop_2025/index.php?page=home" class="btn btn-danger">Cancelar</a>
                         <button type="submit" class="btn btn-neon">Guardar</button>
                     </div>
                 </form>

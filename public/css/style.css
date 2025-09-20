@@ -7,8 +7,7 @@
      background-size: cover;
      background-position: center;
      background-repeat: no-repeat;
-     background-attachment: fixed;
-     /* Hace efecto parallax suave en desktop */
+     background-attachment: fixed; /* Hace efecto parallax suave en desktop */
      position: relative;
      font-family: 'Roboto', sans-serif;
      background-color: #000;

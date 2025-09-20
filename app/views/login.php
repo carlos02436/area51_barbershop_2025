@@ -52,7 +52,7 @@ $password_cookie = $_COOKIE['password'] ?? '';
 $error = $error ?? '';
 ?>
 <body>
-    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center" style="margin-top:80px;">
       <div class="row w-100 justify-content-center">
         <div class="col-12 col-md-8 col-lg-5">
           <div class="card shadow-lg border-0">

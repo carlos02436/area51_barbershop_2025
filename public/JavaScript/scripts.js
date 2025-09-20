@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (reservaForm) {
         reservaForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
             const fecha = document.getElementById('fecha').value;
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             console.log('Reserva recibida:', { nombre, email, fecha, servicio });
             alert('¡Gracias por tu reserva! Nos comunicaremos contigo pronto para confirmarla.');
+
             this.reset();
         });
     }
@@ -30,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (target && window.location.hash !== targetSelector) {
                 e.preventDefault();
-
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
                 window.scrollTo({ top: targetPosition, behavior: 'smooth' });
 
@@ -136,4 +137,5 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-})
+
+});

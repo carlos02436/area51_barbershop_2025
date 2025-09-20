@@ -12,33 +12,27 @@ $servicios = $db->query("SELECT * FROM servicios")->fetchAll(PDO::FETCH_ASSOC);
 $error = '';
 $horasDisponibles = [];
 
-// Función para generar horas disponibles según barbero y fecha
 function generarHoras($id_barbero, $fecha, $ocupadas) {
     $dayOfWeek = date('w', strtotime($fecha));
     $horas = [];
-
-    if ($id_barbero == 1) { // Yeison Sarmiento
-        if ($dayOfWeek == 0) return []; // No trabaja domingos
+    if ($id_barbero == 1) {
+        if ($dayOfWeek == 0) return [];
         for ($h = 8; $h < 20; $h++) {
-            if ($h >= 12 && $h < 14) continue; // Descanso 12-14
+            if ($h >= 12 && $h < 14) continue;
             $hora = str_pad($h,2,'0',STR_PAD_LEFT).":00:00";
             if (!in_array($hora, $ocupadas)) $horas[] = $hora;
         }
     } else {
-        $inicio = ($dayOfWeek == 0) ? 8 : 8;
-        $fin = ($dayOfWeek == 0) ? 16 : 20;
+        $inicio = 8; $fin = 20;
         for ($h = $inicio; $h < $fin; $h++) {
             $hora = str_pad($h,2,'0',STR_PAD_LEFT).":00:00";
             if (!in_array($hora, $ocupadas)) $horas[] = $hora;
         }
     }
-
     return $horas;
 }
 
-// POST: crear cita
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
-
     $id_cliente = $_POST['id_cliente'];
     $id_barbero = $_POST['id_barbero'];
     $id_servicio = $_POST['id_servicio'];
@@ -46,12 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $hora_cita = $_POST['hora_cita'];
 
     if(!empty($id_cliente) && !empty($id_barbero) && !empty($id_servicio) && !empty($fecha_cita) && !empty($hora_cita)) {
-
         $ok = $controller->crearCita($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita);
 
         if ($ok) {
-
-            // Datos de servicio, cliente y barbero
             $servicio = $servicios[array_search($id_servicio, array_column($servicios, 'id_servicio'))];
             $cliente = $clientes[array_search($id_cliente, array_column($clientes, 'id_cliente'))];
             $barbero = $barberos[array_search($id_barbero, array_column($barberos, 'id_barbero'))];
@@ -59,28 +50,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
             $precio = $servicio['precio'];
             $nombre_servicio = $servicio['nombre'];
 
-            // Mensajes para cliente y barbero
+            $hora_cita_formato = date('h:i A', strtotime($hora_cita));
+            $fecha_cita_formato = date('d/m/Y', strtotime($fecha_cita));
+
+            // Mensajes estilizados
             $mensaje_cliente = "✅ *CITA CONFIRMADA - AREA51 BARBER SHOP* ✅\n\n".
                                "👤 *Cliente:* {$cliente['nombre']} {$cliente['apellido']}\n".
                                "💈 *Barbero:* {$barbero['nombre']}\n".
                                "✂️ *Servicio:* {$nombre_servicio} - \${$precio}\n".
-                               "📅 *Fecha:* {$fecha_cita}\n".
-                               "⏰ *Hora:* {$hora_cita}\n\n".
+                               "📅 *Fecha:* {$fecha_cita_formato}\n".
+                               "⏰ *Hora:* {$hora_cita_formato}\n\n".
                                "¡Gracias por confiar en nosotros! 💈✨";
 
             $mensaje_barbero = "📋 *NUEVA CITA AGENDADA* 📋\n\n".
                                "👤 *Cliente:* {$cliente['nombre']} {$cliente['apellido']}\n".
                                "💈 *Barbero:* {$barbero['nombre']}\n".
                                "✂️ *Servicio:* {$nombre_servicio} - \${$precio}\n".
-                               "📅 *Fecha:* {$fecha_cita}\n".
-                               "⏰ *Hora:* {$hora_cita}\n\n".
+                               "📅 *Fecha:* {$fecha_cita_formato}\n".
+                               "⏰ *Hora:* {$hora_cita_formato}\n\n".
                                "¡Prepárate para un excelente servicio! ✂️";
 
-            // Enviar mensajes vía Node.js
-            $urlNode = 'http://localhost:3000/enviarWhatsApp'; // Endpoint Node.js
+            // Enviar mensajes en segundo plano sin bloquear la respuesta
+            ignore_user_abort(true);
+            set_time_limit(0);
+
             $data = [
-                'cliente' => ['telefono' => $cliente['telefono'], 'mensaje' => $mensaje_cliente],
-                'barbero' => ['telefono' => $barbero['telefono'], 'mensaje' => $mensaje_barbero]
+                'cliente' => ['telefono'=>$cliente['telefono'], 'mensaje'=>$mensaje_cliente],
+                'barbero' => ['telefono'=>$barbero['telefono'], 'mensaje'=>$mensaje_barbero]
             ];
 
             $options = [
@@ -88,22 +84,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
                     'header'  => "Content-type: application/json\r\n",
                     'method'  => 'POST',
                     'content' => json_encode($data),
+                    'ignore_errors' => true,
                 ]
             ];
-            $context  = stream_context_create($options);
-            @file_get_contents($urlNode, false, $context); // Se ignora el error si no responde
 
-            // Redirigir a la página Home
+            $context  = stream_context_create($options);
+            @file_get_contents('http://localhost:3000/send-message', false, $context);
+
+            // Redirigir inmediatamente
             header('Location: index.php?page=home#contacto');
             exit();
-
         } else {
             $error = "Hora no disponible o fuera del horario permitido";
         }
     }
 }
 
-// Calcular horas disponibles si seleccionaron barbero y fecha
+// Calcular horas disponibles
 if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
     $ocupadas = $controller->horasOcupadas($_POST['id_barbero'], $_POST['fecha_cita']);
     $horasDisponibles = generarHoras($_POST['id_barbero'], $_POST['fecha_cita'], $ocupadas);
@@ -191,31 +188,31 @@ if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
 
                 <!-- Botones -->
                 <div class="d-flex justify-content-between">
-                    <a href="index.php?page=home#contacto" class="btn btn-danger" style="width:100px;">Cancelar</a>
+                    <a href="index.php?page=home" class="btn btn-danger" style="width:100px;">Cancelar</a>
                     <button type="submit" class="btn btn-neon" style="width:100px;">Guardar</button>
                 </div>
             </form>
-        </div> 
+        </div>
     </div>
 
     <script>
-        function mostrarImagen(){
-            const sel = document.querySelector('select[name="id_servicio"]');
-            const img = sel.selectedOptions[0].dataset.img;
-            const imgContainer = document.getElementById('imagenContainer');
-            const imgElement = document.getElementById('imgServicio');
+    function mostrarImagen(){
+        const sel = document.querySelector('select[name="id_servicio"]');
+        const img = sel.selectedOptions[0].dataset.img;
+        const imgContainer = document.getElementById('imagenContainer');
+        const imgElement = document.getElementById('imgServicio');
 
-            if (sel.value !== '' && img) {
-                imgElement.src = 'app/uploads/servicios/' + img;
-                imgContainer.style.display = 'block';
-            } else {
-                imgContainer.style.display = 'none';
-            }
+        if (sel.value !== '' && img) {
+            imgElement.src = 'app/uploads/servicios/' + img;
+            imgContainer.style.display = 'block';
+        } else {
+            imgContainer.style.display = 'none';
         }
+    }
 
-        // Mostrar imagen al cargar la página si ya hay servicio seleccionado
-        document.addEventListener('DOMContentLoaded', function() {
-            mostrarImagen();
-        });
+    // Mostrar imagen al cargar la página si ya hay servicio seleccionado
+    document.addEventListener('DOMContentLoaded', function() {
+        mostrarImagen();
+    });
     </script>
 <main>

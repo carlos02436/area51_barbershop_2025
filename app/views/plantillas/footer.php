@@ -55,7 +55,7 @@
                 <hr style="border-top: 1px solid #00ff00;">
                 <div class="text-center mt-3">
                     <p class="navbar-brand mb-0" style="justify-content: center;font-size: 0.55rem;">
-                        &copy; 2025 Área 51_Barber Shop. Todos los Derechos Reservados.</p>
+                        &copy; 2025 Área 51_Barber Shop. | Todos los Derechos Reservados.</p>
                 </div>
             </div>
     </footer>

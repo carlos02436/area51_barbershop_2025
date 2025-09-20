@@ -45,13 +45,13 @@ ob_start();
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="index.php?page=home#inicio">Inicio</a>
+                        <a class="nav-link text-white" href="/area51_barbershop_2025/index.php?page=home#inicio">Inicio</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="index.php?page=home#nosotros">Nosotros</a>
+                        <a class="nav-link text-white" href="/area51_barbershop_2025/index.php?page=home#nosotros">Nosotros</a>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="index.php?page=home#servicios">Servicios</a>
+                        <a class="nav-link text-white" href="/area51_barbershop_2025/index.php?page=home#servicios">Servicios</a>
                     </li>
                     <li class="nav-item dropdown me-4">
                         <a class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown"
@@ -59,16 +59,16 @@ ob_start();
                             Más
                         </a>
                         <ul class="dropdown-menu dropdown-menu-start bg-dark ms-n2">
-                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#barberos">Barberos</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#galeria">Galería</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#videos">Videos</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#noticias">Noticias</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#testimonios">Testimonios</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="index.php?page=home#contacto">Contáctanos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#barberos">Barberos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#galeria">Galería</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#videos">Videos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#noticias">Noticias</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#testimonios">Testimonios</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#contacto">Contáctanos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item me-4">
-                        <a class="nav-link text-white" href="index.php?page=login">Admin</a>
+                        <a class="nav-link text-white" href="/area51_barbershop_2025/index.php?page=login">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -79,23 +79,28 @@ ob_start();
         display:none; align-items:center; justify-content:center;">
         <i class="fa-solid fa-chevron-up fa-lg"></i>
     </button>
-    <!-- Código JS para el Botón Scroll hacia abajo y devuelve al inicio -->
+
+    <!-- Código JS para el Botón Scroll hacia arriba -->
     <script>
-        // Mostrar/ocultar el botón al hacer scroll
-        window.addEventListener('scroll', function() {
-            const btn = document.getElementById('scrollToTopBtn');
-            if (window.scrollY > 200) {
-                btn.style.display = 'flex';
-            } else {
-                btn.style.display = 'none';
-            }
-        });
-        // Scroll suave al inicio al hacer clic
-        document.getElementById('scrollToTopBtn').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        document.addEventListener("DOMContentLoaded", function () {
+            const btn = document.getElementById("scrollToTopBtn");
+
+            // Mostrar/ocultar el botón al hacer scroll
+            window.addEventListener("scroll", function () {
+                btn.style.display = (window.scrollY > 200) ? "flex" : "none";
+            });
+
+            // Subir instantáneamente sin animación conflictiva
+            btn.addEventListener("click", function () {
+                window.scrollTo(0, 0);
             });
         });
     </script>
-    <main>
+
+    <!-- Ajuste para que el navbar fijo no tape las secciones -->
+    <style>
+        section {
+            scroll-margin-top: 100px; /* altura de tu navbar */
+        }
+    </style>
+<main>

@@ -25,7 +25,7 @@ $citas = $citasController->listarCitas(); // JOIN con clientes, barberos y servi
                         <th>Apellido</th>
                         <th>Barbero</th>
                         <th>Servicio</th>
-                        <th>Imagen</th> <!-- Nueva columna -->
+                        <th>Imagen</th>
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Estado</th>
@@ -46,13 +46,13 @@ $citas = $citasController->listarCitas(); // JOIN con clientes, barberos y servi
                                         <img src="app/uploads/servicios/<?= htmlspecialchars($c['servicio_imagen']) ?>" 
                                             alt="<?= htmlspecialchars($c['servicio']) ?>" 
                                             class="img-thumbnail border-success"
-                                            style="max-width: 100px; max-height: 80px; border: 2px solid #28a745;">
+                                            style="max-width: 90px; max-height: 90px; border: 2px solid #28a745;">
                                     <?php else: ?>
                                         <span class="text-muted">Sin imagen</span>
                                     <?php endif; ?>
                                 </td>
                                 <td><?= htmlspecialchars(date('d/m/Y', strtotime($c['fecha_cita']))) ?></td>
-                                <td><?= htmlspecialchars(date('H:i', strtotime($c['hora_cita']))) ?></td>
+                                <td><?= htmlspecialchars(date('h:i A', strtotime($c['hora_cita']))) ?></td>
                                 <td><?= htmlspecialchars($c['estado']) ?></td>
                                 <td>
                                     <div class="d-flex gap-2">
