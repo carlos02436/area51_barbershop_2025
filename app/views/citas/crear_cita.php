@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/CitasController.php';
 require_once __DIR__ . '/../../../config/database.php';
 
@@ -195,7 +194,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <select name="id_barbero" id="barbero" class="form-select" required>
                             <option value="">Selecciona un barbero</option>
                             <?php foreach($barberos as $b): ?>
-                                <option value="<?= $b['id_barbero'] ?>"><?= htmlspecialchars($b['nombre']) ?></option>
+                            <option 
+                                value="<?= $b['id_barbero'] ?>" 
+                                data-telefono="<?= preg_replace('/\D/', '', $b['telefono']) ?>">
+                                <?= htmlspecialchars($b['nombre']) ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                         <div id="barberoNotice" class="form-text text-white"></div>

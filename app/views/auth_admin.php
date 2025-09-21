@@ -2,7 +2,17 @@
 // auth_admin.php
 // Protege todas las vistas del panel del administrador y previene cache
 
+// Mantiene la sesión iniciada las 24Hr o hasta que se decida cerrar
 if (session_status() === PHP_SESSION_NONE) {
+    // Configuración de duración de sesión
+    ini_set('session.gc_maxlifetime', 86400); // 24 horas
+    session_set_cookie_params([
+        'lifetime' => 86400,
+        'path' => '/',
+        'domain' => '',
+        'secure' => true,   
+        'httponly' => true
+    ]);
     session_start();
 }
 

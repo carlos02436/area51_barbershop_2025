@@ -18,8 +18,8 @@ const form = $("#citaForm");
 const resetBtn = $("#resetBtn");
 
 /* Constants */
-const OPEN_HOUR = 9;
-const CLOSE_HOUR = 19;
+const OPEN_HOUR = 8;
+const CLOSE_HOUR = 20;
 const SLOT_MINUTES = 60;
 
 /* Helpers */
@@ -80,8 +80,6 @@ async function refreshHoras() {
 
   if (!barberoId || !fechaISO) return;
 
-  // Puedes obtener citas desde PHP si quieres bloquear horas ocupadas
-  // Por ahora solo slots libres según horario
   const baseSlots = generateSlotsFor(barberoId, fechaISO);
   if (baseSlots.length === 0) {
     fechaErrors.textContent = "No hay disponibilidad para el barbero y fecha seleccionados.";
@@ -101,7 +99,7 @@ async function refreshHoras() {
 function updateBarberoNotice() {
   const id = Number(selBarbero.value);
   if (id === 1) barberoNotice.textContent = "Horario: Lun-Sáb 8:00–12:00 y 14:00–20:00. Domingo no trabaja.";
-  else if (id >= 2) barberoNotice.textContent = "Horario: Diario 8:00–20:00 (continuo).";
+  else if (id >= 2) barberoNotice.textContent = "Horario: Diario 8:00–20:00";
   else barberoNotice.textContent = "";
 }
 
@@ -120,28 +118,69 @@ function updateServicePreview() {
   preview.hidden = false;
 }
 
-/* Build WhatsApp URL */
+/* Construir WhatsApp */
 async function buildWhatsAppURL({ id_barbero, cliente, servicio, fecha_cita, hora_cita }) {
-  // Obtén los datos del barbero desde tu PHP si quieres
-  const bNombre = selBarbero.selectedOptions[0]?.textContent || "";
-  const bTelefono = selBarbero.selectedOptions[0]?.dataset.telefono || "";
+  const selBarbero = document.getElementById("barbero");
+  const selectedOption = selBarbero.selectedOptions[0];
+  
+  // Validaciones
+  if (!selectedOption) {
+    alert("Error: No hay barbero seleccionado");
+    return "#";
+  }
+  
+  const bNombre = selectedOption.textContent.trim() || "";
+  let bTelefono = selectedOption.dataset.telefono || "";
+  
+  // Limpiar número
+  bTelefono = bTelefono.replace(/\D/g, "");
+  
+  // Validar teléfono
+  if (!bTelefono) {
+    alert("Error: No se encontró número de teléfono para el barbero seleccionado");
+    return "#";
+  }
 
+  // Formatear fecha y hora
   const fechaTxt = dayjs(fecha_cita).format("DD/MM/YYYY");
   const [H, M] = hora_cita.split(":");
   const horaTxt = to12h(Number(H), Number(M));
 
-  const msg = 
-    `💈 Hola ${bNombre}, se ha agendado una cita.\n` +
+  // Construir mensaje
+  const msg =
+    `💈 Hola ${bNombre}, se ha agendado una cita.\n\n` +
     `👤 Cliente: ${cliente}\n` +
     `💇‍♂️ Servicio: ${servicio}\n` +
     `📅 Fecha: ${fechaTxt}\n` +
-    `🕒 Hora: ${horaTxt}\n` +
-    `✅ ¡Gracias por usar nuestra barbería!`;
+    `🕒 Hora: ${horaTxt}\n\n` +
+    `✅ ¡Prepárate para un excelente servicio!`;
 
-  return `https://wa.me/${bTelefono || ""}?text=${encodeURIComponent(msg)}`;
+  // URL de WhatsApp API
+  return `https://api.whatsapp.com/send?phone=${bTelefono}&text=${encodeURIComponent(msg)}`;
 }
 
-/* Submit handler (solo envía al PHP, PHP guarda la cita) */
+// Función para enviar el mensaje (debe ser llamada desde tu evento de submit)
+async function enviarMensajeWhatsApp(citaData) {
+  try {
+    const whatsappURL = await buildWhatsAppURL(citaData);
+    
+    // Evitar que se abra si hay error
+    if (whatsappURL === "#") {
+      return false;
+    }
+    
+    // Abrir en nueva pestaña
+    window.open(whatsappURL, '_blank');
+    return true;
+    
+  } catch (error) {
+    console.error("Error al generar URL de WhatsApp:", error);
+    alert("Error al preparar el mensaje de WhatsApp");
+    return false;
+  }
+}
+
+/* Submit handler */
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -150,7 +189,6 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Enviar formulario al PHP
   const formData = new FormData(form);
 
   try {
@@ -159,7 +197,7 @@ form.addEventListener("submit", async (e) => {
       body: formData
     });
 
-    const data = await res.json(); // PHP debe devolver JSON {ok:true} o {ok:false,error:""}
+    const data = await res.json();
 
     if (data.ok) {
       const clienteTxt = selCliente.selectedOptions[0]?.textContent || "";
@@ -181,6 +219,9 @@ form.addEventListener("submit", async (e) => {
       updateBarberoNotice();
       await refreshHoras();
       fechaErrors.textContent = "";
+
+      // Redirigir al home
+      window.location.href = "index.php?page=home";
     } else {
       fechaErrors.textContent = data.error || "Error desconocido al guardar la cita.";
     }
@@ -203,6 +244,9 @@ resetBtn.addEventListener("click", () => {
   preview.hidden = true;
   updateBarberoNotice();
   refreshHoras();
+
+  // Redirigir al home
+  window.location.href = "index.php?page=home";
 });
 
 /* Init */
