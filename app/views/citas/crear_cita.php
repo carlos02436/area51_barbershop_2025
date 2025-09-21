@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </form>
 
-            <div class="w-100 bg-info p-3 rounded mt-4">
+            <div class="w-100 bg-dark p-3 rounded mt-4 border border-secondary">
                 <h4 class="mb-2 text-white">
                     <i class="far fa-clock me-2"></i><strong>Horario de Atención</strong>
                 </h4>
