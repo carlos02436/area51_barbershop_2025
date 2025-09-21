@@ -6,7 +6,7 @@ class CitasController {
     private $citas;
 
     public function __construct($db) {
-        $this->citas = new Citas($db);
+        $this->citas = new Citas($db); // Conexión PDO
     }
 
     // Listar todas las citas
@@ -14,37 +14,18 @@ class CitasController {
         return $this->citas->listar();
     }
 
-    // Obtener una cita por id
+    // Obtener una cita por ID
     public function obtenerCita($id) {
         return $this->citas->obtener($id);
     }
 
-    // Crear una nueva cita (con imagen y WhatsApp)
-    public function crearCita($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
-        if (empty($id_cliente) || empty($id_barbero) || empty($id_servicio) || empty($fecha_cita) || empty($hora_cita)) {
-            return false;
-        }
-
-        // Validar disponibilidad
-        if (!$this->citas->validarDisponibilidad($id_barbero, $fecha_cita, $hora_cita)) {
-            return false;
-        }
-
-        // Crear cita (sin imagen)
-        $citaId = $this->citas->crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita);
-
-        if ($citaId) {
-            // Traer datos completos de la cita (con JOIN para obtener la imagen)
-            $cita = $this->citas->obtener($citaId);
-
-            return true;
-        }
-
-        return false;
+    // Crear una nueva cita
+    public function crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita, $img_servicio = '') {
+        return $this->citas->crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita, $img_servicio);
     }
 
     // Actualizar cita
-    public function actualizarCita($id, $id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
+    public function actualizarCita($id, $id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita, $img_servicio = '') {
         return $this->citas->actualizar($id, $id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita);
     }
 
@@ -76,6 +57,7 @@ class CitasController {
         return $this->citas->ultimaCita();
     }
     
+    // Obtener datos relacionados
     public function getCliente($id) {
         return $this->citas->getCliente($id);
     }

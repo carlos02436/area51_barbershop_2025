@@ -67,7 +67,7 @@ $fechaSeleccionada = $_POST['fecha_cita'] ?? $cita['fecha_cita'];
 if ($barberoSeleccionado && $fechaSeleccionada) {
     $ocupadas = $controller->horasOcupadas($barberoSeleccionado, $fechaSeleccionada);
     // Excluir la hora actual de la cita para que siga disponible
-    $ocupadas = array_filter($ocupadas, fn($h) => $h !== $cita['hora_cita']);
+    $ocupadas = $citas($ocupadas, fn($h) => $h !== $cita['hora_cita']);
     $horasDisponibles = generarHorasDisponibles($barberoSeleccionado, $fechaSeleccionada, $ocupadas);
 }
 

@@ -46,18 +46,11 @@ class Citas {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Crear cita (ahora devuelve el ID insertado)
-    public function crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita) {
-        $stmt = $this->db->prepare("
-            INSERT INTO citas (id_cliente, id_barbero, id_servicio, fecha_cita, hora_cita, estado, fecha_creacion)
-            VALUES (?, ?, ?, ?, ?, 'pendiente', NOW())
-        ");
-        $ok = $stmt->execute([$id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita]);
-
-        if ($ok) {
-            return $this->db->lastInsertId(); // ✅ devuelve ID de la cita creada
-        }
-        return false;
+    // Crear nueva cita
+    public function crear($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita, $img_servicio) {
+        $stmt = $this->db->prepare("INSERT INTO citas (id_cliente, id_barbero, id_servicio, img_servicio, fecha_cita, hora_cita, estado) 
+                                    VALUES (?, ?, ?, ?, ?, ?, 'pendiente')");
+        return $stmt->execute([$id_cliente, $id_barbero, $id_servicio, $img_servicio, $fecha_cita, $hora_cita]);
     }
 
     // Actualizar cita
