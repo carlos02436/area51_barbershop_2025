@@ -10,7 +10,9 @@ $barberos = $db->query("SELECT * FROM barberos")->fetchAll(PDO::FETCH_ASSOC);
 $servicios = $db->query("SELECT * FROM servicios")->fetchAll(PDO::FETCH_ASSOC);
 
 $error = '';
+$success = false;
 $horasDisponibles = [];
+$citaData = [];
 
 // Función para generar horas disponibles
 function generarHoras($id_barbero, $fecha, $ocupadas) {
@@ -34,7 +36,26 @@ function generarHoras($id_barbero, $fecha, $ocupadas) {
     return $horas;
 }
 
-// Procesar envío del formulario
+// 🔴 PRIMERO: Verificar si es una solicitud AJAX para horas
+if (isset($_POST['ajax_horas']) && $_POST['ajax_horas'] === 'true') {
+    $id_barbero = $_POST['id_barbero'] ?? '';
+    $fecha_cita = $_POST['fecha_cita'] ?? '';
+    
+    if (!empty($id_barbero) && !empty($fecha_cita)) {
+        $ocupadas = $controller->horasOcupadas($id_barbero, $fecha_cita);
+        $horasDisponibles = generarHoras($id_barbero, $fecha_cita, $ocupadas);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'horas' => $horasDisponibles]);
+        exit;
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'error' => 'Datos incompletos']);
+        exit;
+    }
+}
+
+// 🔴 SEGUNDO: Verificar si es envío del formulario principal con AJAX
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
     $id_cliente = $_POST['id_cliente'];
     $id_barbero = $_POST['id_barbero'];
@@ -46,54 +67,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_cliente'])) {
         $ok = $controller->crearCita($id_cliente, $id_barbero, $id_servicio, $fecha_cita, $hora_cita);
 
         if ($ok) {
-            // Preparar datos
+            $success = true;
+            
+            // Preparar datos para WhatsApp
             $servicio = $servicios[array_search($id_servicio, array_column($servicios, 'id_servicio'))];
             $cliente = $clientes[array_search($id_cliente, array_column($clientes, 'id_cliente'))];
             $barbero = $barberos[array_search($id_barbero, array_column($barberos, 'id_barbero'))];
 
-            $precio = $servicio['precio'];
-            $nombre_servicio = $servicio['nombre'];
-
-            $hora_cita_formato = date('h:i A', strtotime($hora_cita));
-            $fecha_cita_formato = date('d/m/Y', strtotime($fecha_cita));
-
-            // Mensajes estilizados
-            $mensaje_cliente = "✅ *CITA CONFIRMADA - AREA51 BARBER SHOP* ✅\n\n".
-                               "👤 *Cliente:* {$cliente['nombre']} {$cliente['apellido']}\n".
-                               "💈 *Barbero:* {$barbero['nombre']}\n".
-                               "✂️ *Servicio:* {$nombre_servicio} - \${$precio}\n".
-                               "📅 *Fecha:* {$fecha_cita_formato}\n".
-                               "⏰ *Hora:* {$hora_cita_formato}\n\n".
-                               "¡Gracias por confiar en nosotros! 💈✨";
-
-            $mensaje_barbero = "📋 *NUEVA CITA AGENDADA* 📋\n\n".
-                               "👤 *Cliente:* {$cliente['nombre']} {$cliente['apellido']}\n".
-                               "💈 *Barbero:* {$barbero['nombre']}\n".
-                               "✂️ *Servicio:* {$nombre_servicio} - \${$precio}\n".
-                               "📅 *Fecha:* {$fecha_cita_formato}\n".
-                               "⏰ *Hora:* {$hora_cita_formato}\n\n".
-                               "¡Prepárate para un excelente servicio! ✂️";
-
-            // Enviar mensajes en segundo plano sin bloquear la respuesta
-            $data = [
-                'cliente' => ['telefono'=>$cliente['telefono'], 'mensaje'=>$mensaje_cliente],
-                'barbero' => ['telefono'=>$barbero['telefono'], 'mensaje'=>$mensaje_barbero]
+            $citaData = [
+                'cliente' => [
+                    'nombre' => $cliente['nombre'] . ' ' . $cliente['apellido'],
+                    'telefono' => $cliente['telefono']
+                ],
+                'barbero' => [
+                    'nombre' => $barbero['nombre'],
+                    'telefono' => $barbero['telefono']
+                ],
+                'servicio' => [
+                    'nombre' => $servicio['nombre'],
+                    'precio' => $servicio['precio']
+                ],
+                'fecha' => date('d/m/Y', strtotime($fecha_cita)),
+                'hora' => date('h:i A', strtotime($hora_cita))
             ];
 
-            $cmd = 'curl -X POST -H "Content-Type: application/json" -d \'' . json_encode($data) . '\' http://localhost:3000/send-message > NUL 2>&1 &';
-            exec($cmd);
-
-            // Redirigir inmediatamente
-            header('Location: /area51_barbershop_2025/index.php?page=crear_cita');
-            exit();
-        } else {
-            $error = "Hora no disponible o fuera del horario permitido";
+            // Si es AJAX, devolver JSON y terminar
+            if (isset($_POST['ajax']) && $_POST['ajax'] === 'true') {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'cita' => $citaData]);
+                exit;
+            }
         }
     }
 }
 
-// Calcular horas disponibles si se cambian id_barbero o fecha
-if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
+// 🔴 TERCERO: Calcular horas disponibles para recarga normal (no AJAX)
+if (isset($_POST['id_barbero'], $_POST['fecha_cita']) && !isset($_POST['ajax_horas'])) {
     $ocupadas = $controller->horasOcupadas($_POST['id_barbero'], $_POST['fecha_cita']);
     $horasDisponibles = generarHoras($_POST['id_barbero'], $_POST['fecha_cita'], $ocupadas);
 }
@@ -102,109 +111,269 @@ if (isset($_POST['id_barbero'], $_POST['fecha_cita'])) {
     <div class="container py-5" style="margin-top:100px;">
         <h1 class="fw-bold text-white mb-4 text-center">➕ Crear Cita</h1>
         <div class="card text-white mx-auto" style="max-width: 600px; padding: 40px;">
-            <?php if($error) echo "<p class='text-danger'>$error</p>"; ?>
-            <form action="" method="POST" class="text-white">
-                <!-- Cliente -->
-                <div class="mb-3">
-                    <label>Cliente</label>
-                    <select name="id_cliente" class="form-control" required>
-                        <option value="">Selecciona un cliente...</option>
-                        <?php foreach($clientes as $c): ?>
-                            <option value="<?= $c['id_cliente'] ?>" 
-                                data-telefono="<?= $c['telefono'] ?>"
-                                <?= (isset($_POST['id_cliente']) && $_POST['id_cliente']==$c['id_cliente'])?'selected':'' ?>>
-                                <?= $c['nombre'].' '.$c['apellido'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+            <?php if(isset($error) && $error) echo "<p class='text-danger'>$error</p>"; ?>
+            <?php if(isset($success) && $success) echo "<p class='text-success'>Cita creada exitosamente!</p>"; ?>
+            
+            <form id="citaForm" method="POST" action="">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_cliente" class="form-label">Cliente</label>
+                            <select class="form-select" id="id_cliente" name="id_cliente" required>
+                                <option value="">Seleccionar cliente</option>
+                                <?php foreach ($clientes as $cliente): ?>
+                                    <option value="<?= $cliente['id_cliente'] ?>">
+                                        <?= $cliente['nombre'] . ' ' . $cliente['apellido'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_servicio" class="form-label">Servicio</label>
+                            <select class="form-select" id="id_servicio" name="id_servicio" required>
+                                <option value="">Seleccionar servicio</option>
+                                <?php foreach ($servicios as $servicio): ?>
+                                    <option value="<?= $servicio['id_servicio'] ?>">
+                                        <?= $servicio['nombre'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Barbero -->
-                <div class="mb-3">
-                    <label>Barbero</label>
-                    <select name="id_barbero" class="form-control" required onchange="this.form.submit()">
-                        <option value="">Selecciona...</option>
-                        <?php foreach($barberos as $b): ?>
-                            <option value="<?= $b['id_barbero'] ?>" 
-                                data-telefono="<?= $b['telefono'] ?>"
-                                <?= (isset($_POST['id_barbero']) && $_POST['id_barbero']==$b['id_barbero'])?'selected':'' ?>>
-                                <?= $b['nombre'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_barbero" class="form-label">Barbero</label>
+                            <select class="form-select" id="id_barbero" name="id_barbero" required>
+                                <option value="">Seleccionar barbero</option>
+                                <?php foreach ($barberos as $barbero): ?>
+                                    <option value="<?= $barbero['id_barbero'] ?>">
+                                        <?= $barbero['nombre'] ?>
+                                        <?= ($barbero['id_barbero'] == 1) ? " (No trabaja domingos)" : "" ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="fecha_cita" class="form-label">Fecha de la cita</label>
+                            <input type="date" class="form-control" id="fecha_cita" name="fecha_cita" required>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Fecha -->
-                <div class="mb-3">
-                    <label>Fecha</label>
-                    <input type="date" name="fecha_cita" class="form-control" 
-                        value="<?= $_POST['fecha_cita'] ?? '' ?>" required onchange="this.form.submit()">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Horario de atención:</strong> Lunes a Sábado: 8:00 AM - 8:00 PM | Domingos: 9:00 AM - 4:00 PM
                 </div>
 
-                <!-- Hora -->
-                <div class="mb-3">
-                    <label>Hora</label>
-                    <select name="hora_cita" class="form-control" required>
-                        <?php if(!empty($horasDisponibles)): ?>
-                            <?php foreach($horasDisponibles as $h): ?>
-                                <option value="<?= $h ?>" <?= (isset($_POST['hora_cita']) && $_POST['hora_cita']==$h)?'selected':'' ?>>
-                                    <?= $h ?>
-                                </option>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <option value="">--Selecciona barbero y fecha--</option>
-                        <?php endif; ?>
-                    </select>
+                <div id="loading" class="text-center py-4 d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="mt-2">Buscando horarios disponibles...</p>
                 </div>
 
-                <!-- Servicio -->
-                <div class="mb-3">
-                    <label>Servicio</label>
-                    <select name="id_servicio" class="form-control" required onchange="mostrarImagen()">
-                        <option value="">Selecciona un servicio...</option>
-                        <?php foreach($servicios as $s): ?>
-                            <option value="<?= $s['id_servicio'] ?>" 
-                                    data-img="<?= $s['img_servicio'] ?>" 
-                                    data-precio="<?= $s['precio'] ?>"
-                                    <?= (isset($_POST['id_servicio']) && $_POST['id_servicio']==$s['id_servicio'])?'selected':'' ?>>
-                                <?= $s['nombre'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div id="horarios-container" class="d-none">
+                    <h5 class="mb-3">Horarios disponibles</h5>
+                    <div class="alert alert-warning d-none" id="barberoWarning">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <span id="warningText"></span>
+                    </div>
+                    <div id="horarios-list" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2 mb-4"></div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-circle me-2"></i>Confirmar Cita
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Imagen del servicio -->
-                <div class="mb-3 text-center" id="imagenContainer" style="display: none;">
-                    <img id="imgServicio" src="" style="max-width:150px; max-height:200px; border: 3px solid #00ff00; border-radius: 8px;">
+                <div id="no-horarios" class="text-center py-4 d-none">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-clock-history me-2"></i>
+                        No hay horarios disponibles para la fecha y barbero seleccionados.
+                    </div>
                 </div>
-
-                <!-- Botones -->
-                <div class="d-flex justify-content-between">
-                    <a href="index.php?page=home" class="btn btn-danger" style="width:100px;">Cancelar</a>
-                    <button type="submit" class="btn btn-neon" style="width:100px;">Guardar</button>
-                </div>
+                
+                <!-- Campo oculto para la hora seleccionada -->
+                <input type="hidden" id="hora_cita" name="hora_cita" value="">
             </form>
         </div>
     </div>
 
     <script>
-    function mostrarImagen(){
-        const sel = document.querySelector('select[name="id_servicio"]');
-        const img = sel.selectedOptions[0].dataset.img;
-        const imgContainer = document.getElementById('imagenContainer');
-        const imgElement = document.getElementById('imgServicio');
-
-        if (sel.value !== '' && img) {
-            imgElement.src = 'app/uploads/servicios/' + img;
-            imgContainer.style.display = 'block';
-        } else {
-            imgContainer.style.display = 'none';
-        }
-    }
-
-    // Mostrar imagen al cargar la página si ya hay servicio seleccionado
-    document.addEventListener('DOMContentLoaded', function() {
-        mostrarImagen();
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha mínima como hoy
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayStr = `${yyyy}-${mm}-${dd}`;
+            document.getElementById('fecha_cita').setAttribute('min', todayStr);
+            
+            // Elementos del DOM
+            const barberoSelect = document.getElementById('id_barbero');
+            const fechaInput = document.getElementById('fecha_cita');
+            const loadingElement = document.getElementById('loading');
+            const horariosContainer = document.getElementById('horarios-container');
+            const noHorariosElement = document.getElementById('no-horarios');
+            const horariosList = document.getElementById('horarios-list');
+            const barberoWarning = document.getElementById('barberoWarning');
+            const warningText = document.getElementById('warningText');
+            const horaInput = document.getElementById('hora_cita');
+            
+            // Event listeners
+            barberoSelect.addEventListener('change', verificarDisponibilidad);
+            fechaInput.addEventListener('change', verificarDisponibilidad);
+            
+            // Función para verificar disponibilidad
+            function verificarDisponibilidad() {
+                const idBarbero = barberoSelect.value;
+                const fechaCita = fechaInput.value;
+                
+                if (!idBarbero || !fechaCita) {
+                    return;
+                }
+                
+                // Mostrar carga
+                loadingElement.classList.remove('d-none');
+                horariosContainer.classList.add('d-none');
+                noHorariosElement.classList.add('d-none');
+                
+                // Hacer petición AJAX al servidor para obtener horas disponibles
+                fetchHorariosDisponibles(idBarbero, fechaCita)
+                    .then(horariosDisponibles => {
+                        // Ocultar carga
+                        loadingElement.classList.add('d-none');
+                        
+                        if (horariosDisponibles.length > 0) {
+                            mostrarHorariosDisponibles(horariosDisponibles, fechaCita);
+                        } else {
+                            noHorariosElement.classList.remove('d-none');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        loadingElement.classList.add('d-none');
+                        alert('Error al obtener los horarios disponibles. Por favor, recarga la página e intenta nuevamente.');
+                    });
+            }
+            
+            // Función para obtener horarios disponibles desde el servidor
+            function fetchHorariosDisponibles(idBarbero, fechaCita) {
+                return new Promise((resolve, reject) => {
+                    const formData = new FormData();
+                    formData.append('ajax_horas', 'true');
+                    formData.append('id_barbero', idBarbero);
+                    formData.append('fecha_cita', fechaCita);
+                    
+                    fetch(window.location.href, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            resolve(data.horas);
+                        } else {
+                            reject(data.error || 'Error desconocido');
+                        }
+                    })
+                    .catch(error => reject(error));
+                });
+            }
+            
+            // Función para mostrar horarios disponibles
+            function mostrarHorariosDisponibles(horarios, fechaCita) {
+                horariosList.innerHTML = '';
+                horaInput.value = '';
+                
+                // Obtener la hora actual
+                const ahora = new Date();
+                const horaActual = ahora.getHours();
+                const minutosActual = ahora.getMinutes();
+                const fechaSeleccionada = new Date(fechaCita);
+                const esHoy = fechaSeleccionada.toDateString() === ahora.toDateString();
+                
+                // Verificar si hay horarios disponibles
+                if (horarios.length === 0) {
+                    noHorariosElement.classList.remove('d-none');
+                    horariosContainer.classList.add('d-none');
+                    return;
+                }
+                
+                horarios.forEach(hora => {
+                    // Convertir hora de formato HH:MM:SS a formato legible
+                    const [h, m, s] = hora.split(':');
+                    const horaNum = parseInt(h);
+                    const minutoNum = parseInt(m);
+                    const periodo = horaNum >= 12 ? 'PM' : 'AM';
+                    const hora12 = horaNum % 12 || 12;
+                    const horaFormateada = `${hora12}:${minutoNum === 0 ? '00' : minutoNum} ${periodo}`;
+                    
+                    // Verificar si la hora ya pasó (si es hoy)
+                    let disponible = true;
+                    if (esHoy) {
+                        if (horaNum < horaActual) {
+                            disponible = false;
+                        } else if (horaNum === horaActual && minutoNum < minutosActual) {
+                            disponible = false;
+                        }
+                    }
+                    
+                    const col = document.createElement('div');
+                    col.className = 'col';
+                    
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = `btn ${disponible ? 'btn-outline-primary available' : 'btn-outline-secondary unavailable'} time-slot w-100 mb-2`;
+                    button.textContent = horaFormateada;
+                    button.dataset.hora = hora;
+                    
+                    if (!disponible) {
+                        button.disabled = true;
+                        button.title = 'Esta hora ya ha pasado';
+                    } else {
+                        button.addEventListener('click', function() {
+                            document.querySelectorAll('.time-slot').forEach(btn => {
+                                btn.classList.remove('btn-primary');
+                                btn.classList.add('btn-outline-primary');
+                            });
+                            this.classList.remove('btn-outline-primary');
+                            this.classList.add('btn-primary');
+                            
+                            // Guardar la hora seleccionada en el campo oculto
+                            horaInput.value = hora;
+                        });
+                    }
+                    
+                    col.appendChild(button);
+                    horariosList.appendChild(col);
+                });
+                
+                horariosContainer.classList.remove('d-none');
+                noHorariosElement.classList.add('d-none');
+            }
+            
+            // Manejar envío del formulario
+            document.getElementById('citaForm').addEventListener('submit', function(e) {
+                if (!horaInput.value) {
+                    e.preventDefault();
+                    alert('Por favor, selecciona un horario para tu cita.');
+                    return;
+                }
+            });
+        });
     </script>
 <main>

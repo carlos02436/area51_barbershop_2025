@@ -63,6 +63,10 @@ class CitasController {
         return $this->citas->horasOcupadas($id_barbero, $fecha_cita);
     }
 
+    public function contarCitasPorBarberoFecha($id_barbero, $fecha) {
+        return $this->citas->contarCitasPorBarberoFecha($id_barbero, $fecha);
+    }
+
     public function contarCitasDia($id_barbero, $fecha_cita) {
         return $this->citas->contarCitasDia($id_barbero, $fecha_cita);
     }
@@ -70,5 +74,17 @@ class CitasController {
     // Última cita creada
     public function ultimaCita() {
         return $this->citas->ultimaCita();
+    }
+    
+    public function getCliente($id) {
+        return $this->citas->getCliente($id);
+    }
+
+    public function getBarbero($id) {
+        return $this->citas->getBarbero($id);
+    }
+
+    public function getServicio($id) {
+        return $this->citas->getServicio($id);
     }
 }

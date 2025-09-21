@@ -172,4 +172,36 @@ class Citas {
         ");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function contarCitasPorBarberoFecha($id_barbero, $fecha) {
+        $sql = "SELECT COUNT(*) 
+                FROM citas 
+                WHERE id_barbero = :id_barbero 
+                AND fecha_cita = :fecha";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':id_barbero' => $id_barbero,
+            ':fecha' => $fecha
+        ]);
+        return (int)$stmt->fetchColumn();
+    }
+
+    // dentro de class Citas { ... }
+    public function getCliente($id) {
+        $stmt = $this->db->prepare("SELECT * FROM clientes WHERE id_cliente = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getBarbero($id) {
+        $stmt = $this->db->prepare("SELECT * FROM barberos WHERE id_barbero = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getServicio($id) {
+        $stmt = $this->db->prepare("SELECT * FROM servicios WHERE id_servicio = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
