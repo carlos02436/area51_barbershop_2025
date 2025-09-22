@@ -128,34 +128,52 @@ async function buildWhatsAppURL({ id_barbero, cliente, servicio, fecha_cita, hor
     alert("Error: No hay barbero seleccionado");
     return "#";
   }
-  
+
   const bNombre = selectedOption.textContent.trim() || "";
   let bTelefono = selectedOption.dataset.telefono || "";
-  
+
   // Limpiar número
   bTelefono = bTelefono.replace(/\D/g, "");
-  
+
   // Validar teléfono
   if (!bTelefono) {
     alert("Error: No se encontró número de teléfono para el barbero seleccionado");
     return "#";
   }
 
-  // Formatear fecha y hora
+  // Limpiar valores de cliente y servicio
+  const clienteLimpio = cliente.trim();
+  const servicioLimpio = servicio.trim();
+
+  // Formatear fecha
   const fechaTxt = dayjs(fecha_cita).format("DD/MM/YYYY");
+
+  // Formatear hora a 12h
   const [H, M] = hora_cita.split(":");
   const horaTxt = to12h(Number(H), Number(M));
 
+  // Función para convertir a formato de 12 horas
+  function to12h(hours, minutes) {
+    const suffix = hours >= 12 ? "PM" : "AM";
+    let hour = hours % 12;
+    if (hour === 0) hour = 12;
+    return `${hour}:${String(minutes).padStart(2, '0')} ${suffix}`;
+  }
+
   // Construir mensaje
   const msg =
-    `💈 Hola ${bNombre}, se ha agendado una cita.\n\n` +
-    `👤 Cliente: ${cliente}\n` +
-    `💇‍♂️ Servicio: ${servicio}\n` +
-    `📅 Fecha: ${fechaTxt}\n` +
-    `🕒 Hora: ${horaTxt}\n\n` +
-    `✅ ¡Prepárate para un excelente servicio!`;
+  `📌 *CITA CONFIRMADA - ÁREA 51 - LA SUPER BARBER*\n\n` +
+  `💈 *Nueva cita agendada para ${bNombre}*\n\n` +
+  `👤 *Cliente:* ${clienteLimpio}\n` +
+  `💇‍♂️ *Servicio:* ${servicioLimpio}\n` +
+  `📅 *Fecha:* ${fechaTxt}\n` +
+  `🕒 *Hora:* ${horaTxt}\n\n` +
+  `📍 *Ubicación:* https://maps.google.com/?q=Transversal+2+%23+04-01+Barrio+17+de+Febrero\n\n` +
+  `🔁 ¿Necesitas cambiar tu cita? Responde con:\n*REPROGRAMAR*\n\n` +
+  `❌ ¿Cancelar? Responde con:\n*CANCELAR*\n\n` +
+  `✅ ¡Prepárate para un excelente servicio!`;
 
-  // URL de WhatsApp API
+  // Retornar URL de WhatsApp
   return `https://api.whatsapp.com/send?phone=${bTelefono}&text=${encodeURIComponent(msg)}`;
 }
 
