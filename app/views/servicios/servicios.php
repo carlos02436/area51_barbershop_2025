@@ -15,7 +15,7 @@ $servicios = $controller->listarServicios();
             <h1 class="fw-bold display-5 text-white mb-0">📊 Gestión de Servicios</h1>
         </div>
         <div class="d-flex justify-content-end mb-3">
-            <a href="index.php?page=crear_servicio" class="btn btn-neon">Agregar Servicio</a>
+            <a href="index.php?page=crear_servicio" class="btn btn-neon">➕ Agregar Servicio</a>
         </div>
 
         <!-- Contenedor con scroll vertical -->
