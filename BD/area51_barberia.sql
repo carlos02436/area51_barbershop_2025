@@ -98,6 +98,8 @@ CREATE TABLE `servicios` (
   PRIMARY KEY (`id_servicio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO servicios (id_servicio, img_servicio, nombre, descripcion, precio, observacion) VALUES (1, 'corte1.jpg', 'Corte de Cabello', 'Corte de cabello diseñado para que destaques.', 15000.00, ''), (2, 'corte de cabello y barba1.jpg', 'Corte de Cabello y Corte de Barba', 'Afeitado y Corte de Barba clásico, siempre resaltando tu mejor estilo.', 25000.00, NULL), (3, 'corte de cabello y cejas.jpg', 'Corte de Cabello y Corte de Cejas', 'Siempre innovando y utilizando productos de excelente calidad.', 18000.00, NULL), (4, 'corte de barba.jpg', 'Corte de Barba', 'Diferentes cortes y perfilación de barba, al mejor estilo de Área_51 la Super Barber.', 10000.00, NULL), (5, 'corte de cejas.jpg', 'Corte de Cejas', 'Perfilación de cejas, que se adapta a tu estilo.', 5000.00, NULL), (6, 'cerquillo.jpg', 'Cerquillo', 'Delineación de cortes, aplicando las mejores técnicas para resaltar tu estilo.', 5000.00, NULL), (7, 'paquete premium.jpg', 'Paquete Premium', 'Combinación de corte de cabello, arreglo de barba, limpieza facial y masaje relajante.', 50000.00, ''), (8, 'keratina.jpg', 'Aplicación de Queratina', 'Renueva tu cabello con nuestra aplicación de queratina, dejándolo suave, brillante y manejable.', 0.00, 'Costo según el largo del cabello');
+
 -- ===================================================
 -- Tabla: citas
 -- ===================================================
@@ -150,6 +152,8 @@ CREATE TABLE `noticias` (
   KEY `fk_noticias_publicado_por` (`publicado_por`),
   CONSTRAINT `fk_noticias_publicado_por` FOREIGN KEY (`publicado_por`) REFERENCES `administradores` (`id_admin`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO noticias (id_noticia, titulo, contenido, fecha_publicacion, publicado_por, estado) VALUES (1, 'Nueva promoción de cortes', 'Durante enero tenemos descuentos especiales en cortes clásicos. Aprovecha esta promoción para renovar tu estilo a un precio inigualable. Nuestros barberos profesionales te esperan para ofrecerte un servicio de calidad, rápido y con la mejor atención.', '2025-01-02 10:00:00', NULL, 'activo'), (2, 'Concurso de estilo', 'Participa en nuestro Concurso de Estilo y demuestra tu creatividad con los cortes más originales. Los ganadores recibirán premios exclusivos y descuentos en próximos servicios. ¡No te pierdas esta oportunidad de brillar y mostrar tu talento en la barbería!', '2025-01-07 10:00:00', NULL, 'activo'), (3, 'Apertura nocturna', '¡Ahora abrimos en horario nocturno! Ven a disfrutar de un corte o arreglo de barba después de tu jornada diaria. Nuestra barbería estará disponible en horarios extendidos para brindarte comodidad y el mejor servicio cuando más lo necesites.', '2025-01-12 10:00:00', NULL, 'activo');
 
 -- ===================================================
 -- Tabla: galeria
