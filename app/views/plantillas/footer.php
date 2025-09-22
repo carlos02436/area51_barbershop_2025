@@ -11,7 +11,6 @@
                         <li><a href="index.php?page=home#galeria" style="color: white; text-decoration: none;">Galería</a></li>
                         <li><a href="index.php?page=home#barberos" style="color: white; text-decoration: none;">Barberos</a></li>
                         <li><a href="index.php?page=home#contacto" style="color: white; text-decoration: none;">Contacto</a></li>
-                        <li><a href="index.php?page=crear_pqrs" style="color: white; text-decoration: none;">PQRS</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER SERVICIOS -->
@@ -30,7 +29,8 @@
                         <li><a href="index.php?page=home#nosotros" style="color: white; text-decoration: none;">Quiénes Somos</a></li>
                         <li><a href="index.php?page=home#nosotros" style="color: white; text-decoration: none;">Misión</a></li>
                         <li><a href="index.php?page=home#nosotros" style="color: white; text-decoration: none;">Visión</a></li>
-                        <li><a href="index.php?page=home#testimonios" style="color: white; text-decoration: none;">Testimonios</a></li>
+                        <li><a href="index.php?page=crear_testimonios" style="color: white; text-decoration: none;">Agregar testimonio</a></li>
+                        <li><a href="index.php?page=crear_pqrs" style="color: white; text-decoration: none;">PQRS</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER CONTACTO -->

@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../controllers/TestimoniosController.php';
 if (!isset($db)) {
     require_once __DIR__ . '/../../config/database.php';
@@ -42,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="index.php?page=testimonios" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?page=home#testimonios" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-neon">Guardar</button>
                 </div>
             </form>
