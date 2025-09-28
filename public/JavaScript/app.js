@@ -238,8 +238,8 @@ form.addEventListener("submit", async (e) => {
       await refreshHoras();
       fechaErrors.textContent = "";
 
-      // Redirigir al home
-      window.location.href = "index.php?page=home";
+      // Redirigir a la sección de Contacto
+      window.location.href = "index.php?page=home#contacto";
     } else {
       fechaErrors.textContent = data.error || "Error desconocido al guardar la cita.";
     }
