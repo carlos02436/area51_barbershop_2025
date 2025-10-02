@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../auth_admin.php';
 require_once __DIR__ . '/../../config/database.php'; // conexión BD
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
