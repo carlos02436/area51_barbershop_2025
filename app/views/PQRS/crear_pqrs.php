@@ -5,7 +5,7 @@ $controller = new PQRSController($db);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->crear($_POST['nombre'], $_POST['apellidos'], $_POST['email'], $_POST['tipo'], $_POST['mensaje']);
-    header("Location: pqrs.php");
+    header("Location: index.php?page=home");
     exit;
 }
 ?>
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="fw-bold text-white mb-4 text-center">➕ Crear PQRS</h1>
         <div class="card text-white mx-auto" style="max-width: 600px; padding: 30px;">
 
-            <form action="index.php?page=guardar_pqrs" method="POST">
+            <form action="index.php?page=crear_pqrs" method="POST">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" name="nombre" class="form-control" required>

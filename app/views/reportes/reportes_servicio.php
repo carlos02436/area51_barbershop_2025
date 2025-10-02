@@ -15,6 +15,7 @@ require_once __DIR__ . '/../../../config/database.php';
 $anio = $_GET['anio'] ?? date('Y');
 $mes  = $_GET['mes'] ?? '';
 $dia  = $_GET['dia'] ?? '';
+$servicioFiltro = $_GET['servicio'] ?? '';
 
 $condiciones = [];
 $params = [];
@@ -30,6 +31,10 @@ if (!empty($mes)) {
 if (!empty($dia)) {
     $condiciones[] = "DAY(c.fecha_cita) = :dia";
     $params[':dia'] = $dia;
+}
+if (!empty($servicioFiltro)) {
+    $condiciones[] = "c.id_servicio = :servicio";
+    $params[':servicio'] = $servicioFiltro;
 }
 
 $where = $condiciones ? "WHERE " . implode(" AND ", $condiciones) : "";
@@ -51,7 +56,7 @@ $servicioNombre = $servicioSolicitado['servicio'] ?? 'No hay datos';
 $servicioCitas = $servicioSolicitado['total_citas'] ?? 0;
 
 // ==========================
-// Listado de citas con nombres de cliente y servicio
+// Listado de citas
 // ==========================
 $sqlCitas = "SELECT 
                 c.id_cita,
@@ -109,6 +114,22 @@ $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="d-flex flex-column align-items-center">
             <label class="form-label text-white mb-1">Día</label>
             <input type="number" name="dia" min="1" max="31" class="form-control text-center" style="width: <?= $ancho ?>;" value="<?= htmlspecialchars($dia) ?>">
+        </div>
+
+        <div class="d-flex flex-column align-items-center">
+            <label class="form-label text-white mb-1">Servicio</label>
+            <select name="servicio" class="form-select text-center" style="width: <?= $ancho ?>;">
+                <option value="">Todos</option>
+                <?php
+                $sqlServicios = "SELECT id_servicio, nombre FROM servicios ORDER BY nombre ASC";
+                $stmtServ = $db->query($sqlServicios);
+                $servicios = $stmtServ->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($servicios as $serv): ?>
+                    <option value="<?= $serv['id_servicio'] ?>" <?= ($servicioFiltro == $serv['id_servicio']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($serv['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="d-flex gap-2 align-items-end">
@@ -175,7 +196,7 @@ $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Botón PDF -->
     <div class="d-flex justify-content-end">
-        <a href="app/views/reportes/generar_pdf_servicio.php?anio=<?= urlencode($anio) ?>&mes=<?= urlencode($mes) ?>&dia=<?= urlencode($dia) ?>" 
+        <a href="app/views/reportes/generar_pdf_servicio.php?anio=<?= urlencode($anio) ?>&mes=<?= urlencode($mes) ?>&dia=<?= urlencode($dia) ?>&servicio=<?= urlencode($servicioFiltro) ?>" 
         target="_blank" 
         class="btn btn-neon">
         📄 Descargar PDF

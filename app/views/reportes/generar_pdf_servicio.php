@@ -11,6 +11,7 @@ use Dompdf\Dompdf;
 $anio = $_GET['anio'] ?? date('Y');
 $mes  = $_GET['mes'] ?? '';
 $dia  = $_GET['dia'] ?? '';
+$servicioFiltro = $_GET['servicio'] ?? '';
 
 $condiciones = [];
 $params = [];
@@ -18,6 +19,7 @@ $params = [];
 if (!empty($anio)) { $condiciones[] = "YEAR(c.fecha_cita) = :anio"; $params[':anio'] = $anio; }
 if (!empty($mes)) { $condiciones[] = "MONTH(c.fecha_cita) = :mes"; $params[':mes'] = $mes; }
 if (!empty($dia)) { $condiciones[] = "DAY(c.fecha_cita) = :dia"; $params[':dia'] = $dia; }
+if (!empty($servicioFiltro)) { $condiciones[] = "c.id_servicio = :servicio"; $params[':servicio'] = $servicioFiltro; }
 
 $where = $condiciones ? "WHERE " . implode(" AND ", $condiciones) : "";
 
@@ -60,6 +62,19 @@ $stmt->execute($params);
 $citas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // ==========================
+// Texto del filtro
+// ==========================
+$periodo = ($anio ? "Año $anio" : "Todos");
+if ($mes) $periodo .= " - Mes $mes";
+if ($dia) $periodo .= " - Día $dia";
+if ($servicioFiltro) {
+    $stmtServ = $db->prepare("SELECT nombre FROM servicios WHERE id_servicio = :id");
+    $stmtServ->execute([":id" => $servicioFiltro]);
+    $nombreServFiltro = $stmtServ->fetchColumn();
+    $periodo .= " - Servicio: " . htmlspecialchars($nombreServFiltro);
+}
+
+// ==========================
 // Generar HTML PDF
 // ==========================
 $html = '
@@ -76,7 +91,7 @@ $html = '
     h3 { margin: 5px 0; text-align:right; }
 </style>
 <h2>Reporte de Citas y Servicio Más Solicitado</h2>
-<p>Periodo: ' . ($anio ? $anio : 'Todos') . ' ' . ($mes ? "- Mes $mes" : '') . ' ' . ($dia ? "- Día $dia" : '') . '</p>
+<p>' . $periodo . '</p>
 
 <div style="margin-bottom:15px;">
     <h3>Servicio Más Solicitado: ' . htmlspecialchars($servicioNombre) . '</h3>

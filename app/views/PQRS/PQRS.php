@@ -47,13 +47,15 @@ $registros = $pqrsController->listar();
                                 <td><?= htmlspecialchars($row['tipo']) ?></td>
                                 <td><?= nl2br(htmlspecialchars($row['mensaje'])) ?></td>
                                 <td><?= htmlspecialchars($row['estado']) ?></td>
-                                <td class="text-center">
-                                    <a href="index.php?page=editar_pqrs&id=<?= $row['id_pqrs'] ?>" 
-                                       class="btn btn-warning btn-sm" style="width:80px;">Editar</a>
-                                    <a href="index.php?page=eliminar_pqrs&id=<?= $row['id_pqrs'] ?>" 
-                                       class="btn btn-danger btn-sm" style="width:80px;" 
-                                       onclick="return confirm('¿Marcar como resuelto?')">Eliminar</a>
-                                </td>
+<td class="text-center">
+    <div class="d-flex justify-content-center gap-2">
+        <a href="index.php?page=editar_pqrs&id=<?= $row['id_pqrs'] ?>" 
+           class="btn btn-warning btn-sm" style="width:80px;">Editar</a>
+        <a href="index.php?page=eliminar_pqrs&id=<?= $row['id_pqrs'] ?>" 
+           class="btn btn-danger btn-sm" style="width:80px;" 
+           onclick="return confirm('¿Marcar como resuelto?')">Eliminar</a>
+    </div>
+</td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
