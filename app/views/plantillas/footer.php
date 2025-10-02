@@ -10,7 +10,7 @@
                         <li><a href="index.php?page=home#servicios" style="color: white; text-decoration: none;">Servicios</a></li>
                         <li><a href="index.php?page=home#galeria" style="color: white; text-decoration: none;">Galería</a></li>
                         <li><a href="index.php?page=home#barberos" style="color: white; text-decoration: none;">Barberos</a></li>
-                        <li><a href="index.php?page=home#contacto" style="color: white; text-decoration: none;">Contacto</a></li>
+                        <li><a href="index.php?page=home#contactanos" style="color: white; text-decoration: none;">Contacto</a></li>
                     </ul>
                 </div>
                 <!-- FOOTER SERVICIOS -->

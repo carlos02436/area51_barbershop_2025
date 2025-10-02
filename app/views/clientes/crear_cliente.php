@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese su correo">
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a href="/area51_barbershop_2025/index.php?page=home#contacto" class="btn btn-danger">Cancelar</a>
+                        <a href="/area51_barbershop_2025/index.php?page=home#contactanos" class="btn btn-danger">Cancelar</a>
                         <button type="submit" class="btn btn-neon">Guardar</button>
                     </div>
                 </form>

@@ -298,12 +298,12 @@
         <div class="container">
             <h2 class="text-center mb-5 section-title">Testimonios</h2>
 
-            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner" style="height: 200px;">
-
+            <!-- Quité el autoplay (data-bs-ride="carousel") -->
+            <div id="testimonialCarousel" class="carousel slide">
+                <div class="carousel-inner h-100" style="min-height: 250px;"> <!-- altura fija -->
                     <?php foreach ($testimonios as $index => $t): ?>
-                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>" style="margin: 15px auto;">
-                            <div class="d-flex flex-column align-items-center">
+                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?> h-100">
+                            <div class="d-flex flex-column align-items-center justify-content-center h-100">
                                 <img src="app/uploads/testimonios/<?= htmlspecialchars($t['img']) ?>"
                                     alt="<?= htmlspecialchars($t['nombre']) ?>"
                                     class="rounded-circle mb-4"
@@ -332,8 +332,19 @@
         </div>
     </section>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Obtén el carrusel
+        var testimonialCarousel = document.querySelector('#testimonialCarousel');
+        var carousel = new bootstrap.Carousel(testimonialCarousel, {
+            interval: 5000,   // tiempo en milisegundos (5 segundos)
+            ride: "carousel"  // activa el autoplay manualmente
+        });
+    });
+    </script>
+
     <!-- Contacto -->
-    <section id="contacto" class="py-5 fade-in-section contacto-section" style="background:transparent;">
+    <section id="contactanos" class="py-5 fade-in-section contacto-section" style="background:transparent;">
         <div class="container">
             <h2 class="text-center mb-5 section-title">Contacto</h2>
 

@@ -64,7 +64,7 @@ ob_start();
                             <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#videos">Videos</a></li>
                             <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#noticias">Noticias</a></li>
                             <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#testimonios">Testimonios</a></li>
-                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#contacto">Contáctanos</a></li>
+                            <li><a class="dropdown-item text-white bg-dark" href="/area51_barbershop_2025/index.php?page=home#contactanos">Contáctanos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item me-4">

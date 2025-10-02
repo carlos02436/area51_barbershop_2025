@@ -238,8 +238,8 @@ form.addEventListener("submit", async (e) => {
       await refreshHoras();
       fechaErrors.textContent = "";
 
-      // Redirigir a la sección de Contacto
-      window.location.href = "index.php?page=home#contacto";
+      // Redirigir a la sección de Home
+      window.location.href = "index.php?page=home";
     } else {
       fechaErrors.textContent = data.error || "Error desconocido al guardar la cita.";
     }
@@ -263,8 +263,8 @@ resetBtn.addEventListener("click", () => {
   updateBarberoNotice();
   refreshHoras();
 
-  // Redirigir al home
-  window.location.href = "index.php?page=home";
+  // Redirigir a la sección Contáctanos
+  window.location.href = "index.php?page=home#contactanos";
 });
 
 /* Init */
